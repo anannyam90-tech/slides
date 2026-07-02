@@ -1,0 +1,617 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Tree, Layer by Layer</title>
+
+<!-- Fonts: organic serif for display, technical mono for UI/labels -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300..700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+
+<style>
+    /* ===========================================
+       CSS CUSTOM PROPERTIES (THEME)
+       Earthy botanical palette: peat-dark background,
+       terracotta -> amber -> moss -> sage as the tree deepens.
+       =========================================== */
+    :root {
+        --bg-primary: #0b120d;
+        --text-primary: #f3ede1;
+        --text-secondary: #8ea88a;
+        --text-dim: #4d5e48;
+
+        --c-root: #c9673b;
+        --c-l1: #e3a13a;
+        --c-l2: #9caf5c;
+        --c-l3: #c7d19a;
+        --edge-color: #5f7a52;
+
+        --font-display: 'Fraunces', serif;
+        --font-mono: 'JetBrains Mono', monospace;
+
+        --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+        --duration-normal: 0.6s;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body { background: var(--bg-primary); }
+
+    /* ===========================================
+       FIXED 16:9 STAGE: MANDATORY BASE STYLES
+       Include this ENTIRE file in every presentation.
+       Slides are authored at 1920×1080 and scaled as a whole.
+       =========================================== */
+
+    /* 1. Lock the browser viewport */
+    html,
+    body {
+        width: 100%;
+        height: 100%;
+        margin: 0;
+        overflow: hidden;
+        background: var(--stage-bg, #000);
+    }
+
+    /* 2. Full-window deck viewport */
+    .deck-viewport {
+        position: fixed;
+        inset: 0;
+        overflow: hidden;
+        background: var(--stage-bg, #000);
+    }
+
+    /* 3. Fixed 16:9 design canvas.
+       JavaScript sets transform: translate(...) scale(...). */
+    .deck-stage {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 1920px;
+        height: 1080px;
+        overflow: hidden;
+        transform-origin: 0 0;
+        background: var(--slide-bg, #fff);
+    }
+
+    /* 4. Slides stack inside the fixed stage.
+       Content must be laid out at 1920×1080, not reflowed per device. */
+    .slide {
+        position: absolute;
+        inset: 0;
+        width: 1920px;
+        height: 1080px;
+        overflow: hidden;
+        display: block;
+        visibility: hidden;
+        opacity: 0;
+        pointer-events: none;
+        background: var(--slide-bg, #fff);
+    }
+
+    .slide.active,
+    .slide.visible {
+        visibility: visible;
+        opacity: 1;
+        pointer-events: auto;
+        z-index: 1;
+    }
+
+    /* 5. Keep media inside authored slide bounds */
+    img,
+    video,
+    canvas,
+    svg {
+        max-width: 100%;
+        max-height: 100%;
+    }
+
+    /* 6. Presentation chrome stays outside the slide design system */
+    .deck-controls {
+        position: fixed;
+        left: 50%;
+        bottom: 22px;
+        transform: translateX(-50%);
+        z-index: 1000;
+    }
+
+    /* 7. Print one fixed-size slide per page */
+    @media print {
+        html,
+        body {
+            width: 1920px;
+            height: auto;
+            overflow: visible;
+            background: #fff;
+        }
+
+        .deck-viewport {
+            position: static;
+            overflow: visible;
+            background: #fff;
+        }
+
+        .deck-stage {
+            position: static;
+            width: auto;
+            height: auto;
+            transform: none !important;
+            background: none;
+        }
+
+        .slide {
+            position: relative;
+            display: block !important;
+            visibility: visible !important;
+            opacity: 1 !important;
+            pointer-events: auto !important;
+            width: 1920px;
+            height: 1080px;
+            break-after: page;
+            page-break-after: always;
+        }
+
+        .slide:last-child {
+            break-after: auto;
+            page-break-after: auto;
+        }
+
+        .deck-controls {
+            display: none !important;
+        }
+    }
+
+    /* 8. Reduced motion */
+    @media (prefers-reduced-motion: reduce) {
+        *,
+        *::before,
+        *::after {
+            animation-duration: 0.01ms !important;
+            transition-duration: 0.2s !important;
+        }
+    }
+
+    /* ===========================================
+       SLIDE BACKGROUND — blueprint grid + vignette
+       Reinforces the "anatomy diagram" read.
+       =========================================== */
+    .tree-slide {
+        background: var(--bg-primary);
+        font-family: var(--font-mono);
+        color: var(--text-primary);
+    }
+
+    .bg-grid {
+        position: absolute;
+        inset: 0;
+        background-image:
+            linear-gradient(rgba(180, 200, 160, 0.045) 1px, transparent 1px),
+            linear-gradient(90deg, rgba(180, 200, 160, 0.045) 1px, transparent 1px);
+        background-size: 48px 48px;
+    }
+
+    .bg-vignette {
+        position: absolute;
+        inset: 0;
+        background:
+            radial-gradient(ellipse 1100px 900px at 78% 50%, rgba(201, 103, 59, 0.10) 0%, transparent 60%),
+            radial-gradient(ellipse 900px 900px at 5% 90%, rgba(0, 0, 0, 0.5) 0%, transparent 70%);
+    }
+
+    /* ===========================================
+       ANIMATIONS — entrance for sidebar text
+       =========================================== */
+    .reveal {
+        opacity: 0;
+        transform: translateY(24px);
+        transition: opacity var(--duration-normal) var(--ease-out-expo),
+                    transform var(--duration-normal) var(--ease-out-expo);
+    }
+    .slide.visible .reveal { opacity: 1; transform: translateY(0); }
+    .reveal:nth-child(1) { transition-delay: 0.05s; }
+    .reveal:nth-child(2) { transition-delay: 0.15s; }
+    .reveal:nth-child(3) { transition-delay: 0.25s; }
+    .reveal:nth-child(4) { transition-delay: 0.35s; }
+    .reveal:nth-child(5) { transition-delay: 0.45s; }
+
+    /* ===========================================
+       SIDEBAR — copy + the tree-slider control
+       =========================================== */
+    .panel {
+        position: absolute;
+        left: 96px;
+        top: 150px;
+        width: 500px;
+    }
+
+    .kicker {
+        font-family: var(--font-mono);
+        font-size: 15px;
+        font-weight: 500;
+        letter-spacing: 4px;
+        text-transform: uppercase;
+        color: var(--c-l1);
+    }
+
+    .title {
+        font-family: var(--font-display);
+        font-optical-sizing: auto;
+        font-weight: 600;
+        font-size: 66px;
+        line-height: 1.08;
+        letter-spacing: -0.01em;
+        color: var(--text-primary);
+        margin: 22px 0 26px;
+    }
+
+    .description {
+        font-family: var(--font-mono);
+        font-size: 17px;
+        line-height: 1.7;
+        color: var(--text-secondary);
+        max-width: 430px;
+    }
+
+    /* --- Slider control --- */
+    .control {
+        margin-top: 72px;
+    }
+
+    .control-readout {
+        display: flex;
+        align-items: baseline;
+        gap: 14px;
+        margin-bottom: 22px;
+    }
+
+    .stage-name {
+        font-family: var(--font-display);
+        font-weight: 600;
+        font-size: 32px;
+        color: var(--c-l1);
+        transition: color 0.4s var(--ease-out-expo);
+        min-width: 220px;
+    }
+
+    .stage-count {
+        font-family: var(--font-mono);
+        font-size: 14px;
+        color: var(--text-dim);
+        letter-spacing: 1px;
+    }
+
+    .slider-track-wrap {
+        position: relative;
+        width: 100%;
+    }
+
+    input[type="range"].tree-slider {
+        -webkit-appearance: none;
+        appearance: none;
+        width: 100%;
+        height: 3px;
+        border-radius: 2px;
+        background: linear-gradient(90deg, var(--c-root) 0%, var(--c-l1) 0%, rgba(255,255,255,0.08) 0%);
+        outline: none;
+        cursor: pointer;
+    }
+
+    input[type="range"].tree-slider::-webkit-slider-thumb {
+        -webkit-appearance: none;
+        width: 24px;
+        height: 24px;
+        border-radius: 50%;
+        background: var(--c-l1);
+        border: 3px solid var(--bg-primary);
+        box-shadow: 0 0 0 1px rgba(227, 161, 58, 0.5), 0 0 18px rgba(227, 161, 58, 0.55);
+        cursor: pointer;
+        transition: transform 0.2s var(--ease-out-expo);
+    }
+    input[type="range"].tree-slider:active::-webkit-slider-thumb { transform: scale(1.15); }
+
+    input[type="range"].tree-slider::-moz-range-thumb {
+        width: 24px;
+        height: 24px;
+        border-radius: 50%;
+        background: var(--c-l1);
+        border: 3px solid var(--bg-primary);
+        box-shadow: 0 0 0 1px rgba(227, 161, 58, 0.5), 0 0 18px rgba(227, 161, 58, 0.55);
+        cursor: pointer;
+    }
+    input[type="range"].tree-slider::-moz-range-track {
+        height: 3px;
+        background: transparent;
+    }
+
+    .tick-row {
+        display: flex;
+        justify-content: space-between;
+        margin-top: 18px;
+        font-size: 13px;
+        letter-spacing: 1.5px;
+        text-transform: uppercase;
+        color: var(--text-dim);
+    }
+
+    .tick-row span {
+        transition: color 0.4s var(--ease-out-expo), font-weight 0.4s;
+        cursor: default;
+    }
+
+    .tick-row span.on {
+        color: var(--c-l1);
+        font-weight: 600;
+    }
+
+    .hint {
+        margin-top: 40px;
+        font-size: 13px;
+        color: var(--text-dim);
+        letter-spacing: 0.5px;
+    }
+
+    /* ===========================================
+       TREE CANVAS
+       =========================================== */
+    .tree-canvas {
+        position: absolute;
+        inset: 0;
+        width: 1920px;
+        height: 1080px;
+    }
+
+    .tree-edge {
+        fill: none;
+        stroke: var(--edge-color);
+        stroke-linecap: round;
+        opacity: 0;
+        transition: stroke-dashoffset 1s var(--ease-out-expo),
+                    opacity 0.5s ease-out;
+    }
+    .tree-edge.revealed { opacity: 0.85; }
+
+    .tree-node circle {
+        transition: transform 0.5s var(--ease-out-expo), opacity 0.5s ease-out;
+        transform-box: fill-box;
+        transform-origin: center;
+        transform: scale(0.3);
+        opacity: 0;
+    }
+    .tree-node.revealed circle {
+        transform: scale(1);
+        opacity: 1;
+    }
+
+    .tree-node text {
+        font-family: var(--font-mono);
+        fill: var(--text-secondary);
+        opacity: 0;
+        transition: opacity 0.5s ease-out 0.15s;
+    }
+    .tree-node.revealed text { opacity: 1; }
+
+    .tree-node.depth-0 text { fill: var(--text-primary); font-size: 20px; font-weight: 600; }
+    .tree-node.depth-1 text { font-size: 17px; font-weight: 600; fill: var(--text-primary); }
+    .tree-node.depth-2 text { font-size: 15px; }
+    .tree-node.depth-3 text { font-size: 13.5px; color: var(--text-dim); }
+
+    .ring {
+        fill: none;
+        stroke: var(--c-root);
+        opacity: 0.08;
+    }
+</style>
+</head>
+<body>
+    <div class="deck-viewport">
+        <main class="deck-stage" id="deckStage">
+            <section class="slide tree-slide active">
+                <div class="bg-grid"></div>
+                <div class="bg-vignette"></div>
+
+                <!-- Decorative growth rings behind the root -->
+                <svg class="tree-canvas" viewBox="0 0 1920 1080" aria-hidden="true">
+                    <circle class="ring" cx="680" cy="540" r="90"></circle>
+                    <circle class="ring" cx="680" cy="540" r="150"></circle>
+                    <circle class="ring" cx="680" cy="540" r="220"></circle>
+                </svg>
+
+                <!-- Sidebar: copy + the tree-slider control -->
+                <div class="panel">
+                    <p class="kicker reveal">Interactive Anatomy</p>
+                    <h1 class="title reveal">The Tree,<br>Layer by Layer</h1>
+                    <p class="description reveal">
+                        Drag the control to grow the tree outward &mdash;
+                        from a single seed to its full canopy of roots, trunk, and leaves.
+                    </p>
+
+                    <div class="control reveal">
+                        <div class="control-readout">
+                            <span class="stage-name" id="stageName">Seed</span>
+                            <span class="stage-count" id="stageCount">layer 0 / 3</span>
+                        </div>
+                        <div class="slider-track-wrap">
+                            <input type="range" class="tree-slider" id="treeSlider" min="0" max="3" step="1" value="0" aria-label="Tree growth depth">
+                        </div>
+                        <div class="tick-row" id="tickRow">
+                            <span data-i="0">Seed</span>
+                            <span data-i="1">Sprout</span>
+                            <span data-i="2">Sapling</span>
+                            <span data-i="3">Full Canopy</span>
+                        </div>
+                    </div>
+
+                    <p class="hint reveal">Use the slider, or the arrow keys once it's focused.</p>
+                </div>
+
+                <!-- The tree itself, rendered into 1920×1080 coordinate space -->
+                <svg class="tree-canvas" id="treeSvg" viewBox="0 0 1920 1080"></svg>
+            </section>
+        </main>
+    </div>
+
+    <script>
+        /* ===========================================
+           TREE DATA
+           A balanced 3-level hierarchy: 1 root -> 3 -> 6 -> 12.
+           =========================================== */
+        const treeData = {
+            name: 'Tree',
+            children: [
+                { name: 'Canopy', children: [
+                    { name: 'Leaves', children: [ { name: 'Photosynthesis' }, { name: 'Transpiration' } ] },
+                    { name: 'Flowers', children: [ { name: 'Pollination' }, { name: 'Seed Production' } ] },
+                ]},
+                { name: 'Trunk', children: [
+                    { name: 'Xylem', children: [ { name: 'Water Transport' }, { name: 'Structural Support' } ] },
+                    { name: 'Phloem', children: [ { name: 'Sugar Transport' }, { name: 'Growth Signals' } ] },
+                ]},
+                { name: 'Roots', children: [
+                    { name: 'Taproot', children: [ { name: 'Anchorage' }, { name: 'Storage' } ] },
+                    { name: 'Fibrous Roots', children: [ { name: 'Absorption' }, { name: 'Nutrient Uptake' } ] },
+                ]},
+            ],
+        };
+
+        /* ===========================================
+           LAYOUT
+           Leaves are spaced evenly top-to-bottom; every
+           parent's y is the average of its children's y,
+           so the tree balances itself automatically.
+           =========================================== */
+        const DEPTH_X = [680, 960, 1260, 1560];
+        const RADIUS = [30, 21, 16, 12];
+        const COLORS = ['var(--c-root)', 'var(--c-l1)', 'var(--c-l2)', 'var(--c-l3)'];
+        const EDGE_WIDTH = [null, 5, 3.2, 2];
+        const Y_TOP = 118, Y_BOTTOM = 970, LEAF_COUNT = 12;
+
+        let leafIndex = 0;
+        function layout(node, depth) {
+            node.depth = depth;
+            node.x = DEPTH_X[depth];
+            if (!node.children) {
+                node.y = Y_TOP + (Y_BOTTOM - Y_TOP) * ((leafIndex + 0.5) / LEAF_COUNT);
+                leafIndex++;
+            } else {
+                node.children.forEach(c => layout(c, depth + 1));
+                node.y = node.children.reduce((sum, c) => sum + c.y, 0) / node.children.length;
+            }
+        }
+        layout(treeData, 0);
+
+        /* ===========================================
+           RENDER
+           Edges are drawn first (so nodes sit on top),
+           each edge is a soft "elbow" curve toward its child.
+           =========================================== */
+        const svgNS = 'http://www.w3.org/2000/svg';
+        const svg = document.getElementById('treeSvg');
+        const edgeEls = [];
+        const nodeEls = [];
+
+        function walk(node, parent) {
+            if (parent) {
+                const midX = (parent.x + node.x) / 2;
+                const d = `M ${parent.x} ${parent.y} C ${midX} ${parent.y}, ${midX} ${node.y}, ${node.x} ${node.y}`;
+                const path = document.createElementNS(svgNS, 'path');
+                path.setAttribute('d', d);
+                path.setAttribute('class', 'tree-edge');
+                path.setAttribute('stroke-width', EDGE_WIDTH[node.depth]);
+                path.dataset.depth = node.depth;
+                svg.appendChild(path);
+                edgeEls.push(path);
+            }
+
+            const g = document.createElementNS(svgNS, 'g');
+            g.setAttribute('class', `tree-node depth-${node.depth}`);
+            g.dataset.depth = node.depth;
+
+            const circle = document.createElementNS(svgNS, 'circle');
+            circle.setAttribute('cx', node.x);
+            circle.setAttribute('cy', node.y);
+            circle.setAttribute('r', RADIUS[node.depth]);
+            circle.setAttribute('fill', COLORS[node.depth]);
+            g.appendChild(circle);
+
+            const text = document.createElementNS(svgNS, 'text');
+            if (node.children) {
+                // Internal nodes have outgoing curves that leave rightward,
+                // so their labels sit above the node instead of beside it.
+                text.setAttribute('x', node.x);
+                text.setAttribute('y', node.y - RADIUS[node.depth] - 18);
+                text.setAttribute('text-anchor', 'middle');
+            } else {
+                text.setAttribute('x', node.x + RADIUS[node.depth] + 14);
+                text.setAttribute('y', node.y + 5);
+                text.setAttribute('text-anchor', 'start');
+            }
+            text.textContent = node.name;
+            g.appendChild(text);
+
+            svg.appendChild(g);
+            nodeEls.push(g);
+
+            (node.children || []).forEach(c => walk(c, node));
+        }
+        walk(treeData, null);
+
+        // Prime each edge for the "grow" animation via stroke-dash*
+        edgeEls.forEach(path => {
+            const len = path.getTotalLength();
+            path.style.strokeDasharray = len;
+            path.style.strokeDashoffset = len;
+        });
+
+        /* ===========================================
+           SLIDER WIRING
+           Reveals/hides nodes and edges up to the chosen depth.
+           =========================================== */
+        const STAGE_NAMES = ['Seed', 'Sprout', 'Sapling', 'Full Canopy'];
+        const slider = document.getElementById('treeSlider');
+        const stageName = document.getElementById('stageName');
+        const stageCount = document.getElementById('stageCount');
+        const ticks = document.querySelectorAll('#tickRow span');
+
+        function paintTrackFill(value) {
+            const pct = (value / 3) * 100;
+            slider.style.background =
+                `linear-gradient(90deg, var(--c-root) 0%, var(--c-l1) ${pct}%, rgba(255,255,255,0.08) ${pct}%)`;
+        }
+
+        function setStage(stage) {
+            nodeEls.forEach(g => g.classList.toggle('revealed', Number(g.dataset.depth) <= stage));
+            edgeEls.forEach(path => {
+                const on = Number(path.dataset.depth) <= stage;
+                path.classList.toggle('revealed', on);
+                path.style.strokeDashoffset = on ? 0 : path.getTotalLength();
+            });
+            stageName.textContent = STAGE_NAMES[stage];
+            stageCount.textContent = `layer ${stage} / 3`;
+            ticks.forEach(t => t.classList.toggle('on', Number(t.dataset.i) === stage));
+            paintTrackFill(stage);
+        }
+
+        slider.addEventListener('input', () => setStage(Number(slider.value)));
+        setStage(0);
+
+        /* ===========================================
+           STAGE SCALING + entrance trigger
+           =========================================== */
+        const stageEl = document.getElementById('deckStage');
+        function scaleStage() {
+            const factor = Math.min(window.innerWidth / 1920, window.innerHeight / 1080);
+            const x = (window.innerWidth - 1920 * factor) / 2;
+            const y = (window.innerHeight - 1080 * factor) / 2;
+            stageEl.style.transform = `translate(${x}px, ${y}px) scale(${factor})`;
+        }
+        scaleStage();
+        window.addEventListener('resize', scaleStage);
+
+        requestAnimationFrame(() => {
+            document.querySelector('.slide').classList.add('visible');
+        });
+    </script>
+</body>
+</html>
