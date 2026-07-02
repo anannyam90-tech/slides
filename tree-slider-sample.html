@@ -360,6 +360,9 @@
         inset: 0;
         width: 1920px;
         height: 1080px;
+        /* Decorative full-bleed SVGs must not swallow clicks meant
+           for the sidebar controls, even where nothing is drawn. */
+        pointer-events: none;
     }
 
     .tree-edge {
