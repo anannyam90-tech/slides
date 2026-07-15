@@ -1,0 +1,913 @@
+<!DOCTYPE html>
+<html lang="en" data-stage-bg="pale">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Presentation Design — Systems, Strategy, &amp; Career</title>
+<meta name="description" content="Presentation Design: Systems, Strategy, &amp; Career — a course by Galu Design.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600&family=Manrope:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+/* ============================================================
+   DESIGN TOKENS
+   ============================================================ */
+:root{
+  --black:      #191919;
+  --green:      #1FC667;
+  --green-dim:  #17a656;
+  --pale:       #E7EFE1;
+  --pale-2:     #dbe6d3;
+  --border-green: #66E882;
+  --white:      #FFFFFF;
+
+  --font-display: 'Manrope', sans-serif;   /* Segoe UI Black substitute  */
+  --font-body:    'Manrope', sans-serif;   /* Segoe UI Semilight substitute */
+  --font-serif:   'Cormorant Garamond', serif; /* exact match */
+
+  --gutter: clamp(24px, 5vw, 72px);
+  --content-max: 1180px;
+  --menu-w: 340px;
+
+  --ease: cubic-bezier(.22,.85,.32,1);
+  --dur-sm: .28s;
+  --dur-md: .55s;
+  --dur-lg: .9s;
+}
+
+@media (prefers-reduced-motion: reduce){
+  *{ animation-duration: .001ms !important; animation-iteration-count: 1 !important; transition-duration: .001ms !important; scroll-behavior:auto !important; }
+}
+
+*,*::before,*::after{ box-sizing:border-box; }
+html{ scroll-behavior:smooth; }
+body{
+  margin:0;
+  font-family: var(--font-body);
+  color: var(--black);
+  background: var(--pale);
+  -webkit-font-smoothing:antialiased;
+  overflow-x:hidden;
+}
+img{ max-width:100%; display:block; }
+a{ color:inherit; text-decoration:none; }
+ul{ margin:0; padding:0; list-style:none; }
+p{ margin:0 0 1.1em; }
+p:last-child{ margin-bottom:0; }
+h1,h2,h3,h4,h5,h6{ margin:0 0 .5em; font-weight:700; line-height:1.15; }
+
+/* reveal-on-scroll base */
+.reveal{ opacity:0; transform: translateY(28px); transition: opacity var(--dur-lg) var(--ease), transform var(--dur-lg) var(--ease); }
+.reveal.in-view{ opacity:1; transform:none; }
+.reveal-stagger > *{ transition-delay: calc(var(--i,0) * 90ms); }
+
+/* ============================================================
+   GATE SECTIONS (title screen + main blocks)
+   ============================================================ */
+.gate-section{ position:relative; width:100%; min-height:100vh; display:flex; flex-direction:column; }
+
+/* ---------- Title screen ---------- */
+#title-screen{
+  background:
+    radial-gradient(ellipse 900px 500px at 30% 20%, rgba(255,255,255,.55), transparent 60%),
+    linear-gradient(180deg, var(--pale) 0%, var(--pale) 78%, #dce8d4 100%);
+  justify-content:center;
+  align-items:center;
+  text-align:center;
+  padding: var(--gutter);
+}
+.title-screen__inner{ max-width: 980px; }
+.title-screen__eyebrow{
+  font-family: var(--font-display); font-weight:700; letter-spacing:.32em; text-transform:uppercase;
+  font-size: clamp(11px,1.4vw,13px); color: var(--green-dim); margin-bottom: 1.6em;
+}
+.title-screen__title{
+  font-family: var(--font-display); font-weight:800; color: var(--green);
+  font-size: clamp(42px, 8vw, 96px);
+  letter-spacing:-.02em;
+  text-shadow: 0 6px 24px rgba(31,198,103,.25);
+  margin-bottom:.18em;
+}
+.title-screen__subtitle{
+  font-family: var(--font-serif); font-weight:500; color: var(--black);
+  font-size: clamp(22px, 3.4vw, 40px);
+  margin-bottom: 1.3em;
+}
+.title-screen__rule{
+  width:min(420px, 60%); height:3px; background: var(--green); margin: 0 auto 1.6em; border-radius:2px;
+}
+.title-screen__meta{ font-size:13px; color:#5c6b5a; letter-spacing:.02em; }
+
+/* ---------- Main block (module) ---------- */
+.main-block{ padding: 0; }
+.main-block--green{ background: var(--green); }
+.main-block--black{ background: var(--black); }
+
+.main-block__header{
+  padding: clamp(64px,10vh,120px) var(--gutter) clamp(40px,6vh,72px);
+  max-width: var(--content-max);
+  width:100%;
+  margin: 0 auto;
+}
+.main-block__eyebrow{
+  font-family:var(--font-display); font-weight:700; letter-spacing:.28em; text-transform:uppercase;
+  font-size: clamp(11px,1.2vw,13px); margin-bottom:1.4em; opacity:.75;
+}
+.main-block--green .main-block__eyebrow{ color: rgba(25,25,25,.65); }
+.main-block--black .main-block__eyebrow{ color: rgba(31,198,103,.85); }
+
+.main-block__title{
+  font-family: var(--font-display); font-weight:800;
+  font-size: clamp(36px, 6vw, 68px);
+  letter-spacing:-.01em;
+  margin-bottom:.4em;
+}
+.main-block--green .main-block__title{ color: var(--black); }
+.main-block--black .main-block__title{ color: var(--green); }
+
+.main-block__text{
+  font-family: var(--font-serif); font-weight:500; font-style:italic;
+  font-size: clamp(18px, 2.1vw, 24px);
+  max-width: 62ch;
+  line-height:1.5;
+}
+.main-block--green .main-block__text{ color: rgba(255,255,255,.94); }
+.main-block--black .main-block__text{ color: rgba(255,255,255,.85); }
+
+.main-block__body{
+  max-width: var(--content-max);
+  width:100%;
+  margin:0 auto;
+  padding: 0 var(--gutter) clamp(60px,8vh,100px);
+  display:flex;
+  flex-direction:column;
+  gap: clamp(28px,4vh,48px);
+}
+
+/* ---------- Second block (pale card) ---------- */
+.second-block{
+  background: var(--pale);
+  border-radius: 28px;
+  box-shadow: 0 28px 60px -20px rgba(0,0,0,.35), 0 4px 18px rgba(0,0,0,.12);
+  padding: clamp(32px,5vw,64px);
+}
+.second-block h1{
+  font-family: var(--font-display); font-weight:800; color: var(--green);
+  font-size: clamp(26px, 3vw, 38px);
+}
+.second-block h2{
+  font-family: var(--font-serif); font-weight:700; color: var(--black);
+  font-size: clamp(22px, 2.4vw, 30px);
+}
+.second-block h3{
+  font-family: var(--font-display); font-weight:700; color: var(--green);
+  font-size: clamp(18px, 1.8vw, 22px);
+  text-transform:uppercase; letter-spacing:.04em;
+}
+.second-block h4{
+  font-family: var(--font-display); font-weight:700; color: var(--black);
+  font-size: clamp(17px, 1.6vw, 20px);
+}
+.second-block h5{
+  font-family: var(--font-serif); font-weight:600; font-style:italic; color: var(--green-dim);
+  font-size: clamp(16px, 1.5vw, 19px);
+}
+.second-block h6{
+  font-family: var(--font-display); font-weight:700; color: var(--green);
+  font-size: clamp(13px, 1.2vw, 15px);
+}
+.second-block > *:not(:last-child){ margin-bottom: 1.1em; }
+.second-block p{
+  font-family: var(--font-body); font-weight:400; color: var(--black);
+  font-size: clamp(15.5px, 1.05vw, 17px);
+  line-height:1.7;
+}
+.second-block ul{ display:flex; flex-direction:column; gap:.6em; margin: 0 0 1.1em; }
+.second-block ul li{
+  font-family: var(--font-body); font-size: clamp(15.5px, 1.05vw, 17px); line-height:1.65;
+  padding-left: 1.5em; position:relative;
+}
+.second-block ul li::before{
+  content:"";
+  position:absolute; left:0; top:.62em;
+  width:7px; height:7px; border-radius:50%;
+  background: var(--green);
+}
+.second-block ol{ counter-reset: item; display:flex; flex-direction:column; gap:.6em; margin:0 0 1.1em; }
+.second-block ol li{
+  font-family: var(--font-body); font-size: clamp(15.5px, 1.05vw, 17px); line-height:1.65;
+  padding-left: 1.8em; position:relative; counter-increment: item;
+}
+.second-block ol li::before{
+  content: counter(item) ".";
+  position:absolute; left:0; top:0;
+  font-weight:800; color: var(--green);
+  font-family: var(--font-display);
+}
+.second-block b, .second-block strong{ color: var(--green-dim); font-weight:700; }
+.second-block .heading-group{ margin-bottom:1.1em; }
+.second-block .heading-group > *{ margin-bottom:.35em; }
+
+/* subsection divider (H2 groups within a second-block) */
+.subsection{ padding-top: clamp(20px,3vh,32px); border-top: 1px solid rgba(25,25,25,.1); }
+.subsection:first-of-type{ padding-top:0; border-top:none; }
+
+/* ---------- Reflection / Practice inline panels ---------- */
+.inset-panel{
+  border-left: 4px solid var(--green);
+  padding: .2em 0 .2em 1.4em;
+  background: linear-gradient(90deg, rgba(31,198,103,.08), transparent 70%);
+  border-radius: 0 12px 12px 0;
+}
+.inset-panel__label{
+  display:inline-block;
+  font-family: var(--font-display); font-weight:800; color: var(--green-dim);
+  font-size: clamp(12px,1.1vw,13px);
+  letter-spacing:.18em; text-transform:uppercase;
+  margin-bottom:.6em;
+}
+.inset-panel p, .inset-panel ul, .inset-panel ol{
+  font-family: var(--font-serif); font-style:italic; color: #2a2a2a;
+  font-size: clamp(16px,1.2vw,19px); line-height:1.6;
+}
+.inset-panel ul li::before{ background: var(--green-dim); }
+.inset-panel--practice{ border-left-color: var(--green-dim); }
+
+/* ---------- Callout (Instructions / Takeaway / Freelancer) ---------- */
+.callout{ padding: clamp(6px,1vw,10px); }
+.callout__inner{
+  background: var(--black);
+  border: 2px solid var(--border-green);
+  border-radius: 22px;
+  padding: clamp(28px,4.5vw,48px);
+  box-shadow: 0 20px 44px -18px rgba(0,0,0,.55);
+}
+.callout__tag{
+  display:inline-flex; align-items:center; gap:.5em;
+  font-family: var(--font-display); font-weight:800;
+  font-size: clamp(11px,1vw,12px); letter-spacing:.22em; text-transform:uppercase;
+  color: var(--black); background: var(--border-green);
+  padding:.45em 1em; border-radius:999px;
+  margin-bottom:1.2em;
+}
+.callout__inner h1{ font-family:var(--font-display); font-weight:800; color:var(--green); font-size:clamp(24px,2.6vw,32px); }
+.callout__inner h2{ font-family:var(--font-serif); font-weight:700; color:#f4f6ef; font-size:clamp(20px,2.2vw,26px); }
+.callout__inner h3{ font-family:var(--font-display); font-weight:700; color:var(--green); font-size:clamp(16px,1.6vw,19px); text-transform:uppercase; letter-spacing:.04em; }
+.callout__inner h4{ font-family:var(--font-display); font-weight:700; color:#fff; font-size:clamp(16px,1.5vw,18px); }
+.callout__inner h5{ font-family:var(--font-serif); font-weight:600; font-style:italic; color:var(--green); font-size:clamp(15px,1.4vw,17px); }
+.callout__inner h6{ font-family:var(--font-display); font-weight:700; color:var(--green); font-size:clamp(12.5px,1.1vw,14px); }
+.callout__inner > *:not(:last-child){ margin-bottom:1em; }
+.callout__inner p, .callout__inner ul li, .callout__inner ol li{
+  font-family: var(--font-body); color: rgba(255,255,255,.88);
+  font-size: clamp(15px,1.05vw,16.5px); line-height:1.7;
+}
+.callout__inner ul, .callout__inner ol{ display:flex; flex-direction:column; gap:.55em; }
+.callout__inner ul li{ padding-left:1.5em; position:relative; }
+.callout__inner ul li::before{ content:""; position:absolute; left:0; top:.6em; width:7px; height:7px; border-radius:50%; background:var(--green); }
+.callout__inner ol{ counter-reset:citem; }
+.callout__inner ol li{ padding-left:1.8em; position:relative; counter-increment:citem; }
+.callout__inner ol li::before{ content:counter(citem)"."; position:absolute; left:0; top:0; font-weight:800; color:var(--green); font-family:var(--font-display); }
+.callout__inner b, .callout__inner strong{ color: var(--green); font-weight:700; }
+
+/* ============================================================
+   BOTTOM STRIP + CHEVRON
+   ============================================================ */
+.strip{
+  margin-top:auto;
+  position:relative;
+  width:100%;
+  height: clamp(90px,14vh,150px);
+  overflow:hidden;
+  cursor:pointer;
+  border:none;
+  padding:0;
+  display:block;
+}
+.strip:disabled{ cursor:default; }
+.strip--onpale{ background: var(--green); }
+.strip--ongreen{ background: var(--black); }
+.strip--onblack{ background: var(--green); }
+
+.strip__chevrons{
+  position:absolute; left:50%; top:50%;
+  transform: translate(-50%,-50%);
+  display:flex; flex-direction:column; align-items:center; gap:7px;
+}
+.chevron{
+  width: 46px; height:14px;
+  position:relative;
+}
+.chevron::before,.chevron::after{
+  content:""; position:absolute; top:0; width:56%; height:4px; border-radius:3px;
+  background: var(--white);
+}
+.chevron::before{ left:0; transform-origin: right center; transform: rotate(38deg); }
+.chevron::after{ right:0; transform-origin: left center; transform: rotate(-38deg); }
+.chevron:nth-child(1){ opacity:.35; }
+.chevron:nth-child(2){ opacity:.65; }
+.chevron:nth-child(3){ opacity:1; }
+
+.strip:not(:disabled) .strip__chevrons{ animation: chevron-float 2.2s ease-in-out infinite; }
+@keyframes chevron-float{
+  0%,100%{ transform: translate(-50%,-50%); }
+  50%{ transform: translate(-50%,-42%); }
+}
+.strip:disabled .strip__chevrons{ opacity:.3; }
+
+.strip__label{
+  position:absolute; bottom:14px; left:50%; transform:translateX(-50%);
+  font-family: var(--font-display); font-weight:700; letter-spacing:.2em; text-transform:uppercase;
+  font-size:11px; color: rgba(255,255,255,.75);
+}
+
+/* ============================================================
+   SIDEBAR MENU
+   ============================================================ */
+.menu-toggle{
+  position:fixed; top: 24px; right:24px; z-index:60;
+  width:52px; height:52px; border-radius:50%;
+  border:none; cursor:pointer;
+  display:flex; align-items:center; justify-content:center;
+  background: var(--black); color: var(--green);
+  box-shadow: 0 10px 26px rgba(0,0,0,.3);
+  transition: background var(--dur-md) var(--ease), color var(--dur-md) var(--ease), transform var(--dur-sm) var(--ease);
+}
+.menu-toggle:hover{ transform: scale(1.06); }
+.menu-toggle__bar{
+  position:absolute; width:20px; height:2.5px; border-radius:2px; background:currentColor;
+  transition: transform var(--dur-md) var(--ease), opacity var(--dur-sm) var(--ease);
+}
+.menu-toggle__bar:nth-child(1){ transform: rotate(90deg); }
+.menu-toggle__bar:nth-child(2){ transform: rotate(0deg); }
+.menu-open .menu-toggle__bar:nth-child(1){ transform: rotate(45deg); }
+.menu-open .menu-toggle__bar:nth-child(2){ transform: rotate(-45deg); }
+
+.menu{
+  position:fixed; top:0; right:0; height:100vh; width: var(--menu-w); max-width:88vw;
+  background: var(--green);
+  color: var(--black);
+  z-index:55;
+  transform: translateX(100%);
+  transition: transform var(--dur-md) var(--ease), background var(--dur-md) var(--ease), color var(--dur-md) var(--ease);
+  display:flex; flex-direction:column;
+  box-shadow: -30px 0 60px rgba(0,0,0,.25);
+}
+.menu-open .menu{ transform: translateX(0); }
+
+.menu__scroll{ overflow-y:auto; padding: 96px 20px 40px; flex:1; }
+.menu__brand{
+  font-family: var(--font-display); font-weight:800; letter-spacing:.1em; text-transform:uppercase;
+  font-size:12px; opacity:.65; padding: 0 12px 20px;
+}
+
+.nav-module{ margin-bottom: 6px; }
+.nav-module__btn{
+  width:100%; display:flex; align-items:center; justify-content:space-between; gap:10px;
+  background:none; border:none; cursor:pointer; text-align:left;
+  padding:12px 12px; border-radius:12px;
+  font-family: var(--font-display); font-weight:700; font-size:15px;
+  color: currentColor;
+  transition: transform var(--dur-sm) var(--ease), background var(--dur-sm) var(--ease);
+}
+.nav-module__btn:hover{ background: rgba(0,0,0,.08); transform: translateX(-2px) scale(1.02); }
+.menu[data-scheme="menuBlack"] .nav-module__btn:hover{ background: rgba(255,255,255,.1); }
+.nav-module__caret{ font-size:11px; transition: transform var(--dur-sm) var(--ease); flex-shrink:0; }
+.nav-module.is-expanded .nav-module__caret{ transform: rotate(90deg); }
+
+.nav-module__children{
+  overflow:hidden;
+  max-height:0;
+  transition: max-height var(--dur-md) var(--ease);
+  padding-left: 14px;
+}
+.nav-module.is-expanded .nav-module__children{ max-height: 800px; }
+
+.nav-link{
+  display:block; padding:9px 12px; margin:2px 0;
+  font-family: var(--font-body); font-weight:500; font-size:13.5px; line-height:1.4;
+  border-radius:10px; color: currentColor;
+  transition: transform var(--dur-sm) var(--ease), color var(--dur-sm) var(--ease), background var(--dur-sm) var(--ease), letter-spacing var(--dur-sm) var(--ease);
+}
+.nav-link:hover{ transform: translateX(4px) scale(1.045); letter-spacing:.01em; background: rgba(0,0,0,.06); }
+.menu[data-scheme="menuBlack"] .nav-link:hover{ background: rgba(255,255,255,.08); }
+.nav-link.is-active, .nav-module__btn.is-active{ color: var(--white) !important; font-weight:800; }
+
+/* menu color scheme: menu & toggle always share the same background —
+   green main block (or pale title) -> menu/toggle black; black main block -> menu/toggle green */
+.menu[data-scheme="menuBlack"], .menu-toggle[data-scheme="menuBlack"]{ background: var(--black); color: var(--green); }
+.menu[data-scheme="menuGreen"], .menu-toggle[data-scheme="menuGreen"]{ background: var(--green); color: var(--black); }
+
+.menu-scrim{
+  position:fixed; inset:0; background: rgba(0,0,0,.25); backdrop-filter: blur(2px);
+  z-index:50; opacity:0; pointer-events:none; transition: opacity var(--dur-md) var(--ease);
+}
+.menu-open .menu-scrim{ opacity:1; pointer-events:auto; }
+
+/* ============================================================
+   RESPONSIVE
+   ============================================================ */
+@media (max-width: 720px){
+  :root{ --menu-w: 86vw; }
+  .main-block__header{ padding-top: 88px; }
+  .strip{ height:96px; }
+  .second-block{ border-radius:20px; }
+  .callout__inner{ border-radius:16px; }
+}
+</style>
+</head>
+<body>
+
+<!-- ============================================================
+     MENU TOGGLE + SCRIM + SIDEBAR
+     ============================================================ -->
+<button class="menu-toggle" id="menuToggle" aria-label="Open navigation menu" aria-expanded="false">
+  <span class="menu-toggle__bar"></span>
+  <span class="menu-toggle__bar"></span>
+</button>
+
+<div class="menu-scrim" id="menuScrim"></div>
+
+<nav class="menu" id="menu" aria-label="Course navigation">
+  <div class="menu__scroll">
+    <div class="menu__brand">Presentation Design</div>
+    <div id="navList"><!-- populated by JS --></div>
+  </div>
+</nav>
+
+<!-- ============================================================
+     TITLE SCREEN
+     ============================================================ -->
+<section class="gate-section" id="title" data-bg="pale" data-nav-id="title">
+  <div id="title-screen" class="gate-section" style="min-height:100vh;">
+    <div class="title-screen__inner reveal" data-i="0">
+      <div class="title-screen__eyebrow reveal" data-i="0">A Course By Galu Design</div>
+      <h1 class="title-screen__title reveal" data-i="1">Presentation Design</h1>
+      <p class="title-screen__subtitle reveal" data-i="2">Systems, Strategy, &amp; Career</p>
+      <div class="title-screen__rule reveal" data-i="3"></div>
+      <p class="title-screen__meta reveal" data-i="4">© 2026 Galu Design. All rights reserved.</p>
+    </div>
+    <button class="strip strip--onpale" data-advance="0" aria-label="Begin Module 1">
+      <span class="strip__chevrons"><span class="chevron"></span><span class="chevron"></span><span class="chevron"></span></span>
+      <span class="strip__label">Begin</span>
+    </button>
+  </div>
+</section>
+
+<!-- ============================================================
+     MODULE 1 — THE LANDSCAPE
+     ============================================================ -->
+<section class="gate-section main-block main-block--green" id="module-1" data-bg="green" data-nav-id="module-1">
+
+  <div class="main-block__header">
+    <div class="main-block__eyebrow reveal">Module 1</div>
+    <h2 class="main-block__title reveal">The Landscape</h2>
+    <p class="main-block__text reveal">This module gives you the language and clarity to understand what presentation design actually is, why it has been undervalued, and where it&rsquo;s going. That context is the foundation for every positioning decision you will make in your career.</p>
+  </div>
+
+  <div class="main-block__body">
+
+    <!-- Second Block 1.1 -->
+    <article class="second-block reveal" id="m1-s1" data-nav-id="m1-s1">
+      <h1>A Brief History of Presentation Design</h1>
+      <p>From chalkboards to overhead projectors to slide carousels, the fundamentals of presentation have stayed constant: one person with information, communicating to an audience that wants it. These early tools were the infant stage of what we do today. Each innovation changed how we delivered information, not why we delivered it.</p>
+      <p>Desktop computers brought PowerPoint into widespread use beginning in the late 1980s and accelerating through the 1990s. It was not the first presentation software (Harvard Graphics came earlier, and rivals like Aldus Persuasion followed), but PowerPoint succeeded because it matched user behavior: easy editing, quick iteration, and minimal friction from idea to slide. It was the digital evolution of overhead transparencies and slide carousels, with far more control and flexibility.</p>
+      <p>That accessibility had a consequence. It democratized presentation creation without democratizing presentation skill. As competitors emerged (Keynote for Mac users in 2003, Google Presentations in 2007, rebranded as Google Slides in 2012 and gaining enterprise traction through the mid-2010s as Chrome and cloud workflows became standard), the volume of presentations exploded. What teachers once crafted carefully on transparencies could now be assembled in minutes, and the volume of poorly designed slides grew with it.</p>
+      <p>This explosion created a new need: the presentation designer.</p>
+      <p>AI is the next wave of democratization, and it follows the same pattern. More people with more tools still does not replace the expertise required to build systems, maintain brand integrity, and communicate at the highest level. AI raises the floor for everyone else. It does not lower the ceiling.</p>
+      <p>Traditional presentation was simple: A to B, presenter to audience. Modern presentation design adds a third element: A and B to C, presenter and designer collaborating to reach the audience. The designer does what those early educators with chalkboards understood intuitively, that how you present information matters as much as the information itself. Today&rsquo;s designers turn dry content into narrative and move presentations from small conference rooms to worldwide stages that drive significant revenue for the largest companies in the world.</p>
+
+      <div class="inset-panel">
+        <span class="inset-panel__label">Reflection</span>
+        <p>What is the first example of presentation design you can recall? Is your original perception of it still true today, or has your view of it changed?</p>
+      </div>
+    </article>
+
+    <!-- Second Block 1.2 -->
+    <article class="second-block reveal" id="m1-s2" data-nav-id="m1-s2">
+      <h1>Defining Presentation Design</h1>
+      <p>Presentation design has a problem most design fields do not share: its name is too literal. The term tells people what we do but not how we do it. It misses the nuance of the work, the niche expertise of the skill set, and the strategic depth of the craft.</p>
+      <p>The clearest way to define presentation design is to draw a parallel to a more established discipline: UX design.</p>
+
+      <h5>UX Design</h5>
+      <p>A UX (User Experience) designer is a professional who is responsible for creating products that provide a seamless and enjoyable experience for users. This involves the design of the entire process of acquiring and integrating the product, including aspects of branding, design, usability, and function. UX designers focus on the user&rsquo;s journey to solve a problem, ensuring that the product is not only functional but also intuitive and pleasurable to use. They often work on the user interface, but their role is broader, encompassing the overall feel of the experience rather than just the visual elements.</p>
+      <p>Now take that definition and swap a few words to define presentation design.</p>
+
+      <h5>Presentation Design</h5>
+      <p>A Presentation Designer (aka VX &lsquo;Viewer Experience&rsquo; designer) is a professional who is responsible for creating decks that provide a seamless and enjoyable experience for viewers. This involves the design of the entire process of acquiring and integrating the content, strategy, and business goals including aspects of branding, design, usability, and function. VX designers focus on the viewer&rsquo;s journey to comprehend a narrative, ensuring that the presentation is not only functional but also intuitive and pleasurable to experience. They often work on slides, but their role is broader, encompassing the overall process and production rather than just the visual elements.</p>
+      <p>The most notable difference is the acronym VX, for viewer experience. Understanding the viewer&rsquo;s journey is foundational to our work. The visual component is critical because it dictates how a presentation flows. Is it monotonous and forgettable? Chaotic and disorienting? Or is it the single best representation of the brand?</p>
+      <p>The visual experience communicates brand, and it communicates trust. Consider two websites: one poorly designed with clashing colors and inconsistent type, the other with clear brand direction and clean execution. Which would you trust with your money? The same principle applies to presentations. Design quality signals credibility.</p>
+
+      <h4>How to Use This Framing in Practice</h4>
+      <p>The VX definition is both a mental model and a positioning tool. Use it to sharpen how you think about your work, defend decisions in the room, and communicate your value to stakeholders who do not yet understand what you actually do.</p>
+      <p>When a stakeholder tells you to &ldquo;clean it up,&rdquo; reframe: &ldquo;I want to make sure the viewer experience is clear before we focus on aesthetics. Who is the audience, and what do we need them to do after seeing this?&rdquo; That one question shifts the conversation from decoration to strategy.</p>
+      <p>A note on &ldquo;visual communications designer.&rdquo; Some prefer that framing because it centers the message over the experience. Both are valid, but VX is more specific. Visual communications is a broad category that includes brand, advertising, and motion. VX names the thing we actually do: design the experience of receiving and understanding content in real time. That specificity is the point.</p>
+
+      <div class="inset-panel">
+        <span class="inset-panel__label">Reflection</span>
+        <ul>
+          <li>Does this definition resonate with you? Why or why not?</li>
+          <li>Think of a recent presentation you have seen, good or bad. How would a viewer experience approach have improved it?</li>
+        </ul>
+      </div>
+    </article>
+
+    <!-- Second Block 1.3 -->
+    <article class="second-block reveal" id="m1-s3" data-nav-id="m1-s3">
+      <h1>Misconceptions of Presentation Design</h1>
+      <p>We have covered the definition. We have not addressed the perception, and that is where the disconnect lies. Within the broader design community, presentation design sits lower on the hierarchy. That is a direct result of the field&rsquo;s origin story and who has historically done the work.</p>
+
+      <div class="subsection">
+        <h2>The Accessibility Problem</h2>
+        <p>The first wave of presentation designers, and many today, were not trained creatives. They were business analysts, HR professionals, executive assistants, consultants, and subject matter experts. Over time presentations became their primary communication tool (second only to email and Slack), so building slides became part of the job regardless of design background.</p>
+        <p>PowerPoint democratized visual communication, which sounds positive until you consider the consequences. Imagine if Photoshop had been handed to business users first, before designers ever touched it. It would have been seen as a slop generator, a tool that produces mediocre output at scale. The quality of what any tool produces is directly related to the skill of who is using it. That is how PowerPoint earned its reputation problem: it became synonymous with bad design because most people using it had no design training.</p>
+      </div>
+
+      <div class="subsection">
+        <h2>The Software Problem</h2>
+        <p>There is also a technical reality. Presentation software (PowerPoint, Keynote, Google Slides) is objectively limited compared to professional design tools like Figma, Illustrator, or InDesign. It lacks precision, flexibility, and control. For designers used to pixel-perfect workflows, presentation software feels restrictive and clunky. Many of us have control issues. We want tools that bend to our will, not tools that fight us with auto-formatting and template constraints.</p>
+        <p>This creates a compound effect: non-designers using limited software produce low-quality output, which reinforces the perception that presentation design itself is low-value work.</p>
+        <p>Here is the reality we have to accept: presentation software dominates the market for good reasons.</p>
+        <p>Design tools like Figma can build presentations in 16:9, and the output is often superior. But they fail the accessibility test that made PowerPoint and Google Slides ubiquitous:</p>
+        <ul>
+          <li><b>Steeper learning curve:</b> Figma requires design knowledge; presentation software does not.</li>
+          <li><b>Limited collaboration:</b> Not everyone in an organization has or needs a Figma license. Google Slides and PowerPoint are usually bundled into existing subscriptions.</li>
+          <li><b>Presentation mode limits:</b> Figma was not built for live stage delivery with presenter notes, clicker compatibility, and seamless screen sharing.</li>
+          <li><b>File compatibility:</b> Clients and stakeholders expect .pptx or Google Slides files they can edit themselves.</li>
+          <li><b>Ecosystem lock-in:</b> Organizations have invested decades in presentation software infrastructure, templates, training, and workflows.</li>
+        </ul>
+        <p>Our challenge is not to fight the software. It&rsquo;s to master it.</p>
+        <p>The best presentation designers do not complain about these limits. They find workarounds, push the software past its intended capabilities, and deliver exceptional work despite the constraints. That is part of the craft. We are not just designers, we are problem-solvers working within real business requirements. Yes, the software is flawed, and yes, it enables mediocre work at scale. But these tools are also the common language of business communication. Our job is to speak that language fluently while raising the standard of what is possible within it.</p>
+      </div>
+
+      <div class="subsection">
+        <h2>The Perception Problem</h2>
+        <p>Because of these factors, presentation designers are often seen as production workers rather than strategic thinkers, polishers who make things look nice after the real work is done, slide operators rather than communication designers, and order-takers who execute someone else&rsquo;s vision rather than shaping it.</p>
+        <p>This perception is dangerous because it directly affects how we are valued, compensated, and included in decisions. If stakeholders see us as the person who makes slides pretty, we are brought in at the end, after the strategic decisions are already made. We become decorators, not collaborators.</p>
+        <p>The uncomfortable truth: sometimes we are these things, and that is fine at certain stages of a career.</p>
+        <p>Everyone starts somewhere. Early on you will do production work, polish other people&rsquo;s ideas, and execute someone else&rsquo;s vision. That is not failure, it is the foundation. You learn the craft by doing the work, understanding the constraints, and mastering the tools. The problem is not starting as a production designer. The problem is staying there because you never developed the strategic skills, business acumen, and communication expertise to level up.</p>
+        <p>The move from production to strategy requires:</p>
+        <ul>
+          <li>Asking better questions upfront (What is the goal? Who is the audience? What action do we want them to take?)</li>
+          <li>Learning their language (mirroring common terms and acronyms builds familiarity and common ground)</li>
+          <li>Understanding the business context behind the presentation (Why does this deck matter? What is at stake?)</li>
+          <li>Developing a point of view and the confidence to push back when needed</li>
+          <li>Building trust so stakeholders want your input early</li>
+          <li>Demonstrating value beyond aesthetics, showing how design decisions affect outcomes</li>
+        </ul>
+        <p>You do not demand a seat at the strategic table. You earn it by proving you belong there. The misconception is not wrong because we are never production workers. It is limiting because it assumes that is all we can be.</p>
+      </div>
+
+      <div class="subsection">
+        <h2>Why This Matters</h2>
+        <p>If we let others define our craft, they will reduce it to busy work. They will compare us to the untrained person who threw slides together in an hour, not to the strategic communication designer who shapes narratives and drives outcomes. That is why we have to control the narrative.</p>
+        <ul>
+          <li>We are not slide decorators, we are communication architects.</li>
+          <li>We do not just make things pretty, we make complex ideas accessible.</li>
+          <li>We do not work in presentation software, we work in audience psychology, information hierarchy, and visual storytelling.</li>
+        </ul>
+        <p>And while we are most valuable when involved from the start, that involvement is earned through experience and proven value.</p>
+        <p>The way you talk about your work shapes how others value it. Start using this language now, in interviews, in Slack messages, in kickoff conversations. The shift happens gradually, then all at once. But you cannot simply claim this value, you have to demonstrate it through the quality of your questions, the depth of your thinking, and the measurable impact of your work.</p>
+      </div>
+
+      <div class="inset-panel">
+        <span class="inset-panel__label">Reflection</span>
+        <ul>
+          <li>Where are you in your presentation design journey: mostly production, transitioning to strategy, or already positioned as a strategic partner? What is one skill you need to develop to move to the next level?</li>
+          <li>Think of a recent project. At what stage were you brought in, and how might the outcome have differed if you had been involved earlier?</li>
+        </ul>
+      </div>
+    </article>
+
+    <!-- Second Block 1.4 -->
+    <article class="second-block reveal" id="m1-s4" data-nav-id="m1-s4">
+      <h1>Who We Are</h1>
+      <p>The roots of presentation design come from the business world, not the design world, and that origin shows up in who we are today. We are hybrids: half analytical, half creative. We speak both languages fluently, which makes us uniquely valuable but also hard to categorize.</p>
+      <p>We are the bridge between creative and business teams, more so than any other design discipline.</p>
+      <p>This lets us move fluidly between departments and add value on both sides. A graphic designer typically works within the creative team. A UX designer works within product. Presentation designers work with everyone: executives, sales, marketing, product, HR, finance. We collaborate across silos in ways few other roles do.</p>
+      <p>Aside from creative directors, we are often the only practitioners who get regular face-to-face time with all levels of stakeholders, from individual contributors to the C-suite. That access is rare and powerful, and it holds immense strategic value if we know how to use it.</p>
+      <p>The flip side: sometimes we do not fit neatly into either camp. Creative teams may see us as too business-focused. Business teams may see us as the design person. That can make it hard to find our organizational home, but it also gives us a unique perspective.</p>
+      <p>We are also a field of accidental arrivals. Almost no one grows up dreaming of being a presentation designer. We stumble into it, often from graphic design, communications, consulting, or unrelated fields, and discover we are good at it. That is not a weakness, it is a feature. Our diverse backgrounds bring fresh perspective to a craft that rewards multidisciplinary thinking.</p>
+
+      <div class="subsection">
+        <h2>Our Shared Traits</h2>
+        <p>We come from different backgrounds, but certain traits define successful presentation designers.</p>
+        <ul>
+          <li>We adapt under constraints. Tight deadlines and last-minute changes are common, not because they are inevitable, but because most organizations do not yet have the systems to prevent them. Part of your job is to build those systems. Until then, the ability to stay calm, prioritize quickly, and deliver quality under pressure is a real professional asset.</li>
+          <li>We operate autonomously. We are often the only presentation designer in a company, with no team to lean on for feedback or mentorship. We figure things out independently, build our own systems, and self-manage. That requires discipline, resourcefulness, and confidence in our own judgment.</li>
+          <li>We&rsquo;re problem-solvers first, designers second. We care about aesthetics, but our real job is clarity. We take messy, complex information and make it understandable. We find the story buried in the data and translate jargon into human language. Design is the tool. Communication is the craft.</li>
+        </ul>
+      </div>
+
+      <div class="subsection">
+        <h2>A Word on Storytelling</h2>
+        <p>You will hear storytelling everywhere in this industry. It is on every job description, every LinkedIn post, every course landing page. And it is mostly noise.</p>
+        <p>Here is the reality: in-house and agency presentation work rarely involves building a story from scratch. Executives own the narrative. The product team owns the message. The PMMs own the strategy deck. You are almost never the author. You are the person who takes a collection of disconnected ideas and makes them legible, sequential, and compelling for the audience they are going to.</p>
+        <p>That is not storytelling in the Pixar sense. It is information architecture: knowing what order things go in, what belongs on the slide and what belongs in the speaker&rsquo;s mouth, where the deck should breathe and where it needs to punch.</p>
+        <p>Real storytelling opportunities show up in pitch decks and TED-style keynotes, high-stakes, high-ownership formats where a designer can genuinely shape the narrative. Those situations exist and they matter, but they are maybe 5 percent of the work. This course focuses on the other 95 percent: the systems, the intake, the templates, the event process, because that is where you will spend your career. Master those, and the storytelling opportunities will find you.</p>
+      </div>
+
+      <div class="subsection">
+        <h2>Specializations Within the Field (The Four Archetypes)</h2>
+        <p>Presentation design is broad enough that practitioners develop distinct specializations. Here are four common archetypes.</p>
+        <ul>
+          <li><b>Creative-first designers:</b> The visionaries who push boundaries and unlock new creative possibilities. They look at a brand and imagine applications no one else thought of, and they turn a mundane slide into something memorable. Their strength is imagination and creative problem-solving.</li>
+          <li><b>Business-first designers:</b> Strategists at heart. They understand sales cycles, business objectives, and ROI, and they know how to structure a pitch deck that closes, a board deck that secures funding, or an internal deck that drives alignment. Their strength is strategic thinking and business acumen.</li>
+          <li><b>Systems &amp; template builders:</b> The architects. They build scalable, foolproof templates that let entire organizations communicate consistently and efficiently. They think in systems: how do we make it easier for 500 employees to create on-brand presentations without a designer every time? Their strength is structure, scalability, and long-term thinking.</li>
+          <li><b>Generalists:</b> The future creative directors who understand every facet of the craft because they have had to do it all. They concept creatively, think strategically, build systems, and execute. Their strength is versatility and range, and they have the depth to lead teams and set the standard.</li>
+        </ul>
+        <p>None of these is better than the others. They are different ways to add value, and the best teams have a mix. Knowing where your strengths lie helps you position yourself, find the right opportunities, and keep developing in the direction that fits you.</p>
+      </div>
+
+      <div class="subsection">
+        <h2>How I Got My Start in Presentation Design</h2>
+        <p>My background is in traditional graphic design. After finishing school, I scoured job boards for entry-level freelance gigs and eventually landed one at a boutique design agency in San Francisco called Pixink Design. It was an individually owned shop that ran on subcontractors like me. I took whatever they sent and learned to design through trial and error. Some of that work happened to be in PowerPoint.</p>
+        <p>I had no awareness of the term &ldquo;presentation design.&rdquo; But you could have handed me a rock back then and told me to design on it, and I would have.</p>
+        <p>That work became experience in a field I didn&rsquo;t know existed, and it led to an interview with Duarte, the pinnacle of presentation design agencies. At the time I had no idea who Duarte was. I was just excited to land a full-time job at a design agency. I had made it.</p>
+        <p>My first day in the office, I was blown away. I walked into a building full of talented, creative people whose sole purpose was to figure out how to break PowerPoint. I learned all of it there: the technical template details, storytelling, storyboarding, design craft. That became the foundation for the rest of my career.</p>
+        <p>Back then, in-house presentation design roles didn&rsquo;t really exist. Then, slowly, one or two started to appear. I took advantage and found my way in. The roles have grown substantially since.</p>
+        <p>We all found this work by accident. My hope is that this course, and the continued evolution of the field, helps usher in a wave of designers who choose it on purpose.</p>
+      </div>
+
+      <div class="inset-panel">
+        <span class="inset-panel__label">Reflection</span>
+        <ul>
+          <li>Which archetype(s) do you identify with most right now? Which would you like to develop toward?</li>
+          <li>Think about the accidental arrival idea. How did you end up in presentation design, and which skills from your previous experience are actually assets in this role?</li>
+        </ul>
+      </div>
+    </article>
+
+    <!-- Second Block 1.5 -->
+    <article class="second-block reveal" id="m1-s5" data-nav-id="m1-s5">
+      <h1>The State and Scope of the Field</h1>
+      <p>The field is small but growing. Presentation design is one of the smallest niches in the creative industry, with far fewer roles than graphic design, UX, or web design. When I started at Duarte, the field felt almost invisible. There were barely any job listings, no clear career ladder, and little awareness that &ldquo;presentation designer&rdquo; was even a legitimate profession.</p>
+      <p>That has changed.</p>
+      <p>Over the past decade the field has steadily expanded. Today the largest and most sophisticated companies, the Fortune 500 tech giants, consulting firms, and enterprise organizations, either run dedicated presentation design teams or invest heavily in agencies like Duarte. That is not coincidence, it is recognition. These companies understand that high-stakes communication requires specialized expertise, and they are willing to pay for it.</p>
+      <p>I expect the trend to keep accelerating, for three reasons.</p>
+      <ul>
+        <li>The volume and complexity of presentations keeps rising. More remote work means more decks, more stakeholders mean more alignment presentations, and more competition means higher standards for sales and pitch materials.</li>
+        <li>AI is accelerating the same pattern we have seen before. More people producing more slides with less skill. That raises the floor for everyone and widens the gap between generic output and genuinely strategic work. The designers who will feel AI most are the ones doing purely production work. The ones who will not are the ones who understand why a presentation needs to exist, who it is for, and what it needs to do. A prompt does not solve that.</li>
+        <li>Companies are connecting presentation quality directly to business outcomes. A poorly designed investor deck can cost millions in lost funding, a confusing product launch can tank adoption, and a messy sales presentation loses deals. Organizations are starting to invest in the people who can deliver results.</li>
+      </ul>
+
+      <div class="subsection">
+        <h2>The Scope Problem</h2>
+        <p>One challenge the field faces is the massive variance in what &ldquo;presentation designer&rdquo; means. The title covers an enormous range of work and seniority. On one end are downstream production designers, entry-level roles focused on formatting, brand compliance, and polish, executing someone else&rsquo;s vision within tight constraints. On the other end are strategic creative directors and event managers, senior practitioners shaping narratives, leading creative concepting, running multi-day conferences, and working directly with executives on high-stakes communication. Yet both are often labeled simply &ldquo;presentation designer.&rdquo;</p>
+        <p>That creates confusion in hiring, compensation, and progression. A single job posting could mean anything from an assistant who cleans up slides to a senior creative leading a team. The terminology itself is a bottleneck. As the field matures, we need clearer distinctions: Junior, Mid, and Senior levels, specializations (production, creative, strategic), and titles that reflect scope (Presentation Designer, Senior Creative Strategist, Presentation Creative Director).</p>
+        <p>You will start in production. That is normal. Your goal is to prove, consistently, that you are capable of more, until stakeholders cannot imagine starting a high-stakes presentation without you at the table from day one. The detailed tradeoffs between in-house, agency, and freelance paths, and how to choose among them, are covered in Module 6.</p>
+      </div>
+
+      <div class="inset-panel inset-panel--practice">
+        <span class="inset-panel__label">Put It Into Practice</span>
+        <p>Create a 3&ndash;5 slide deck on any topic you choose. This is intentionally open-ended. The goal is to capture where you&rsquo;re starting from, not to produce something polished.</p>
+        <h6 style="font-family:var(--font-display); font-weight:700; color:var(--green-dim); font-size:13px; text-transform:uppercase; letter-spacing:.1em; margin-top:1em;">Topic Ideas</h6>
+        <ul>
+          <li>Your favorite pet (and why they&rsquo;re the best)</li>
+          <li>A recent disagreement you had (and what you learned)</li>
+          <li>A movie you&rsquo;d recommend (or actively warn people against)</li>
+          <li>A passion project or hobby</li>
+          <li>Why you&rsquo;re taking this course</li>
+        </ul>
+        <p>Keep it simple. Keep it scrappy. You&rsquo;ll return to this deck in every module and improve it as your skills develop. This is your baseline.</p>
+        <p>When you&rsquo;re done, write down:</p>
+        <ul>
+          <li>Your thought process behind the structure (why did you organize it this way?)</li>
+          <li>One thing you struggled with</li>
+        </ul>
+        <p>Hold onto both. You&rsquo;ll want to compare them to your answers at the end of the course.</p>
+      </div>
+
+      <div class="inset-panel">
+        <span class="inset-panel__label">Reflection</span>
+        <ul>
+          <li>Prior to this course, how would you have defined your role? How has that definition changed?</li>
+          <li>Which archetype do you most identify with right now, and which do you want to grow toward?</li>
+        </ul>
+      </div>
+    </article>
+
+  </div>
+
+  <button class="strip strip--ongreen" data-advance="1" aria-label="Continue to Module 2" disabled>
+    <span class="strip__chevrons"><span class="chevron"></span><span class="chevron"></span><span class="chevron"></span></span>
+    <span class="strip__label">Module 2 &mdash; Coming Soon</span>
+  </button>
+</section>
+
+<!-- ============================================================
+     JAVASCRIPT
+     ============================================================ -->
+<script>
+(function(){
+  "use strict";
+  var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* ---------- Nav data model (2 levels: module + subsection) ---------- */
+  var NAV = [
+    { id:'title', label:'Cover' },
+    { id:'module-1', label:'Module 1 — The Landscape', children:[
+      { id:'m1-s1', label:'A Brief History of Presentation Design' },
+      { id:'m1-s2', label:'Defining Presentation Design' },
+      { id:'m1-s3', label:'Misconceptions of Presentation Design' },
+      { id:'m1-s4', label:'Who We Are' },
+      { id:'m1-s5', label:'The State and Scope of the Field' }
+    ]}
+    /* Modules 2–6 will be appended here as they're built. */
+  ];
+
+  var navListEl = document.getElementById('navList');
+  var navLinkEls = {}; // id -> element (module button or link)
+
+  NAV.forEach(function(item){
+    if(item.children){
+      var wrap = document.createElement('div');
+      wrap.className = 'nav-module';
+      wrap.dataset.id = item.id;
+
+      var btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'nav-module__btn';
+      btn.innerHTML = '<span>'+item.label+'</span><span class="nav-module__caret">&#9656;</span>';
+      btn.addEventListener('click', function(){
+        wrap.classList.toggle('is-expanded');
+      });
+      wrap.appendChild(btn);
+      navLinkEls[item.id] = btn;
+
+      var childWrap = document.createElement('div');
+      childWrap.className = 'nav-module__children';
+      item.children.forEach(function(child){
+        var a = document.createElement('a');
+        a.href = '#'+child.id;
+        a.className = 'nav-link';
+        a.textContent = child.label;
+        a.addEventListener('click', function(e){ handleNavClick(e, child.id); });
+        childWrap.appendChild(a);
+        navLinkEls[child.id] = a;
+      });
+      wrap.appendChild(childWrap);
+      navListEl.appendChild(wrap);
+    } else {
+      var a2 = document.createElement('a');
+      a2.href = '#'+item.id;
+      a2.className = 'nav-link';
+      a2.style.fontFamily = 'var(--font-display)';
+      a2.style.fontWeight = '700';
+      a2.textContent = item.label;
+      a2.addEventListener('click', function(e){ handleNavClick(e, item.id); });
+      navListEl.appendChild(a2);
+      navLinkEls[item.id] = a2;
+    }
+  });
+
+  /* ---------- Gate sections (title + main blocks) ---------- */
+  var gateSections = Array.prototype.slice.call(document.querySelectorAll('.gate-section[data-nav-id]'))
+    .filter(function(el){ return el.closest('.main-block__body') === null; });
+  // gateSections = [#title, #module-1, ...] top-level sections only
+  var topLevel = [];
+  document.querySelectorAll(':scope > .gate-section, body > .gate-section').forEach(function(){});
+  Array.prototype.forEach.call(document.body.children, function(el){
+    if(el.classList && el.classList.contains('gate-section')) topLevel.push(el);
+  });
+
+  var frontier = 0; // index into topLevel currently unlocked
+
+  function maxScrollFor(index){
+    if(index < 0) return 0;
+    var el = topLevel[index];
+    if(!el) return document.body.scrollHeight;
+    var rect = el.getBoundingClientRect();
+    var elBottom = rect.bottom + window.scrollY;
+    return Math.max(0, elBottom - window.innerHeight);
+  }
+
+  var clampPending = false;
+  function clampScroll(){
+    if(clampPending) return;
+    clampPending = true;
+    requestAnimationFrame(function(){
+      clampPending = false;
+      var max = maxScrollFor(frontier);
+      if(window.scrollY > max + 2){
+        window.scrollTo(0, max);
+      }
+    });
+  }
+  window.addEventListener('scroll', clampScroll, {passive:true});
+  window.addEventListener('resize', clampScroll);
+
+  function indexOfSection(id){
+    for(var i=0;i<topLevel.length;i++){ if(topLevel[i].id === id) return i; }
+    return -1;
+  }
+
+  function unlockThrough(index){
+    if(index > frontier) frontier = index;
+  }
+
+  /* ---------- Strip / chevron advance buttons ---------- */
+  document.querySelectorAll('.strip[data-advance]').forEach(function(btn){
+    if(btn.disabled) return;
+    btn.addEventListener('click', function(){
+      var fromIdx = parseInt(btn.getAttribute('data-advance'), 10);
+      var target = topLevel[fromIdx+1];
+      unlockThrough(fromIdx+1);
+      if(target){
+        target.scrollIntoView({ behavior: reduceMotion ? 'auto':'smooth', block:'start' });
+      }
+    });
+  });
+
+  /* ---------- Nav link click: unlock then scroll to anchor ---------- */
+  function handleNavClick(e, id){
+    e.preventDefault();
+    var el = document.getElementById(id);
+    if(!el) return;
+    var parentSection = el.closest('.gate-section');
+    // find which top-level section this belongs to (itself, or ancestor)
+    var topIdx = topLevel.indexOf(parentSection);
+    if(topIdx === -1){
+      // parentSection might itself be nested; walk up
+      var node = el;
+      while(node && topLevel.indexOf(node) === -1){ node = node.parentElement; }
+      topIdx = node ? topLevel.indexOf(node) : 0;
+    }
+    unlockThrough(topIdx);
+    el.scrollIntoView({ behavior: reduceMotion ? 'auto':'smooth', block: (id===topLevel[topIdx].id ? 'start':'start') });
+    closeMenu();
+  }
+
+  /* ---------- Menu open/close ---------- */
+  var body = document.body;
+  var menuToggle = document.getElementById('menuToggle');
+  var menuScrim = document.getElementById('menuScrim');
+
+  function openMenu(){ body.classList.add('menu-open'); menuToggle.setAttribute('aria-expanded','true'); }
+  function closeMenu(){ body.classList.remove('menu-open'); menuToggle.setAttribute('aria-expanded','false'); }
+  menuToggle.addEventListener('click', function(){
+    body.classList.contains('menu-open') ? closeMenu() : openMenu();
+  });
+  menuScrim.addEventListener('click', closeMenu);
+
+  /* ---------- Active-section tracking: theme sync + nav highlight ---------- */
+  var menuEl = document.getElementById('menu');
+  var allNavTargets = document.querySelectorAll('[data-nav-id]');
+
+  // rule: black main block -> menu/toggle turn green; green main block (or pale title) -> menu/toggle turn black.
+  function applyScheme(bg){
+    var scheme = (bg === 'black') ? 'menuGreen' : 'menuBlack';
+    menuEl.setAttribute('data-scheme', scheme);
+    menuToggle.setAttribute('data-scheme', scheme);
+    document.documentElement.setAttribute('data-stage-bg', bg);
+  }
+
+  var currentActiveId = null;
+  function setActiveNav(id){
+    if(id === currentActiveId) return;
+    currentActiveId = id;
+    Object.keys(navLinkEls).forEach(function(key){
+      navLinkEls[key].classList.toggle('is-active', key === id);
+    });
+    // auto-expand the module containing this id
+    document.querySelectorAll('.nav-module').forEach(function(mod){
+      var containsActive = mod.dataset.id === id || mod.querySelector('[href="#'+id+'"]');
+      if(mod.dataset.id === id) mod.classList.add('is-expanded');
+    });
+    NAV.forEach(function(item){
+      if(item.children && item.children.some(function(c){ return c.id === id; })){
+        var modWrap = navListEl.querySelector('.nav-module[data-id="'+item.id+'"]');
+        if(modWrap) modWrap.classList.add('is-expanded');
+      }
+    });
+  }
+
+  var io = new IntersectionObserver(function(entries){
+    entries.forEach(function(entry){
+      if(entry.isIntersecting){
+        var id = entry.target.getAttribute('data-nav-id');
+        setActiveNav(id);
+        var section = entry.target.closest('.gate-section');
+        if(section && section.dataset.bg){ applyScheme(section.dataset.bg); }
+      }
+    });
+  }, { root:null, rootMargin:'-42% 0px -42% 0px', threshold:0 });
+
+  allNavTargets.forEach(function(el){ io.observe(el); });
+
+  /* ---------- Reveal-on-scroll ---------- */
+  var revealIo = new IntersectionObserver(function(entries){
+    entries.forEach(function(entry){
+      if(entry.isIntersecting){
+        entry.target.classList.add('in-view');
+        revealIo.unobserve(entry.target);
+      }
+    });
+  }, { threshold:0.12 });
+  document.querySelectorAll('.reveal').forEach(function(el){ revealIo.observe(el); });
+
+  /* initial state */
+  applyScheme('pale');
+})();
+</script>
+</body>
+</html>
