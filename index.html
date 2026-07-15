@@ -151,10 +151,32 @@ h1,h2,h3,h4,h5,h6{ margin:0 0 .5em; font-weight:700; line-height:1.15; }
   box-shadow: 0 28px 60px -20px rgba(0,0,0,.35), 0 4px 18px rgba(0,0,0,.12);
   padding: clamp(32px,5vw,64px);
 }
-.second-block h1{
+.second-block h1, .callout__inner h1{
   font-family: var(--font-display); font-weight:800; color: var(--green);
   font-size: clamp(26px, 3vw, 38px);
+  display:flex; align-items:center; gap: clamp(14px,2vw,18px);
 }
+
+/* ---------- H1 icon badge (Lucide icons) ---------- */
+.h1-icon{
+  flex: 0 0 auto;
+  display:inline-flex; align-items:center; justify-content:center;
+  width: clamp(44px, 5vw, 54px);
+  height: clamp(44px, 5vw, 54px);
+  border-radius:50%;
+  background: var(--black);
+  border: 2px solid var(--border-green);
+  box-shadow: 0 10px 22px -8px rgba(0,0,0,.45), 0 0 0 5px rgba(31,198,103,.10);
+  transition: transform var(--dur-sm) var(--ease);
+}
+.h1-icon svg{
+  width: clamp(20px, 2.2vw, 24px);
+  height: clamp(20px, 2.2vw, 24px);
+  stroke: var(--white);
+  stroke-width: 2;
+  fill: none;
+}
+.second-block h1:hover .h1-icon, .callout__inner h1:hover .h1-icon{ transform: scale(1.08) rotate(-4deg); }
 .second-block h2{
   font-family: var(--font-serif); font-weight:700; color: var(--black);
   font-size: clamp(22px, 2.4vw, 30px);
@@ -468,7 +490,7 @@ h1,h2,h3,h4,h5,h6{ margin:0 0 .5em; font-weight:700; line-height:1.15; }
 
     <!-- Second Block 1.1 -->
     <article class="second-block reveal" id="m1-s1" data-nav-id="m1-s1">
-      <h1>A Brief History of Presentation Design</h1>
+      <h1><span class="h1-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/><path d="M12 7v5l4 2"/></svg></span>A Brief History of Presentation Design</h1>
       <p>From chalkboards to overhead projectors to slide carousels, the fundamentals of presentation have stayed constant: one person with information, communicating to an audience that wants it. These early tools were the infant stage of what we do today. Each innovation changed how we delivered information, not why we delivered it.</p>
       <p>Desktop computers brought PowerPoint into widespread use beginning in the late 1980s and accelerating through the 1990s. It was not the first presentation software (Harvard Graphics came earlier, and rivals like Aldus Persuasion followed), but PowerPoint succeeded because it matched user behavior: easy editing, quick iteration, and minimal friction from idea to slide. It was the digital evolution of overhead transparencies and slide carousels, with far more control and flexibility.</p>
       <p>That accessibility had a consequence. It democratized presentation creation without democratizing presentation skill. As competitors emerged (Keynote for Mac users in 2003, Google Presentations in 2007, rebranded as Google Slides in 2012 and gaining enterprise traction through the mid-2010s as Chrome and cloud workflows became standard), the volume of presentations exploded. What teachers once crafted carefully on transparencies could now be assembled in minutes, and the volume of poorly designed slides grew with it.</p>
@@ -484,7 +506,7 @@ h1,h2,h3,h4,h5,h6{ margin:0 0 .5em; font-weight:700; line-height:1.15; }
 
     <!-- Second Block 1.2 -->
     <article class="second-block reveal" id="m1-s2" data-nav-id="m1-s2">
-      <h1>Defining Presentation Design</h1>
+      <h1><span class="h1-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 7v14"/><path d="M3 18a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h5a4 4 0 0 1 4 4 4 4 0 0 1 4-4h5a1 1 0 0 1 1 1v13a1 1 0 0 1-1 1h-6a3 3 0 0 0-3 3 3 3 0 0 0-3-3z"/></svg></span>Defining Presentation Design</h1>
       <p>Presentation design has a problem most design fields do not share: its name is too literal. The term tells people what we do but not how we do it. It misses the nuance of the work, the niche expertise of the skill set, and the strategic depth of the craft.</p>
       <p>The clearest way to define presentation design is to draw a parallel to a more established discipline: UX design.</p>
 
@@ -513,7 +535,7 @@ h1,h2,h3,h4,h5,h6{ margin:0 0 .5em; font-weight:700; line-height:1.15; }
 
     <!-- Second Block 1.3 -->
     <article class="second-block reveal" id="m1-s3" data-nav-id="m1-s3">
-      <h1>Misconceptions of Presentation Design</h1>
+      <h1><span class="h1-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><path d="M12 17h.01"/></svg></span>Misconceptions of Presentation Design</h1>
       <p>We have covered the definition. We have not addressed the perception, and that is where the disconnect lies. Within the broader design community, presentation design sits lower on the hierarchy. That is a direct result of the field&rsquo;s origin story and who has historically done the work.</p>
 
       <div class="subsection">
@@ -580,7 +602,7 @@ h1,h2,h3,h4,h5,h6{ margin:0 0 .5em; font-weight:700; line-height:1.15; }
 
     <!-- Second Block 1.4 -->
     <article class="second-block reveal" id="m1-s4" data-nav-id="m1-s4">
-      <h1>Who We Are</h1>
+      <h1><span class="h1-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><path d="M16 3.128a4 4 0 0 1 0 7.744"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><circle cx="9" cy="7" r="4"/></svg></span>Who We Are</h1>
       <p>The roots of presentation design come from the business world, not the design world, and that origin shows up in who we are today. We are hybrids: half analytical, half creative. We speak both languages fluently, which makes us uniquely valuable but also hard to categorize.</p>
       <p>We are the bridge between creative and business teams, more so than any other design discipline.</p>
       <p>This lets us move fluidly between departments and add value on both sides. A graphic designer typically works within the creative team. A UX designer works within product. Presentation designers work with everyone: executives, sales, marketing, product, HR, finance. We collaborate across silos in ways few other roles do.</p>
@@ -639,7 +661,7 @@ h1,h2,h3,h4,h5,h6{ margin:0 0 .5em; font-weight:700; line-height:1.15; }
 
     <!-- Second Block 1.5 -->
     <article class="second-block reveal" id="m1-s5" data-nav-id="m1-s5">
-      <h1>The State and Scope of the Field</h1>
+      <h1><span class="h1-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M16 7h6v6"/><path d="m22 7-8.5 8.5-5-5L2 17"/></svg></span>The State and Scope of the Field</h1>
       <p>The field is small but growing. Presentation design is one of the smallest niches in the creative industry, with far fewer roles than graphic design, UX, or web design. When I started at Duarte, the field felt almost invisible. There were barely any job listings, no clear career ladder, and little awareness that &ldquo;presentation designer&rdquo; was even a legitimate profession.</p>
       <p>That has changed.</p>
       <p>Over the past decade the field has steadily expanded. Today the largest and most sophisticated companies, the Fortune 500 tech giants, consulting firms, and enterprise organizations, either run dedicated presentation design teams or invest heavily in agencies like Duarte. That is not coincidence, it is recognition. These companies understand that high-stakes communication requires specialized expertise, and they are willing to pay for it.</p>
