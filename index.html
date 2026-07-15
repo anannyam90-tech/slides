@@ -191,7 +191,7 @@ h1,h2,h3,h4,h5,h6{ margin:0 0 .5em; font-weight:700; line-height:1.15; }
   height: clamp(44px, 5vw, 54px);
   border-radius:50%;
   background: var(--green);
-  border: 2px solid var(--border-green);
+  border: 2px solid var(--white);
   transition: transform var(--dur-sm) var(--ease);
 }
 .h1-icon svg{
@@ -240,18 +240,68 @@ h1,h2,h3,h4,h5,h6{ margin:0 0 .5em; font-weight:700; line-height:1.15; }
   width:7px; height:7px; border-radius:50%;
   background: var(--green);
 }
-.second-block ol{ counter-reset: item; display:flex; flex-direction:column; gap:.6em; margin:0 0 1.1em; }
-.second-block ol li{
+/* numbered timeline (ordered lists = sequential steps/processes) */
+.second-block ol, .callout__inner ol{ counter-reset: item; display:flex; flex-direction:column; margin:0 0 1.1em; }
+.second-block ol li, .callout__inner ol li{
   font-family: var(--font-body); font-size: clamp(15.5px, 1.05vw, 17px); line-height:1.65;
-  padding-left: 1.8em; position:relative; counter-increment: item;
+  padding: 0 0 1.5em 3em; position:relative; counter-increment: item;
 }
-.second-block ol li::before{
-  content: counter(item) ".";
-  position:absolute; left:0; top:0;
-  font-weight:800; color: var(--green);
-  font-family: var(--font-display);
+.second-block ol li:last-child, .callout__inner ol li:last-child{ padding-bottom:0; }
+.second-block ol li::before, .callout__inner ol li::before{
+  content: counter(item);
+  position:absolute; left:0; top:-.15em;
+  width:2em; height:2em; border-radius:50%;
+  display:flex; align-items:center; justify-content:center;
+  font-weight:800; font-size:.82em; font-family: var(--font-display);
+  background: var(--green); color: var(--white);
+  z-index:1;
 }
-.second-block b, .second-block strong{ color: var(--green-dim); font-weight:700; }
+.second-block ol li:not(:last-child)::after, .callout__inner ol li:not(:last-child)::after{
+  content:""; position:absolute; left:1em; top:2em; bottom:0;
+  width:2px; background: rgba(31,198,103,.28); transform: translateX(-50%);
+}
+
+/* numbered feature-card grid (named frameworks: 3-5 concepts) */
+.feature-grid{ display:grid; grid-template-columns:repeat(2,1fr); gap: 18px; margin: 1.3em 0; }
+.feature-card{
+  background: rgba(31,198,103,.055);
+  border: 1px solid rgba(31,198,103,.22);
+  border-radius: 18px;
+  padding: clamp(20px,2.6vw,26px);
+}
+.feature-card__num{
+  display:inline-flex; align-items:center; justify-content:center;
+  width: 34px; height:34px; border-radius:50%;
+  background: var(--green); color: var(--white);
+  font-family: var(--font-display); font-weight:800; font-size:14px;
+  margin-bottom: 14px;
+}
+.feature-card h4{ margin-bottom:.5em; }
+.feature-card p{ margin-bottom:0; }
+.callout__inner .feature-card{ background: rgba(31,198,103,.1); border-color:rgba(31,198,103,.3); }
+.callout__inner .feature-card h4{ color:#fff; }
+@media (max-width:720px){ .feature-grid{ grid-template-columns:1fr; } }
+
+/* keyword tag-chips (short 1-4 word list items) */
+.tag-row{ display:flex; flex-wrap:wrap; gap:10px; margin: 1em 0 1.3em; }
+.tag-chip{
+  display:inline-flex; align-items:center;
+  padding: 9px 18px;
+  border-radius:999px;
+  background: rgba(31,198,103,.08);
+  border: 1.5px solid rgba(31,198,103,.35);
+  font-family: var(--font-display); font-weight:700; color: var(--green-dim);
+  font-size: clamp(13px,1vw,14.5px);
+  line-height:1.3;
+}
+.callout__inner .tag-chip{ background: rgba(31,198,103,.14); border-color: rgba(31,198,103,.45); color: var(--green); }
+
+/* small icon accent for h4 subheadings (e.g. Calm / Communication / Craft) */
+.h1-icon--sm{ width:32px; height:32px; }
+.h1-icon--sm svg{ width:16px; height:16px; }
+.second-block h4:has(.h1-icon--sm), .callout__inner h4:has(.h1-icon--sm){ display:flex; align-items:center; gap:10px; }
+
+.second-block b, .second-block strong, .feature-card b{ color: var(--green-dim); font-weight:700; }
 .second-block .heading-group{ margin-bottom:1.1em; }
 .second-block .heading-group > *{ margin-bottom:.35em; }
 
@@ -338,12 +388,9 @@ h1,h2,h3,h4,h5,h6{ margin:0 0 .5em; font-weight:700; line-height:1.15; }
   font-family: var(--font-body); color: rgba(255,255,255,.88);
   font-size: clamp(15px,1.05vw,16.5px); line-height:1.7;
 }
-.callout__inner ul, .callout__inner ol{ display:flex; flex-direction:column; gap:.55em; }
+.callout__inner ul{ display:flex; flex-direction:column; gap:.55em; }
 .callout__inner ul li{ padding-left:1.5em; position:relative; }
 .callout__inner ul li::before{ content:""; position:absolute; left:0; top:.6em; width:7px; height:7px; border-radius:50%; background:var(--green); }
-.callout__inner ol{ counter-reset:citem; }
-.callout__inner ol li{ padding-left:1.8em; position:relative; counter-increment:citem; }
-.callout__inner ol li::before{ content:counter(citem)"."; position:absolute; left:0; top:0; font-weight:800; color:var(--green); font-family:var(--font-display); }
 .callout__inner b, .callout__inner strong{ color: var(--green); font-weight:700; }
 
 /* ============================================================
@@ -686,12 +733,28 @@ h1,h2,h3,h4,h5,h6{ margin:0 0 .5em; font-weight:700; line-height:1.15; }
       <div class="subsection">
         <h2>Specializations Within the Field (The Four Archetypes)</h2>
         <p>Presentation design is broad enough that practitioners develop distinct specializations. Here are four common archetypes.</p>
-        <ul>
-          <li><b>Creative-first designers:</b> The visionaries who push boundaries and unlock new creative possibilities. They look at a brand and imagine applications no one else thought of, and they turn a mundane slide into something memorable. Their strength is imagination and creative problem-solving.</li>
-          <li><b>Business-first designers:</b> Strategists at heart. They understand sales cycles, business objectives, and ROI, and they know how to structure a pitch deck that closes, a board deck that secures funding, or an internal deck that drives alignment. Their strength is strategic thinking and business acumen.</li>
-          <li><b>Systems &amp; template builders:</b> The architects. They build scalable, foolproof templates that let entire organizations communicate consistently and efficiently. They think in systems: how do we make it easier for 500 employees to create on-brand presentations without a designer every time? Their strength is structure, scalability, and long-term thinking.</li>
-          <li><b>Generalists:</b> The future creative directors who understand every facet of the craft because they have had to do it all. They concept creatively, think strategically, build systems, and execute. Their strength is versatility and range, and they have the depth to lead teams and set the standard.</li>
-        </ul>
+        <div class="feature-grid">
+          <div class="feature-card">
+            <span class="feature-card__num">1</span>
+            <h4>Creative-First Designers</h4>
+            <p>The visionaries who push boundaries and unlock new creative possibilities. They look at a brand and imagine applications no one else thought of, and they turn a mundane slide into something memorable. Their strength is imagination and creative problem-solving.</p>
+          </div>
+          <div class="feature-card">
+            <span class="feature-card__num">2</span>
+            <h4>Business-First Designers</h4>
+            <p>Strategists at heart. They understand sales cycles, business objectives, and ROI, and they know how to structure a pitch deck that closes, a board deck that secures funding, or an internal deck that drives alignment. Their strength is strategic thinking and business acumen.</p>
+          </div>
+          <div class="feature-card">
+            <span class="feature-card__num">3</span>
+            <h4>Systems &amp; Template Builders</h4>
+            <p>The architects. They build scalable, foolproof templates that let entire organizations communicate consistently and efficiently. They think in systems: how do we make it easier for 500 employees to create on-brand presentations without a designer every time? Their strength is structure, scalability, and long-term thinking.</p>
+          </div>
+          <div class="feature-card">
+            <span class="feature-card__num">4</span>
+            <h4>Generalists</h4>
+            <p>The future creative directors who understand every facet of the craft because they have had to do it all. They concept creatively, think strategically, build systems, and execute. Their strength is versatility and range, and they have the depth to lead teams and set the standard.</p>
+          </div>
+        </div>
         <p>None of these is better than the others. They are different ways to add value, and the best teams have a mix. Knowing where your strengths lie helps you position yourself, find the right opportunities, and keep developing in the direction that fits you.</p>
       </div>
 
@@ -790,13 +853,33 @@ h1,h2,h3,h4,h5,h6{ margin:0 0 .5em; font-weight:700; line-height:1.15; }
       <p>A comprehensive audit examines five layers of a presentation ecosystem.</p>
 
       <h6>The 5 Layers</h6>
-      <ul>
-        <li><b>Slide surface:</b> What the audience sees: titles, subtitles, footers, body content, media placement, and visual hierarchy. This is where the immediate quality of execution shows.</li>
-        <li><b>Backend infrastructure:</b> The hidden structure: master templates, slide layouts, font systems, color palettes, and brand asset libraries. This determines whether presentations scale consistently or devolve into chaos.</li>
-        <li><b>Flow &amp; hierarchy:</b> How information moves through a deck: hierarchy within slides, narrative sequencing across slides, transitions, pacing, and cognitive load. This reveals whether a deck guides the audience or overwhelms them.</li>
-        <li><b>Audience context:</b> Who receives the content and how they use it: creative versus sales teams, leadership versus individual contributors, internal stakeholders versus external clients. A deck built for leadership but delivered to an individual contributor feels irrelevant; the reverse feels condescending. Missing this layer is one of the most common reasons a well-designed deck fails.</li>
-        <li><b>Delivery context:</b> How and where the deck is experienced: one-on-one meetings, boardrooms, conference keynotes, or self-serve decks sent by email. What works on a Zoom call fails on a 20-foot stage. A self-serve deck has to carry its own narrative without a presenter. Designing without knowing the delivery context means guessing.</li>
-      </ul>
+      <div class="feature-grid">
+        <div class="feature-card">
+          <span class="feature-card__num">1</span>
+          <h4>Slide Surface</h4>
+          <p>What the audience sees: titles, subtitles, footers, body content, media placement, and visual hierarchy. This is where the immediate quality of execution shows.</p>
+        </div>
+        <div class="feature-card">
+          <span class="feature-card__num">2</span>
+          <h4>Backend Infrastructure</h4>
+          <p>The hidden structure: master templates, slide layouts, font systems, color palettes, and brand asset libraries. This determines whether presentations scale consistently or devolve into chaos.</p>
+        </div>
+        <div class="feature-card">
+          <span class="feature-card__num">3</span>
+          <h4>Flow &amp; Hierarchy</h4>
+          <p>How information moves through a deck: hierarchy within slides, narrative sequencing across slides, transitions, pacing, and cognitive load. This reveals whether a deck guides the audience or overwhelms them.</p>
+        </div>
+        <div class="feature-card">
+          <span class="feature-card__num">4</span>
+          <h4>Audience Context</h4>
+          <p>Who receives the content and how they use it: creative versus sales teams, leadership versus individual contributors, internal stakeholders versus external clients. A deck built for leadership but delivered to an individual contributor feels irrelevant; the reverse feels condescending. Missing this layer is one of the most common reasons a well-designed deck fails.</p>
+        </div>
+        <div class="feature-card">
+          <span class="feature-card__num">5</span>
+          <h4>Delivery Context</h4>
+          <p>How and where the deck is experienced: one-on-one meetings, boardrooms, conference keynotes, or self-serve decks sent by email. What works on a Zoom call fails on a 20-foot stage. A self-serve deck has to carry its own narrative without a presenter. Designing without knowing the delivery context means guessing.</p>
+        </div>
+      </div>
       <p>If we skip the audit and jump straight to design, we build on unstable ground. We might deliver something beautiful that breaks the moment it meets real use.</p>
 
       <div class="subsection">
@@ -1565,12 +1648,12 @@ h1,h2,h3,h4,h5,h6{ margin:0 0 .5em; font-weight:700; line-height:1.15; }
         <h2>The Event Designer&rsquo;s Mindset: Calmness Is Leadership</h2>
         <p>Before the mechanics, establish the mindset. When you are deep in last-minute script changes, technical failures, and executive nerves, one mantra keeps you grounded: the event will happen, and then it will end.</p>
         <p>A few grounding truths:</p>
-        <ul>
-          <li>The event will happen</li>
-          <li>Then it will end</li>
-          <li>Everyone is doing their best</li>
-          <li>Panic does not improve outcomes</li>
-        </ul>
+        <div class="tag-row">
+          <span class="tag-chip">The event will happen</span>
+          <span class="tag-chip">Then it will end</span>
+          <span class="tag-chip">Everyone is doing their best</span>
+          <span class="tag-chip">Panic does not improve outcomes</span>
+        </div>
         <p>Calm is an operational advantage. Events feel urgent because they are visible, not because they are unsolvable. Your job is not to prevent every problem (impossible), it is to solve problems calmly and keep the train moving.</p>
         <p>Calm designers make better decisions under pressure, earn trust faster, get invited upstream next time, and become the person people rely on. You do not need to be loud to lead in these moments. You need to be steady. (We return to calm as a career-defining quality in Module 6.)</p>
       </div>
@@ -1583,19 +1666,19 @@ h1,h2,h3,h4,h5,h6{ margin:0 0 .5em; font-weight:700; line-height:1.15; }
         <p>Not &ldquo;this version unless something changes.&rdquo;</p>
         <p>One source. Owned. Visible. Trusted.</p>
         <p>Without this:</p>
-        <ul>
-          <li>Teams work in silos</li>
-          <li>Feedback gets lost</li>
-          <li>Decisions get reversed</li>
-          <li>Designers become messengers instead of operators</li>
-        </ul>
+        <div class="tag-row">
+          <span class="tag-chip">Teams work in silos</span>
+          <span class="tag-chip">Feedback gets lost</span>
+          <span class="tag-chip">Decisions get reversed</span>
+          <span class="tag-chip">Designers become messengers instead of operators</span>
+        </div>
         <p>With it:</p>
-        <ul>
-          <li>Noise drops</li>
-          <li>Accountability sharpens</li>
-          <li>Collaboration improves</li>
-          <li>Design regains authority</li>
-        </ul>
+        <div class="tag-row">
+          <span class="tag-chip">Noise drops</span>
+          <span class="tag-chip">Accountability sharpens</span>
+          <span class="tag-chip">Collaboration improves</span>
+          <span class="tag-chip">Design regains authority</span>
+        </div>
         <p>Everything else in event production exists to protect this principle. For our purposes, <b>the single source of truth is the script</b>.</p>
       </div>
     </article>
@@ -1697,12 +1780,12 @@ h1,h2,h3,h4,h5,h6{ margin:0 0 .5em; font-weight:700; line-height:1.15; }
           <li><b>Edit access narrows as the event approaches:</b> Fewer people can make changes as you get closer to showtime</li>
         </ul>
         <h6>This Protects</h6>
-        <ul>
-          <li>Version control</li>
-          <li>Creative integrity</li>
-          <li>Team trust</li>
-          <li>Delivery quality</li>
-        </ul>
+        <div class="tag-row">
+          <span class="tag-chip">Version control</span>
+          <span class="tag-chip">Creative integrity</span>
+          <span class="tag-chip">Team trust</span>
+          <span class="tag-chip">Delivery quality</span>
+        </div>
         <p>It also teaches stakeholders that process enables speed, not the other way around.</p>
       </div>
 
@@ -1879,12 +1962,28 @@ h1,h2,h3,h4,h5,h6{ margin:0 0 .5em; font-weight:700; line-height:1.15; }
           <li><b>Live edits:</b> Who makes changes during rehearsals?</li>
         </ul>
         <h3>The Four Roles That Matter Onsite</h3>
-        <ul>
-          <li><b>Showrunner / Event PM:</b> Owns the run of show, manages timing, and coordinates all moving parts. The single point of contact for what&rsquo;s happening and when.</li>
-          <li><b>Graphics Operator:</b> Manages the presentation file during rehearsal and live delivery. Handles minor script edits during rehearsal, advances slides when the speaker cues, and maintains the version on screen.</li>
-          <li><b>Production Lead:</b> Coordinates with AV and venue. Owns the technical environment: screens, lighting, audio, video playback.</li>
-          <li><b>Designer (you):</b> Owns the creative deliverable. You are not the graphics operator during live delivery. Your job is to ensure the deck that goes to the graphics operator is final and correct, and to be available for any visual adjustments that require design judgment.</li>
-        </ul>
+        <div class="feature-grid">
+          <div class="feature-card">
+            <span class="feature-card__num">1</span>
+            <h4>Showrunner / Event PM</h4>
+            <p>Owns the run of show, manages timing, and coordinates all moving parts. The single point of contact for what&rsquo;s happening and when.</p>
+          </div>
+          <div class="feature-card">
+            <span class="feature-card__num">2</span>
+            <h4>Graphics Operator</h4>
+            <p>Manages the presentation file during rehearsal and live delivery. Handles minor script edits during rehearsal, advances slides when the speaker cues, and maintains the version on screen.</p>
+          </div>
+          <div class="feature-card">
+            <span class="feature-card__num">3</span>
+            <h4>Production Lead</h4>
+            <p>Coordinates with AV and venue. Owns the technical environment: screens, lighting, audio, video playback.</p>
+          </div>
+          <div class="feature-card">
+            <span class="feature-card__num">4</span>
+            <h4>Designer (You)</h4>
+            <p>Owns the creative deliverable. You are not the graphics operator during live delivery. Your job is to ensure the deck that goes to the graphics operator is final and correct, and to be available for any visual adjustments that require design judgment.</p>
+          </div>
+        </div>
       </div>
 
       <div class="subsection">
@@ -2417,7 +2516,7 @@ h1,h2,h3,h4,h5,h6{ margin:0 0 .5em; font-weight:700; line-height:1.15; }
         <p>You can master the five operating layers (Intake and Discovery, Templates and Systems, Strategy and Storytelling, Design and Execution, Events and Live Delivery) and still hit upstream resistance.</p>
         <p>The difference between a designer stuck in production and one who becomes a trusted partner usually comes down to three things, plus a handful of mindsets that sustain them. None of these are innate. They are behaviors you practice until they become how you operate.</p>
 
-        <h4>Calm</h4>
+        <h4><span class="h1-icon h1-icon--sm" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12.8 19.6A2 2 0 1 0 14 16H2"/><path d="M17.5 8a2.5 2.5 0 1 1 2 4H2"/><path d="M9.8 4.4A2 2 0 1 1 11 8H2"/></svg></span>Calm</h4>
         <p>The designer who stays steady when everything around them is chaos becomes the person everyone relies on. Events are chaotic, executives are stressed, timelines collapse, and last-minute changes arrive at 11 PM. Most people panic; the designer who does not becomes the anchor. Calm is not passive or indifferent, it is an operational advantage. When you stay calm you make better decisions under pressure, reduce everyone else&rsquo;s stress, signal confidence that earns trust, and become the person people want in the room when things go wrong.</p>
         <p>The practices are simple and were introduced in Module 5:</p>
         <ul>
@@ -2429,14 +2528,14 @@ h1,h2,h3,h4,h5,h6{ margin:0 0 .5em; font-weight:700; line-height:1.15; }
         </ul>
         <p>The most valuable version of calm is preventative: when your systems reduce chaos before it starts, you are not just staying calm in the storm, you are preventing the storm from forming. This is also why trust is currency. Once trust exists, access follows; you do not need permission to be strategic when people already rely on you.</p>
 
-        <h4>Communication</h4>
+        <h4><span class="h1-icon h1-icon--sm" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M2.992 16.342a2 2 0 0 1 .094 1.167l-1.065 3.29a1 1 0 0 0 1.236 1.168l3.413-.998a2 2 0 0 1 1.099.092 10 10 0 1 0-4.777-4.719"/></svg></span>Communication</h4>
         <p>Your ability to ask the right questions, set clear expectations, and articulate value determines how far upstream you get invited. Most designers think their work speaks for itself. It does not. No matter how good your slides are, if you cannot communicate why they are good, what problem they solve, and how they support the business, you will stay downstream.</p>
         <p>Communication is what moves you from production to partnership.</p>
         <p>It looks like asking the right questions upfront (not &ldquo;what do you want this to look like?&rdquo; but &ldquo;why does this exist, who is the audience, what happens if it fails?&rdquo;), setting expectations early (&ldquo;this will take three days, not three hours, because we need to audit existing content first&rdquo;), and articulating value in business terms (not &ldquo;I made the slides look better&rdquo; but &ldquo;I reduced revision cycles from five rounds to two by implementing a structured feedback process&rdquo;).</p>
         <p>Stakeholders care about outcomes, not aesthetics, so learn to speak their language. Advocate for process without being rigid: when you explain why the script template eliminates version confusion and saves time, people follow it; when you just enforce rules, they resist. And communication is also listening. Truly hearing what stakeholders worry about, what constraints they are under, and what success looks like to them builds trust faster than anything else. The designers who advance are not the loudest, they are the clearest. They know when to speak, what to say, and how to frame a point so it lands.</p>
         <p>Conviction comes from clarity, not volume.</p>
 
-        <h4>Craft</h4>
+        <h4><span class="h1-icon h1-icon--sm" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="m15 12-9.373 9.373a1 1 0 0 1-3.001-3L12 9"/><path d="m18 15 4-4"/><path d="m21.5 11.5-1.914-1.914A2 2 0 0 1 19 8.172v-.344a2 2 0 0 0-.586-1.414l-1.657-1.657A6 6 0 0 0 12.516 3H9l1.243 1.243A6 6 0 0 1 12 8.485V10l2 2h1.172a2 2 0 0 1 1.414.586L18.5 14.5"/></svg></span>Craft</h4>
         <p>Craft is not just how your slides look. It is the rigor, intentionality, and standard you bring to every decision. It is often mistaken for aesthetics; it is really the standard you hold yourself to when no one is watching.</p>
         <p>Craft shows up in attention to detail (alignment is not &ldquo;close enough,&rdquo; fonts are consistent, image resolution is optimized for the delivery context, file naming is clear), because these are signals that communicate professionalism. It shows up in systemic thinking (you do not just fix the slide in front of you, you ask whether it is a pattern that belongs in the template). It shows up in knowing when good enough is actually good enough, because craft is not perfectionism; it is calibrated to context. Over-polishing low-stakes work wastes time, and under-polishing high-stakes work erodes trust. It shows up in following through (you do not leave half-finished systems, ship known issues, or disappear after delivery; you follow up, gather feedback, and refine). And it shows up in continuous improvement (you are never satisfied with &ldquo;how we have always done it,&rdquo; and you keep refining your templates, workflows, and thinking).</p>
         <p>For many designers, especially introverts, this clarity is also personal: taking complex, chaotic content and making it accessible is both a coping mechanism and a competitive advantage. Craft is not about being the best designer in the room. It is about being the most rigorous thinker, and it compounds.</p>
@@ -2605,8 +2704,8 @@ h1,h2,h3,h4,h5,h6{ margin:0 0 .5em; font-weight:700; line-height:1.15; }
     requestAnimationFrame(function(){
       clampPending = false;
       var max = maxScrollFor(frontier);
-      if(window.scrollY > max + 2){
-        window.scrollTo(0, max);
+      if(window.scrollY > max){
+        window.scrollTo({ top: max, left: 0, behavior: 'instant' });
       }
     });
   }
@@ -2718,7 +2817,7 @@ h1,h2,h3,h4,h5,h6{ margin:0 0 .5em; font-weight:700; line-height:1.15; }
         revealIo.unobserve(entry.target);
       }
     });
-  }, { threshold:0.12 });
+  }, { threshold:0, rootMargin:'0px 0px -5% 0px' });
   document.querySelectorAll('.reveal').forEach(function(el){ revealIo.observe(el); });
 
   /* initial state */
