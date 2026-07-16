@@ -74,9 +74,8 @@ h1,h2,h3,h4,h5,h6{ margin:0 0 .5em; font-weight:700; line-height:1.15; }
   justify-content:center;
   align-items:center;
   text-align:center;
-  padding: var(--gutter);
 }
-.title-screen__inner{ max-width: 980px; }
+.title-screen__inner{ max-width: 980px; padding: var(--gutter); }
 .title-screen__eyebrow{
   font-family: var(--font-display); font-weight:700; letter-spacing:.32em; text-transform:uppercase;
   font-size: clamp(11px,1.4vw,13px); color: var(--green-dim); margin-bottom: 1.6em;
@@ -225,8 +224,10 @@ h1,h2,h3,h4,h5,h6{ margin:0 0 .5em; font-weight:700; line-height:1.15; }
   font-size: clamp(16px, 1.5vw, 19px);
 }
 .second-block h6{
-  font-family: var(--font-display); font-weight:700; color: var(--green);
-  font-size: clamp(13px, 1.2vw, 15px);
+  font-family: var(--font-display); font-weight:800; color: var(--black);
+  font-size: clamp(11.5px, 1vw, 13px);
+  text-transform: uppercase; letter-spacing: .09em;
+  opacity: .72;
 }
 .second-block > *:not(:last-child){ margin-bottom: 1.1em; }
 .second-block p{
@@ -301,6 +302,33 @@ h1,h2,h3,h4,h5,h6{ margin:0 0 .5em; font-weight:700; line-height:1.15; }
   line-height:1.3;
 }
 .callout__inner .tag-chip{ background: rgba(31,198,103,.14); border-color: rgba(31,198,103,.45); color: var(--green); }
+
+/* lead-list: short (3-4 item) lists with a bold lead-in — no bullet, just stacked label+text */
+.lead-list{ display:flex; flex-direction:column; gap:.85em; margin:0 0 1.1em; }
+.lead-list li{ padding-left:0 !important; }
+.lead-list li::before{ content:none !important; }
+
+/* icon-list: default graphic marker (chevron corner) replacing the plain dot, no markup changes needed per item */
+.icon-list{ display:flex; flex-direction:column; gap:.7em; margin:0 0 1.1em; }
+.icon-list li{ padding-left:1.5em !important; }
+.icon-list li::before{ content:none !important; }
+.icon-list li::after{
+  content:""; position:absolute; left:1px; top:.5em;
+  width:9px; height:9px;
+  border-right: 2.5px solid var(--green); border-bottom: 2.5px solid var(--green);
+  transform: rotate(-45deg);
+  border-radius: 0 0 2px 0;
+}
+.callout__inner .icon-list li::after{ border-color: var(--green); }
+
+/* check-list: checkbox-square marker for literal checklists */
+.check-list{ display:flex; flex-direction:column; gap:.7em; margin:0 0 1.1em; }
+.check-list li{ padding-left:1.7em !important; }
+.check-list li::before{
+  content:"" !important; width:13px !important; height:13px !important; border-radius:4px !important;
+  background:transparent !important; border:2px solid var(--green) !important; top:.28em !important;
+}
+.callout__inner .check-list li::before{ border-color: var(--green) !important; }
 
 /* three-across variant of the feature grid (S/M/L, Tier 1/2/3, etc.) */
 .feature-grid--3col{ grid-template-columns:repeat(3,1fr); }
@@ -440,7 +468,24 @@ h1,h2,h3,h4,h5,h6{ margin:0 0 .5em; font-weight:700; line-height:1.15; }
   font-size: clamp(16px,1.2vw,19px); line-height:1.6;
 }
 .inset-panel ul li::before{ background: var(--green-dim); }
-.inset-panel--practice{ border-left-color: var(--green-dim); }
+
+.inset-panel--practice{
+  border-left: none;
+  border: 2px dashed rgba(31,198,103,.4);
+  background: rgba(31,198,103,.045);
+  border-radius: 14px;
+  padding: clamp(20px,2.6vw,26px);
+}
+.inset-panel--practice .inset-panel__label{ display:flex; align-items:center; gap:9px; }
+.inset-panel--practice .inset-panel__label svg{ width:15px; height:15px; stroke:var(--green-dim); stroke-width:2.3; fill:none; }
+.inset-panel--practice p, .inset-panel--practice ul, .inset-panel--practice ol{
+  font-family: var(--font-body); font-style:normal; color: var(--black);
+  font-size: clamp(15px,1.05vw,16.5px); line-height:1.7;
+}
+.inset-panel--practice ul li::before{
+  content:""; width:13px; height:13px; border-radius:4px;
+  background:transparent; border:2px solid var(--green-dim); top:.28em;
+}
 
 /* ---------- Callout (Instructions / Takeaway / Freelancer) ---------- */
 .callout{ padding: clamp(6px,1vw,10px); }
@@ -464,7 +509,7 @@ h1,h2,h3,h4,h5,h6{ margin:0 0 .5em; font-weight:700; line-height:1.15; }
 .callout__inner h3{ font-family:var(--font-display); font-weight:700; color:var(--green); font-size:clamp(16px,1.6vw,19px); text-transform:uppercase; letter-spacing:.04em; }
 .callout__inner h4{ font-family:var(--font-display); font-weight:700; color:#fff; font-size:clamp(16px,1.5vw,18px); }
 .callout__inner h5{ font-family:var(--font-serif); font-weight:600; font-style:italic; color:var(--green); font-size:clamp(15px,1.4vw,17px); }
-.callout__inner h6{ font-family:var(--font-display); font-weight:700; color:var(--green); font-size:clamp(12.5px,1.1vw,14px); }
+.callout__inner h6{ font-family:var(--font-display); font-weight:800; color:#fff; font-size:clamp(11.5px,1vw,13px); text-transform:uppercase; letter-spacing:.09em; opacity:.78; }
 .callout__inner > *:not(:last-child){ margin-bottom:1em; }
 .callout__inner p, .callout__inner ul li, .callout__inner ol li{
   font-family: var(--font-body); color: rgba(255,255,255,.88);
@@ -482,12 +527,12 @@ h1,h2,h3,h4,h5,h6{ margin:0 0 .5em; font-weight:700; line-height:1.15; }
   margin-top:auto;
   position:relative;
   width:100%;
-  height: clamp(90px,14vh,150px);
+  height: clamp(120px,15vh,170px);
   overflow:hidden;
   cursor:pointer;
   border:none;
-  padding:0;
-  display:block;
+  padding: 18px 0 20px;
+  display:flex; flex-direction:column; align-items:center; justify-content:center; gap:14px;
 }
 .strip:disabled{ cursor:default; }
 .strip--onpale{ background: var(--green); }
@@ -495,13 +540,12 @@ h1,h2,h3,h4,h5,h6{ margin:0 0 .5em; font-weight:700; line-height:1.15; }
 .strip--onblack{ background: var(--green); }
 
 .strip__chevrons{
-  position:absolute; left:50%; top:50%;
-  transform: translate(-50%,-50%);
   display:flex; flex-direction:column; align-items:center; gap:7px;
 }
 .chevron{
   width: 46px; height:14px;
   position:relative;
+  flex: 0 0 auto;
 }
 .chevron::before,.chevron::after{
   content:""; position:absolute; top:0; width:56%; height:4px; border-radius:3px;
@@ -515,16 +559,29 @@ h1,h2,h3,h4,h5,h6{ margin:0 0 .5em; font-weight:700; line-height:1.15; }
 
 .strip:not(:disabled) .strip__chevrons{ animation: chevron-float 2.2s ease-in-out infinite; }
 @keyframes chevron-float{
-  0%,100%{ transform: translate(-50%,-50%); }
-  50%{ transform: translate(-50%,-42%); }
+  0%,100%{ transform: translateY(0); }
+  50%{ transform: translateY(-6px); }
 }
 .strip:disabled .strip__chevrons{ opacity:.3; }
 
 .strip__label{
-  position:absolute; bottom:14px; left:50%; transform:translateX(-50%);
+  flex: 0 0 auto;
   font-family: var(--font-display); font-weight:700; letter-spacing:.2em; text-transform:uppercase;
   font-size:11px; color: rgba(255,255,255,.75);
 }
+
+/* end-of-course strip: no chevron, just a quiet close */
+.strip--end{
+  cursor:default;
+  gap: 10px;
+}
+.strip--end .strip__end-mark{
+  width:34px; height:34px; border-radius:50%;
+  border: 2px solid rgba(255,255,255,.5);
+  display:flex; align-items:center; justify-content:center;
+}
+.strip--end .strip__end-mark svg{ width:16px; height:16px; stroke: rgba(255,255,255,.85); stroke-width:2.5; fill:none; }
+.strip--end .strip__label{ color: rgba(255,255,255,.6); }
 
 /* ============================================================
    SIDEBAR MENU
@@ -734,13 +791,33 @@ h1,h2,h3,h4,h5,h6{ margin:0 0 .5em; font-weight:700; line-height:1.15; }
         <p>This creates a compound effect: non-designers using limited software produce low-quality output, which reinforces the perception that presentation design itself is low-value work.</p>
         <p>Here is the reality we have to accept: presentation software dominates the market for good reasons.</p>
         <p>Design tools like Figma can build presentations in 16:9, and the output is often superior. But they fail the accessibility test that made PowerPoint and Google Slides ubiquitous:</p>
-        <ul>
-          <li><b>Steeper learning curve:</b> Figma requires design knowledge; presentation software does not.</li>
-          <li><b>Limited collaboration:</b> Not everyone in an organization has or needs a Figma license. Google Slides and PowerPoint are usually bundled into existing subscriptions.</li>
-          <li><b>Presentation mode limits:</b> Figma was not built for live stage delivery with presenter notes, clicker compatibility, and seamless screen sharing.</li>
-          <li><b>File compatibility:</b> Clients and stakeholders expect .pptx or Google Slides files they can edit themselves.</li>
-          <li><b>Ecosystem lock-in:</b> Organizations have invested decades in presentation software infrastructure, templates, training, and workflows.</li>
-        </ul>
+        <div class="feature-grid">
+          <div class="feature-card">
+            <span class="feature-card__num">1</span>
+            <h4>Steeper Learning Curve</h4>
+            <p>Figma requires design knowledge; presentation software does not.</p>
+          </div>
+          <div class="feature-card">
+            <span class="feature-card__num">2</span>
+            <h4>Limited Collaboration</h4>
+            <p>Not everyone in an organization has or needs a Figma license. Google Slides and PowerPoint are usually bundled into existing subscriptions.</p>
+          </div>
+          <div class="feature-card">
+            <span class="feature-card__num">3</span>
+            <h4>Presentation Mode Limits</h4>
+            <p>Figma was not built for live stage delivery with presenter notes, clicker compatibility, and seamless screen sharing.</p>
+          </div>
+          <div class="feature-card">
+            <span class="feature-card__num">4</span>
+            <h4>File Compatibility</h4>
+            <p>Clients and stakeholders expect .pptx or Google Slides files they can edit themselves.</p>
+          </div>
+          <div class="feature-card">
+            <span class="feature-card__num">5</span>
+            <h4>Ecosystem Lock-In</h4>
+            <p>Organizations have invested decades in presentation software infrastructure, templates, training, and workflows.</p>
+          </div>
+        </div>
         <p>Our challenge is not to fight the software. It&rsquo;s to master it.</p>
         <p>The best presentation designers do not complain about these limits. They find workarounds, push the software past its intended capabilities, and deliver exceptional work despite the constraints. That is part of the craft. We are not just designers, we are problem-solvers working within real business requirements. Yes, the software is flawed, and yes, it enables mediocre work at scale. But these tools are also the common language of business communication. Our job is to speak that language fluently while raising the standard of what is possible within it.</p>
       </div>
@@ -752,7 +829,7 @@ h1,h2,h3,h4,h5,h6{ margin:0 0 .5em; font-weight:700; line-height:1.15; }
         <p>The uncomfortable truth: sometimes we are these things, and that is fine at certain stages of a career.</p>
         <p>Everyone starts somewhere. Early on you will do production work, polish other people&rsquo;s ideas, and execute someone else&rsquo;s vision. That is not failure, it is the foundation. You learn the craft by doing the work, understanding the constraints, and mastering the tools. The problem is not starting as a production designer. The problem is staying there because you never developed the strategic skills, business acumen, and communication expertise to level up.</p>
         <p>The move from production to strategy requires:</p>
-        <ul>
+        <ul class="icon-list">
           <li>Asking better questions upfront (What is the goal? Who is the audience? What action do we want them to take?)</li>
           <li>Learning their language (mirroring common terms and acronyms builds familiarity and common ground)</li>
           <li>Understanding the business context behind the presentation (Why does this deck matter? What is at stake?)</li>
@@ -767,7 +844,7 @@ h1,h2,h3,h4,h5,h6{ margin:0 0 .5em; font-weight:700; line-height:1.15; }
       <div class="subsection">
         <h2>Why This Matters</h2>
         <p>If we let others define our craft, they will reduce it to busy work. They will compare us to the untrained person who threw slides together in an hour, not to the strategic communication designer who shapes narratives and drives outcomes. That is why we have to control the narrative.</p>
-        <ul>
+        <ul class="icon-list">
           <li>We are not slide decorators, we are communication architects.</li>
           <li>We do not just make things pretty, we make complex ideas accessible.</li>
           <li>We do not work in presentation software, we work in audience psychology, information hierarchy, and visual storytelling.</li>
@@ -798,7 +875,7 @@ h1,h2,h3,h4,h5,h6{ margin:0 0 .5em; font-weight:700; line-height:1.15; }
       <div class="subsection">
         <h2>Our Shared Traits</h2>
         <p>We come from different backgrounds, but certain traits define successful presentation designers.</p>
-        <ul>
+        <ul class="icon-list">
           <li>We adapt under constraints. Tight deadlines and last-minute changes are common, not because they are inevitable, but because most organizations do not yet have the systems to prevent them. Part of your job is to build those systems. Until then, the ability to stay calm, prioritize quickly, and deliver quality under pressure is a real professional asset.</li>
           <li>We operate autonomously. We are often the only presentation designer in a company, with no team to lean on for feedback or mentorship. We figure things out independently, build our own systems, and self-manage. That requires discipline, resourcefulness, and confidence in our own judgment.</li>
           <li>We&rsquo;re problem-solvers first, designers second. We care about aesthetics, but our real job is clarity. We take messy, complex information and make it understandable. We find the story buried in the data and translate jargon into human language. Design is the tool. Communication is the craft.</li>
@@ -867,7 +944,7 @@ h1,h2,h3,h4,h5,h6{ margin:0 0 .5em; font-weight:700; line-height:1.15; }
       <p>That has changed.</p>
       <p>Over the past decade the field has steadily expanded. Today the largest and most sophisticated companies, the Fortune 500 tech giants, consulting firms, and enterprise organizations, either run dedicated presentation design teams or invest heavily in agencies like Duarte. That is not coincidence, it is recognition. These companies understand that high-stakes communication requires specialized expertise, and they are willing to pay for it.</p>
       <p>I expect the trend to keep accelerating, for three reasons.</p>
-      <ul>
+      <ul class="icon-list">
         <li>The volume and complexity of presentations keeps rising. More remote work means more decks, more stakeholders mean more alignment presentations, and more competition means higher standards for sales and pitch materials.</li>
         <li>AI is accelerating the same pattern we have seen before. More people producing more slides with less skill. That raises the floor for everyone and widens the gap between generic output and genuinely strategic work. The designers who will feel AI most are the ones doing purely production work. The ones who will not are the ones who understand why a presentation needs to exist, who it is for, and what it needs to do. A prompt does not solve that.</li>
         <li>Companies are connecting presentation quality directly to business outcomes. A poorly designed investor deck can cost millions in lost funding, a confusing product launch can tank adoption, and a messy sales presentation loses deals. Organizations are starting to invest in the people who can deliver results.</li>
@@ -881,7 +958,7 @@ h1,h2,h3,h4,h5,h6{ margin:0 0 .5em; font-weight:700; line-height:1.15; }
       </div>
 
       <div class="inset-panel inset-panel--practice">
-        <span class="inset-panel__label">Put It Into Practice</span>
+        <span class="inset-panel__label"><svg viewBox="0 0 24 24"><path d="M13 21h8"/><path d="m15 5 4 4"/><path d="M21.174 6.812a1 1 0 0 0-3.986-3.987L3.842 16.174a2 2 0 0 0-.5.83l-1.321 4.352a.5.5 0 0 0 .623.622l4.353-1.32a2 2 0 0 0 .83-.497z"/></svg>Put It Into Practice</span>
         <p>Create a 3&ndash;5 slide deck on any topic you choose. This is intentionally open-ended. The goal is to capture where you&rsquo;re starting from, not to produce something polished.</p>
         <h6 style="font-family:var(--font-display); font-weight:700; color:var(--green-dim); font-size:13px; text-transform:uppercase; letter-spacing:.1em; margin-top:1em;">Topic Ideas</h6>
         <ul>
@@ -970,7 +1047,7 @@ h1,h2,h3,h4,h5,h6{ margin:0 0 .5em; font-weight:700; line-height:1.15; }
         <p>The audit is the most important part of my work, because I like to start client relationships with their templates. It is the most foundational piece of everything else. A strong template system unlocks consistency, efficiency, and brand integrity at scale. A weak one creates frustration, workarounds, and visual chaos.</p>
 
         <h4>Here Is What I Look For</h4>
-        <ul>
+        <ul class="lead-list">
           <li><b>User behavior:</b> What are their habits? How far do they stray from best practices? Where do they struggle? I look for patterns of misuse: slides clearly not designed for their content, overcrowded layouts, inconsistent formatting. This tells me what users need that the template is not providing.</li>
           <li><b>Patterns &amp; structure:</b> What slide types are most common? What layouts do users build repeatedly? Where are things breaking, revealing user-created workarounds instead of designed solutions? If I see the same makeshift slide built five different ways, that is a layout the template needs to include.</li>
           <li><b>Brand integrity:</b> Does the work authentically represent the brand, or does it look like an afterthought? Is the brand applied consistently, or does every team interpret it differently? Are there gaps between the official guidelines and what the template actually makes possible?</li>
@@ -978,7 +1055,7 @@ h1,h2,h3,h4,h5,h6{ margin:0 0 .5em; font-weight:700; line-height:1.15; }
 
         <h4>How I Execute the Audit</h4>
         <p>I search through a dozen or more decks from around the company or department and begin filtering down slide types until I have a clear collection of their most common needs. I document:</p>
-        <ul>
+        <ul class="icon-list">
           <li>The 10&ndash;15 most frequently used slide layouts</li>
           <li>Recurring content types (data tables, image grids, timelines, process diagrams, quotes, etc.)</li>
           <li>User pain points (slides that consistently look broken or inconsistent)</li>
@@ -995,7 +1072,7 @@ h1,h2,h3,h4,h5,h6{ margin:0 0 .5em; font-weight:700; line-height:1.15; }
       <div class="subsection">
         <h2>Audits Beyond Templates: Live Events</h2>
         <p>Audits are also essential in event work. When taking on a conference or keynote, I start by auditing:</p>
-        <ul>
+        <ul class="lead-list">
           <li><b>Previous years&rsquo; keynotes and breakout sessions:</b> What was the level of execution? What worked visually? What felt disconnected or rushed?</li>
           <li><b>Event branding and visual identity:</b> How cohesive was the brand experience across stages, signage, and digital assets?</li>
           <li><b>Production constraints:</b> Screen dimensions, AV capabilities, lighting conditions, file handoff processes.</li>
@@ -1013,7 +1090,7 @@ h1,h2,h3,h4,h5,h6{ margin:0 0 .5em; font-weight:700; line-height:1.15; }
       <div class="subsection">
         <h2>Turn Your Audit Into a Deliverable</h2>
         <p>Write your findings down, not just as personal notes but as a formatted document you can share. That turns subjective observations into a proposal. It is the difference between saying &ldquo;there are problems&rdquo; and showing the problems, their impact, and your recommended path forward. For each finding, capture:</p>
-        <ul>
+        <ul class="lead-list">
           <li><b>What I found.</b> Specific, observable problems (for example, &ldquo;there are 6 variations of themes found in the majority of user decks&rdquo;).</li>
           <li><b>Why it matters.</b> Business impact, not design opinion (&ldquo;this can lead to bloated files that stall in a live setting or result in brand inconsistency at scale.&rdquo;).</li>
           <li><b>What I recommend.</b> The fix and the effort level involved.</li>
@@ -1138,7 +1215,7 @@ h1,h2,h3,h4,h5,h6{ margin:0 0 .5em; font-weight:700; line-height:1.15; }
       <div class="subsection">
         <h2>Why They Have Not Unseated the Big Three Yet</h2>
         <p>They primarily serve startups, individuals, and solopreneurs rather than large brand teams. The structural barriers to enterprise adoption are real:</p>
-        <ul>
+        <ul class="icon-list">
           <li><b>Lack of template complexity and customization:</b> Enterprise brands need granular control over master slides, locked brand elements, and scalable systems.</li>
           <li><b>Limited integration with existing enterprise software ecosystems:</b> IT departments are heavily invested in Microsoft 365 or Google Workspace.</li>
           <li><b>Collaboration and permissions at scale:</b> Most lack the robust admin controls, SSO integration, and compliance features enterprises require.</li>
@@ -1158,7 +1235,7 @@ h1,h2,h3,h4,h5,h6{ margin:0 0 .5em; font-weight:700; line-height:1.15; }
       </div>
 
       <div class="inset-panel inset-panel--practice">
-        <span class="inset-panel__label">Put It Into Practice</span>
+        <span class="inset-panel__label"><svg viewBox="0 0 24 24"><path d="M13 21h8"/><path d="m15 5 4 4"/><path d="M21.174 6.812a1 1 0 0 0-3.986-3.987L3.842 16.174a2 2 0 0 0-.5.83l-1.321 4.352a.5.5 0 0 0 .623.622l4.353-1.32a2 2 0 0 0 .83-.497z"/></svg>Put It Into Practice</span>
         <p>Return to your Module 1 deck and run it through the five audit layers.</p>
         <p><b>For each finding, write down:</b></p>
         <ul>
@@ -1241,7 +1318,7 @@ h1,h2,h3,h4,h5,h6{ margin:0 0 .5em; font-weight:700; line-height:1.15; }
       <div class="callout">
         <div class="callout__inner">
           <span class="callout__tag">Instructions</span>
-          <ul>
+          <ul class="check-list">
             <li><b>Block your weekends.</b> Put a recurring calendar block on your weekends, marked &ldquo;Out of Office&rdquo; or &ldquo;Personal Time&rdquo;, visible to anyone who can book with you. This signals that weekends are non-negotiable unless there is a genuine emergency. Pushback on weekend time is a red flag for what is ahead.</li>
             <li><b>Block your evenings.</b> Put a daily block from 5 PM to 8 AM (adjust to your hours). This protects your mornings, evenings, and sleep, and prevents a 6 PM &ldquo;quick sync&rdquo; from derailing your night. This matters most for parents; carrying work stress into family time is its own cost.</li>
             <li><b>Decide which violations are worth it.</b> Not every boundary violation is worth fighting. If it is a genuinely business-critical Tier 3 project and a rare exception, you might flex. But if every project is urgent and every stakeholder expects instant turnaround, escalate with your manager and reset expectations.</li>
@@ -1258,7 +1335,7 @@ h1,h2,h3,h4,h5,h6{ margin:0 0 .5em; font-weight:700; line-height:1.15; }
 
       <h4>Why Boundaries Matter for Your Career</h4>
       <p>Boundaries are not selfish, they are professional.</p>
-      <ul>
+      <ul class="lead-list">
         <li><b>Prevents burnout:</b> Presentation design is high-pressure work with constant deadlines. Without boundaries, you&rsquo;ll burn out within a year and either leave the role or become resentful and disengaged.</li>
         <li><b>Trains stakeholders to plan better:</b> When you&rsquo;re always available for last-minute requests, stakeholders never learn to plan ahead. When you enforce boundaries, they start bringing you into projects earlier and thinking more strategically about timelines.</li>
         <li><b>Protects your quality of work:</b> Tired, overworked designers make mistakes. Rushed projects look rushed. When you protect your time, you protect the quality of your output, which protects your reputation.</li>
@@ -1277,7 +1354,7 @@ h1,h2,h3,h4,h5,h6{ margin:0 0 .5em; font-weight:700; line-height:1.15; }
       <p>With boundaries set, let&rsquo;s talk prioritization. It starts with intake: how work is requested and triaged. This is a partnership between you, your manager, and the system you all share. Before work begins, advocate for clarity on three things.</p>
 
       <h4>The Three Must-Haves for Every Request</h4>
-      <ul>
+      <ul class="lead-list">
         <li><b>What:</b> What is the format? What program? What is the scope (slide count, complexity, deliverables)?</li>
         <li><b>Why:</b> Why does this exist? What business need is it tied to? Why now? What is the intended outcome, and who is the audience?</li>
         <li><b>When and where:</b> When is it needed, and where will it live (internal meeting, client pitch, conference stage, email distribution)?</li>
@@ -1363,7 +1440,7 @@ h1,h2,h3,h4,h5,h6{ margin:0 0 .5em; font-weight:700; line-height:1.15; }
         <h2>Managing Stakeholders and Your Project Manager</h2>
         <p>Aside from intake, you need to understand people, and active listening is vital.</p>
         <p>Your best ally is your project manager, if you have one. Coach them to be your champion; they are the first line of defense between you and burnout. They need to understand, in explicit detail:</p>
-        <ul>
+        <ul class="icon-list">
           <li>Why this request is L and this one is S</li>
           <li>Why you need 3 weeks to complete vs. 2 days</li>
           <li>What trade-offs exist if timelines are compressed</li>
@@ -1377,7 +1454,7 @@ h1,h2,h3,h4,h5,h6{ margin:0 0 .5em; font-weight:700; line-height:1.15; }
         <div class="callout__inner">
           <span class="callout__tag">Instructions</span>
           <h6>Key Strategies</h6>
-          <ul>
+          <ul class="icon-list">
             <li>Educate stakeholders early on what good looks like and why it takes time</li>
             <li>Be transparent about capacity (visual roadmaps or capacity dashboards help)</li>
             <li>Offer alternatives when timelines are unrealistic (template-based solutions, phased delivery, scope reduction)</li>
@@ -1391,14 +1468,14 @@ h1,h2,h3,h4,h5,h6{ margin:0 0 .5em; font-weight:700; line-height:1.15; }
         <h2>Tracking Your Work: The Quarterly Recap</h2>
         <p>The most effective way to secure resources (more headcount, a contractor, protected time for high-value work) is not to ask for them. It is to show up with data that makes the case for you. Most presentation designers have no formal record of what they have done. They finish the work, move on, and when it is time to argue for a bigger scope or more support, they have nothing concrete to show. Fix that by tracking your work at a project level, not just a task level.</p>
         <h6>Include</h6>
-        <ul>
-          <li>Project name and stakeholder</li>
-          <li>Tier level (1, 2, or 3)</li>
-          <li>Size (S, M, L)</li>
-          <li>Dollar value of the deal it was tied to (if available, your Salesforce or CRM likely has this)</li>
-          <li>Hours spent</li>
-          <li>Outcome or impact (did the pitch close? did the event go smoothly? did the rebrand launch on time?)</li>
-        </ul>
+        <div class="tag-row">
+          <span class="tag-chip">Project name and stakeholder</span>
+          <span class="tag-chip">Tier level (1, 2, or 3)</span>
+          <span class="tag-chip">Size (S, M, L)</span>
+          <span class="tag-chip">Dollar value of the deal</span>
+          <span class="tag-chip">Hours spent</span>
+          <span class="tag-chip">Outcome or impact</span>
+        </div>
         <h6>Roundup</h6>
         <p>Once a quarter, build a 3 to 5 slide summary of this data, not as a performance review artifact but as a business case. Show the distribution: &ldquo;I spent 70% of my time on Tier 1 and Tier 2 work this quarter. The Tier 3 work I did was tied to 4.2 million dollars in pipeline. Here is what I need to shift that ratio.&rdquo;</p>
         <p>This is how you become the CEO of your own practice, in-house or freelance. You are not reporting hours, you are presenting the economics of your function and making a case for investment, in language executives understand. The data does not need to be perfect; rough numbers make the same point. What matters is that you show up with the analysis instead of waiting to be asked for it.</p>
@@ -1407,7 +1484,7 @@ h1,h2,h3,h4,h5,h6{ margin:0 0 .5em; font-weight:700; line-height:1.15; }
       </div>
 
       <div class="inset-panel inset-panel--practice">
-        <span class="inset-panel__label">Put It Into Practice</span>
+        <span class="inset-panel__label"><svg viewBox="0 0 24 24"><path d="M13 21h8"/><path d="m15 5 4 4"/><path d="M21.174 6.812a1 1 0 0 0-3.986-3.987L3.842 16.174a2 2 0 0 0-.5.83l-1.321 4.352a.5.5 0 0 0 .623.622l4.353-1.32a2 2 0 0 0 .83-.497z"/></svg>Put It Into Practice</span>
         <p>Revise your deck using the audit notes you wrote in Module 2. Focus on making it land for a specific audience. Aim for more than interest: a sense of recognition, something they&rsquo;d feel is their own.</p>
         <p>Then work backward. This is Scalability in practice.</p>
         <p>Imagine a company whose business relates to your topic wants to use this story. A presentation about your clumsy dog is now being used by a company that sells dog training courses.</p>
@@ -1483,7 +1560,7 @@ h1,h2,h3,h4,h5,h6{ margin:0 0 .5em; font-weight:700; line-height:1.15; }
         <p>Let&rsquo;s talk about master slides. Paralysis of choice is bad. Creating a template for every possible slide type is a recipe for failure.</p>
 
         <h6>Why Too Many Master Slides Is a Problem</h6>
-        <ul>
+        <ul class="lead-list">
           <li><b>File size bloat:</b> Templates become slow and unwieldy.</li>
           <li><b>Difficult to manage:</b> Updates and maintenance become nightmares.</li>
           <li><b>Confusing for users:</b> Scrolling through 50+ layout options with no clear strategy overwhelms people, and they default to blank slides instead.</li>
@@ -1514,7 +1591,7 @@ h1,h2,h3,h4,h5,h6{ margin:0 0 .5em; font-weight:700; line-height:1.15; }
         </div>
 
         <p>The way to manage this is to treat the template like a product with a roadmap, not a request queue. When a new layout is requested:</p>
-        <ul>
+        <ul class="lead-list">
           <li><b>Ask who else needs it:</b> If it&rsquo;s one person&rsquo;s edge case, it doesn&rsquo;t belong in the master template. It belongs in the slide library.</li>
           <li><b>Ask how often:</b> Frequency justifies inclusion. &ldquo;I&rsquo;ve needed this three times this month&rdquo; is different from &ldquo;I might need this someday.&rdquo;</li>
           <li><b>Name an owner:</b> Someone has to be responsible for what goes in the template. If you&rsquo;re not able to own that role long-term (common for freelancers), surface it explicitly during the engagement and help the client identify who should.</li>
@@ -1527,7 +1604,7 @@ h1,h2,h3,h4,h5,h6{ margin:0 0 .5em; font-weight:700; line-height:1.15; }
         <p>Whatever you choose, be consistent so users can predict where things are. In Google Slides, use alphanumeric or numerical naming for master slides, because it determines the order they appear when selecting a slide type. That one detail alone can make or break the UX of your template.</p>
         <p>Also: define type styles for every text hierarchy (title, subtitle, body, caption), lock theme colors so users cannot introduce off-brand colors, use placeholder text to guide content length and formatting, and build in alt text and accessibility features where possible. There is far more nuance to template building than one course can cover.</p>
         <h6>A Few Systems That Work</h6>
-        <ul>
+        <ul class="lead-list">
           <li><b>Numerical grouping:</b> 01_Title, 02_Section_Header, 03_Content_One_Column, 04_Content_Two_Column, 05_Image_Full_Bleed</li>
           <li><b>Alphanumeric grouping:</b> A1_Opening, A2_Agenda, B1_Content_Text_Heavy, B2_Content_Image_Heavy, C1_Data_Chart, C2_Data_Table</li>
           <li><b>Functional grouping:</b> Opening_Title, Opening_Agenda, Content_Text, Content_Image, Closing_Thank_You</li>
@@ -1557,7 +1634,7 @@ h1,h2,h3,h4,h5,h6{ margin:0 0 .5em; font-weight:700; line-height:1.15; }
             <span class="callout__tag">Freelancer</span>
             <p>For freelancers, the reskin is also a separate service worth pricing explicitly. Clients may not even think to ask what to do with their existing decks; most do not have the bandwidth to update hundreds of files and are hoping you will figure it out.</p>
             <p>You can fast-track replacement by reskinning all priority decks at launch, which is resource-intensive but highly effective.</p>
-            <ul>
+            <ul class="icon-list">
               <li>Identify the top 10 to 20 most frequently used decks (sales pitch decks, onboarding presentations, product overviews).</li>
               <li>Rebuild them in the new template.</li>
               <li>Launch the new template alongside the reskinned decks as examples.</li>
@@ -1580,19 +1657,19 @@ h1,h2,h3,h4,h5,h6{ margin:0 0 .5em; font-weight:700; line-height:1.15; }
         <h2>Launch Plan: Adoption Strategy</h2>
         <p>Launching a template is not a one-time event, it&rsquo;s a campaign.</p>
         <p><b>Pre-launch:</b></p>
-        <ul>
+        <ul class="icon-list">
           <li>Identify champions in each department who will advocate for the new template</li>
           <li>Run a beta test with a small group of power users</li>
           <li>Gather feedback and refine before wide release</li>
         </ul>
         <p><b>Launch:</b></p>
-        <ul>
+        <ul class="icon-list">
           <li>Host a live walkthrough or training session (record it for async viewing)</li>
           <li>Send an email announcement with clear benefits (faster slide creation, brand consistency, better-looking decks)</li>
           <li>Provide a quick-start guide or one-pager that shows the most common use cases</li>
         </ul>
         <p><b>Post-launch:</b></p>
-        <ul>
+        <ul class="icon-list">
           <li>Offer office hours for troubleshooting and questions</li>
           <li>Create a feedback loop (Slack channel, form, regular check-ins)</li>
           <li>Track adoption metrics (how many people are using the new template vs. old ones)</li>
@@ -1609,7 +1686,7 @@ h1,h2,h3,h4,h5,h6{ margin:0 0 .5em; font-weight:700; line-height:1.15; }
           <div class="callout__inner">
             <span class="callout__tag">Freelancer</span>
             <h4>For Freelancers, the Playbook</h4>
-            <ul>
+            <ul class="icon-list">
               <li>Watch for companies announcing rebrands on LinkedIn</li>
               <li>Find the internal marketing lead or creative director (not the brand agency)</li>
               <li>Your opening is simple: &ldquo;I saw your rebrand launched. I work with organizations to build presentation systems that match the new brand and actually get adopted internally. Companies typically have a backlog of existing decks that need updating alongside the new template. Worth a 20-minute call?&rdquo;</li>
@@ -1626,20 +1703,20 @@ h1,h2,h3,h4,h5,h6{ margin:0 0 .5em; font-weight:700; line-height:1.15; }
           <h2>Extra Credit Enablement: Where You Shine</h2>
           <p>This is where you go from &ldquo;good template designer&rdquo; to &ldquo;indispensable strategic partner.&rdquo; The goal: Make it so easy to use the template correctly that doing it wrong feels harder.</p>
           <p><b>Upfront instructions in the template</b></p>
-          <ul>
+          <ul class="icon-list">
             <li>Overview of slide types and when to use them</li>
             <li>Tips for maintaining brand consistency</li>
             <li>Common mistakes to avoid</li>
           </ul>
           <p><b>Link out to resources</b></p>
-          <ul>
+          <ul class="icon-list">
             <li>Brand guidelines and logo files</li>
             <li>Image libraries (stock photography, brand imagery)</li>
             <li>Tips and tricks documentation</li>
             <li>Video tutorials or walkthroughs</li>
           </ul>
           <p><b>Ongoing support</b></p>
-          <ul>
+          <ul class="icon-list">
             <li>Monthly template tips (email or Slack updates)</li>
             <li>&ldquo;Slide of the Month&rdquo; showcasing great examples from across the org</li>
             <li>Template update changelogs (so users know what&rsquo;s new)</li>
@@ -1683,7 +1760,7 @@ h1,h2,h3,h4,h5,h6{ margin:0 0 .5em; font-weight:700; line-height:1.15; }
       </div>
 
       <div class="inset-panel inset-panel--practice">
-        <span class="inset-panel__label">Put It Into Practice</span>
+        <span class="inset-panel__label"><svg viewBox="0 0 24 24"><path d="M13 21h8"/><path d="m15 5 4 4"/><path d="M21.174 6.812a1 1 0 0 0-3.986-3.987L3.842 16.174a2 2 0 0 0-.5.83l-1.321 4.352a.5.5 0 0 0 .623.622l4.353-1.32a2 2 0 0 0 .83-.497z"/></svg>Put It Into Practice</span>
         <p>Return to your deck and convert it into a template, not a finished deck.</p>
         <p>This means:</p>
         <ul>
@@ -1769,13 +1846,33 @@ h1,h2,h3,h4,h5,h6{ margin:0 0 .5em; font-weight:700; line-height:1.15; }
 
       <p>The stakes are higher, the timelines tighter, and the number of stakeholders multiplies. That is why events require dedicated systems and protocols.</p>
       <p>The goal of event design is control of:</p>
-      <ul>
-        <li><b>Information:</b> What&rsquo;s true? What&rsquo;s decided? What&rsquo;s changing?</li>
-        <li><b>Versions:</b> Which deck is final? Who has edit access?</li>
-        <li><b>Feedback:</b> How does input flow? Who approves?</li>
-        <li><b>Timing:</b> What&rsquo;s locked when? What milestones matter?</li>
-        <li><b>Decision-making:</b> Who owns the call? Who breaks ties?</li>
-      </ul>
+      <div class="feature-grid">
+        <div class="feature-card">
+          <span class="feature-card__num">1</span>
+          <h4>Information</h4>
+          <p>What&rsquo;s true? What&rsquo;s decided? What&rsquo;s changing?</p>
+        </div>
+        <div class="feature-card">
+          <span class="feature-card__num">2</span>
+          <h4>Versions</h4>
+          <p>Which deck is final? Who has edit access?</p>
+        </div>
+        <div class="feature-card">
+          <span class="feature-card__num">3</span>
+          <h4>Feedback</h4>
+          <p>How does input flow? Who approves?</p>
+        </div>
+        <div class="feature-card">
+          <span class="feature-card__num">4</span>
+          <h4>Timing</h4>
+          <p>What&rsquo;s locked when? What milestones matter?</p>
+        </div>
+        <div class="feature-card">
+          <span class="feature-card__num">5</span>
+          <h4>Decision-Making</h4>
+          <p>Who owns the call? Who breaks ties?</p>
+        </div>
+      </div>
       <p>That control comes from process. Everything in this section ladders into creating it.</p>
 
       <div class="subsection">
@@ -1827,14 +1924,14 @@ h1,h2,h3,h4,h5,h6{ margin:0 0 .5em; font-weight:700; line-height:1.15; }
       <p><b>Format:</b> Google Slides</p>
       <p><b>Purpose:</b> The first impression of the event, a high-level collaborative deck that organizes foundational details.</p>
       <p><b>Includes:</b></p>
-      <ul>
-        <li>Event details (venue, date, time, goals)</li>
-        <li>Attendees/Audience profile</li>
-        <li>Content topics/Agenda</li>
-        <li>Speakers/Sessions</li>
-        <li>Team and DRIs (decision-makers and owners)</li>
-        <li>Announcements and key milestones</li>
-      </ul>
+      <div class="tag-row">
+        <span class="tag-chip">Event details</span>
+        <span class="tag-chip">Attendees/Audience profile</span>
+        <span class="tag-chip">Content topics/Agenda</span>
+        <span class="tag-chip">Speakers/Sessions</span>
+        <span class="tag-chip">Team and DRIs</span>
+        <span class="tag-chip">Announcements and key milestones</span>
+      </div>
       <p><b>Who uses it:</b> Anyone looking to understand what this event is shaping up to be. This is your &ldquo;send this link to new stakeholders&rdquo; resource.</p>
       <p><b>Why it matters:</b> Without this, every new person joining the project asks the same questions repeatedly. This deck answers them once.</p>
       <p><b>Who owns it:</b> This is typically owned by the events team and rarely requires your involvement to produce.</p>
@@ -1843,14 +1940,38 @@ h1,h2,h3,h4,h5,h6{ margin:0 0 .5em; font-weight:700; line-height:1.15; }
       <p><b>Format:</b> Google Sheets</p>
       <p><b>Purpose:</b> A central doc to iron out all concrete production details. This is where your team and production partners align on the single source of truth for execution.</p>
       <p><b>Tabs to include:</b></p>
-      <ul>
-        <li><b>Team and owners:</b> Who&rsquo;s responsible for what</li>
-        <li><b>Production run of show:</b> Minute-by-minute timeline</li>
-        <li><b>Creative tracker:</b> Status of all visual deliverables</li>
-        <li><b>Rehearsal schedule:</b> Table reads, walkthroughs, tech rehearsals</li>
-        <li><b>Key milestones:</b> Script locks, design freezes, load-in dates</li>
-        <li><b>Onsite schedule:</b> Who needs to be where and when</li>
-      </ul>
+      <div class="feature-grid feature-grid--3col">
+        <div class="feature-card">
+          <span class="feature-card__num">1</span>
+          <h4>Team and Owners</h4>
+          <p>Who&rsquo;s responsible for what</p>
+        </div>
+        <div class="feature-card">
+          <span class="feature-card__num">2</span>
+          <h4>Production Run of Show</h4>
+          <p>Minute-by-minute timeline</p>
+        </div>
+        <div class="feature-card">
+          <span class="feature-card__num">3</span>
+          <h4>Creative Tracker</h4>
+          <p>Status of all visual deliverables</p>
+        </div>
+        <div class="feature-card">
+          <span class="feature-card__num">4</span>
+          <h4>Rehearsal Schedule</h4>
+          <p>Table reads, walkthroughs, tech rehearsals</p>
+        </div>
+        <div class="feature-card">
+          <span class="feature-card__num">5</span>
+          <h4>Key Milestones</h4>
+          <p>Script locks, design freezes, load-in dates</p>
+        </div>
+        <div class="feature-card">
+          <span class="feature-card__num">6</span>
+          <h4>Onsite Schedule</h4>
+          <p>Who needs to be where and when</p>
+        </div>
+      </div>
       <p><b>Who uses it:</b> Production team, AV partners, venue staff, designers, content leads.</p>
       <p><b>Why it matters:</b> This is your operational command center. If it&rsquo;s not in the workbook, it doesn&rsquo;t exist.</p>
       <p><b>Who owns it:</b> This is owned by the Project/Events Manager, but requires individual owners for each work-stream. In your case it&rsquo;s the creative deliverables of the presentation. You don&rsquo;t typically own anything else, but should be heavily invested in the run-of-show and general scheduling as they impact your deliverables and timing.</p>
@@ -1859,7 +1980,7 @@ h1,h2,h3,h4,h5,h6{ margin:0 0 .5em; font-weight:700; line-height:1.15; }
       <p><b>Format:</b> Google Docs</p>
       <p><b>Purpose:</b> The most critical artifact. All content stakeholders align on and work from this as the source of truth for keynotes.</p>
       <p><b>Functions:</b></p>
-      <ul>
+      <ul class="icon-list">
         <li>Centralizes content decisions</li>
         <li>Tracks narrative changes</li>
         <li>Aligns content and creative</li>
@@ -1867,22 +1988,22 @@ h1,h2,h3,h4,h5,h6{ margin:0 0 .5em; font-weight:700; line-height:1.15; }
         <li>Eliminates parallel documents</li>
       </ul>
       <p><b>Includes:</b></p>
-      <ul>
-        <li>Official keynote title</li>
-        <li>Speaker names and bios</li>
-        <li>Space for creative review (designers comment here)</li>
-        <li>Space for content sign-off (sign-off boxes at top to indicate approval)</li>
-        <li>Space for adding feedback (comments mode for collaborative editing)</li>
-        <li>Space for demo content (if live demos are part of the keynote)</li>
-        <li>Link to final deck location</li>
-        <li>Gated access (Suggestion Only mode during final phases)</li>
-      </ul>
+      <div class="tag-row">
+        <span class="tag-chip">Official keynote title</span>
+        <span class="tag-chip">Speaker names and bios</span>
+        <span class="tag-chip">Space for creative review</span>
+        <span class="tag-chip">Space for content sign-off</span>
+        <span class="tag-chip">Space for adding feedback</span>
+        <span class="tag-chip">Space for demo content</span>
+        <span class="tag-chip">Link to final deck location</span>
+        <span class="tag-chip">Gated access</span>
+      </div>
 
       <div class="callout">
         <div class="callout__inner">
           <span class="callout__tag">Takeaway</span>
           <h6>The Script Is Where</h6>
-          <ul>
+          <ul class="icon-list">
             <li>Content owners commit</li>
             <li>Creative reviews happen</li>
             <li>Feedback is captured</li>
@@ -1900,7 +2021,7 @@ h1,h2,h3,h4,h5,h6{ margin:0 0 .5em; font-weight:700; line-height:1.15; }
         <h2>Why &ldquo;Just Share the Deck&rdquo; Breaks Everything</h2>
         <p>Here&rsquo;s a common mistake: sharing editable keynote files too early. Sharing editable files early is the single fastest way to lose the control you just built.</p>
         <h6>What Happens When You Do This</h6>
-        <ul>
+        <ul class="icon-list">
           <li><b>Silent edits:</b> People make changes without any form of documentation</li>
           <li><b>Conflicting feedback:</b> Multiple people editing simultaneously with different directions</li>
           <li><b>Version confusion:</b> Which file is the latest? Who has what version?</li>
@@ -1908,7 +2029,7 @@ h1,h2,h3,h4,h5,h6{ margin:0 0 .5em; font-weight:700; line-height:1.15; }
           <li><b>Last-minute surprises:</b> Changes you didn&rsquo;t know about surface during rehearsal</li>
         </ul>
         <h6>A Better Model</h6>
-        <ul>
+        <ul class="lead-list">
           <li><b>Early collaboration happens in the script:</b> All stakeholders work from the same Google Doc</li>
           <li><b>Design rounds are time-stamped:</b> Version 1, Version 2, Version 3 with clear dates</li>
           <li><b>Feedback is routed intentionally:</b> Comments in the script, reviews in scheduled meetings</li>
@@ -1942,14 +2063,14 @@ h1,h2,h3,h4,h5,h6{ margin:0 0 .5em; font-weight:700; line-height:1.15; }
         <h2>Locking the Script</h2>
         <p>When multiple stakeholders collaborate at all hours, you will struggle to keep up. Pre-scheduling times to lock the script lets creative keep pace with content, which matters for rehearsals and day-to-day accuracy.</p>
         <h6>Locking the Script</h6>
-        <ul>
+        <ul class="icon-list">
           <li>Forces alignment (everyone must commit to what&rsquo;s in the doc)</li>
           <li>Creates a decision boundary (no more major changes after this point)</li>
           <li>Protects the final stretch (designers can finalize without chasing moving targets)</li>
           <li>Enables rehearsal confidence (speakers practice the actual content they&rsquo;ll deliver)</li>
         </ul>
         <h6>When the Script Is Locked</h6>
-        <ul>
+        <ul class="icon-list">
           <li>Feedback becomes discussion, not edits</li>
           <li>Changes move to verbal communication (in-person or scheduled calls)</li>
           <li>Designers own the final artifact</li>
@@ -1970,7 +2091,7 @@ h1,h2,h3,h4,h5,h6{ margin:0 0 .5em; font-weight:700; line-height:1.15; }
         <h6>Comms Internal Kickoff</h6>
         <p>Communicate the official start of event production, the process, key members, and capacity planning.</p>
         <p><b>Topics covered:</b></p>
-        <ul>
+        <ul class="icon-list">
           <li>Who (team roles)</li>
           <li>What (event scope and goals)</li>
           <li>Where (venue details)</li>
@@ -1981,7 +2102,7 @@ h1,h2,h3,h4,h5,h6{ margin:0 0 .5em; font-weight:700; line-height:1.15; }
 
         <p><b>Internal Partner Kickoff:</b> Align with cross-functional partners (product, marketing, sales, policy) on the event process and rules of engagement.</p>
         <p><b>Topics covered:</b></p>
-        <ul>
+        <ul class="icon-list">
           <li>Who&rsquo;s involved and their roles</li>
           <li>What we&rsquo;re building toward</li>
           <li>Where collaboration happens (script template, workbook)</li>
@@ -1992,7 +2113,7 @@ h1,h2,h3,h4,h5,h6{ margin:0 0 .5em; font-weight:700; line-height:1.15; }
 
         <p><b>Exec Kickoff (Agile):</b> A more agile effort to get the message in front of captive exec and EA attention. This is where you build relationships with leadership and set expectations.</p>
         <p><b>Topics covered:</b></p>
-        <ul>
+        <ul class="icon-list">
           <li>Time commitment required from execs</li>
           <li>Key DRIs and who they&rsquo;ll work with</li>
           <li>Agreed-upon milestones (script review dates, rehearsal dates)</li>
@@ -2007,7 +2128,7 @@ h1,h2,h3,h4,h5,h6{ margin:0 0 .5em; font-weight:700; line-height:1.15; }
         <h6>Process Owners Check-Ins (Weekly Cadence)</h6>
         <p>Regular check-ins with process owners/collaborators to ensure blockers are removed and the process is protected.</p>
         <p><b>Topics covered:</b></p>
-        <ul>
+        <ul class="icon-list">
           <li>Adherence to key artifacts (are people using the script template?)</li>
           <li>Timeline concerns (are we on track?)</li>
           <li>&ldquo;Downed helicopters&rdquo; (what&rsquo;s stalling progress and who can clear it?)</li>
@@ -2018,7 +2139,7 @@ h1,h2,h3,h4,h5,h6{ margin:0 0 .5em; font-weight:700; line-height:1.15; }
 
         <p><b>Content Reviews:</b> Check-ins on content progress, including re-committing to timelines every time. Design is included in these meetings. If possible, this should take place shortly after each exec review.</p>
         <p><b>Topics covered:</b></p>
-        <ul>
+        <ul class="icon-list">
           <li>Content updates (what&rsquo;s changed since last review?)</li>
           <li>Parallel workflows (demos, videos, graphics in progress)</li>
           <li>Demos (live demo walkthroughs and technical requirements)</li>
@@ -2027,7 +2148,7 @@ h1,h2,h3,h4,h5,h6{ margin:0 0 .5em; font-weight:700; line-height:1.15; }
 
         <p><b>Creative Reviews:</b> Check-ins on design progress, including re-committing to timelines every time. This should take place at least 24 hours prior to exec reviews and/or rehearsals.</p>
         <p><b>Topics covered:</b></p>
-        <ul>
+        <ul class="icon-list">
           <li>Creative concepts (visual direction, theme, storytelling approach)</li>
           <li>Presentation functionality (transitions, animations, technical execution)</li>
           <li>Expectations (are we aligned on what &ldquo;done&rdquo; looks like?)</li>
@@ -2040,7 +2161,7 @@ h1,h2,h3,h4,h5,h6{ margin:0 0 .5em; font-weight:700; line-height:1.15; }
         <h6>Practice Makes Perfect</h6>
         <p>Rehearsals are not optional. They are part of the design process.</p>
         <p><b>Good rehearsals:</b></p>
-        <ul>
+        <ul class="icon-list">
           <li>Reveal broken pacing</li>
           <li>Expose unclear visuals</li>
           <li>Surface narrative gaps</li>
@@ -2051,35 +2172,35 @@ h1,h2,h3,h4,h5,h6{ margin:0 0 .5em; font-weight:700; line-height:1.15; }
 
         <h6>Prior to Onsite</h6>
         <p><b>Table Read #1: Content Focus</b></p>
-        <ul>
+        <ul class="icon-list">
           <li>Focus: Script clarity, narrative flow, messaging alignment</li>
           <li>No visuals yet, just reading through content</li>
         </ul>
         <p><b>Table Read #2: Content + Creative</b></p>
-        <ul>
+        <ul class="icon-list">
           <li>Focus: Content with initial visual concepts</li>
           <li>Designers present early creative direction</li>
         </ul>
         <p><b>Rehearsal #1 (Full Production in Forum/Office)</b></p>
-        <ul>
+        <ul class="icon-list">
           <li>Focus: Full run-through with slides, timing, and production elements</li>
           <li>This is the stress test. Find what breaks before you&rsquo;re onsite</li>
         </ul>
         <p><b>Table Read #3: Unofficial Rehearsal (Optional)</b></p>
-        <ul>
+        <ul class="icon-list">
           <li>Password-protected keynote files can be shared with presenters for practicing</li>
           <li>This ensures any changes are communicated directly back to design to avoid version control issues</li>
         </ul>
 
         <h6>Officially Onsite</h6>
         <p><b>Keynote Room: Full Onstage Run-Through</b></p>
-        <ul>
+        <ul class="icon-list">
           <li>Full production environment (stage, screens, AV, lighting)</li>
           <li>Script notes and edits managed live</li>
           <li>Production details finalized (clicker compatibility, screen dimensions, fallback plans)</li>
         </ul>
         <p><b>Offline Room: Quiet Refinement Space</b></p>
-        <ul>
+        <ul class="icon-list">
           <li>Quiet space to refine slides with design partners and practice clicking through</li>
           <li>Secure environment to facilitate final adjustments 24 hours before showtime</li>
           <li>No distractions, just presenters, designers, and final polish</li>
@@ -2090,7 +2211,7 @@ h1,h2,h3,h4,h5,h6{ margin:0 0 .5em; font-weight:700; line-height:1.15; }
         <h2>Working Onsite as a Production Team</h2>
         <p>Once you&rsquo;re on-site, the process shifts. You&rsquo;re no longer iterating freely. You&rsquo;re in a controlled environment where every change has to be tracked, owned, and confirmed. Even small events benefit from role clarity. You may hold multiple roles, and that&rsquo;s fine. What matters is that ownership is explicit, responsibilities are understood, and decisions have a home. Ambiguity creates panic.</p>
         <p>At minimum, someone must own:</p>
-        <ul>
+        <ul class="lead-list">
           <li><b>Content decisions:</b> Who approves script changes?</li>
           <li><b>Creative execution:</b> Who owns the visual design?</li>
           <li><b>Production logistics:</b> Who coordinates with AV/venue?</li>
@@ -2124,7 +2245,7 @@ h1,h2,h3,h4,h5,h6{ margin:0 0 .5em; font-weight:700; line-height:1.15; }
       <div class="subsection">
         <h2>Version Control Onsite Is a Handoff Protocol</h2>
         <p>The moment the file leaves your hands and goes to the graphics operator, you lose direct control. That is fine, but it requires a clear process:</p>
-        <ul>
+        <ul class="icon-list">
           <li>You send the graphics operator the final version. That is the working file. No one else has edit access.</li>
           <li>During rehearsal, the operator handles in-the-moment changes (click timing, minor speaker-note edits), logged in an edits tracker: the change, who requested it, confirmed or pending.</li>
           <li>After each rehearsal pass, the operator returns the file with all tracked edits. You review, make design-level adjustments, and send back a clean version. That becomes the new working file.</li>
@@ -2139,7 +2260,7 @@ h1,h2,h3,h4,h5,h6{ margin:0 0 .5em; font-weight:700; line-height:1.15; }
     <article class="second-block reveal" id="m5-s4" data-nav-id="m5-s4">
       <h1><span class="h1-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 3v18"/><path d="m19 8 3 8a5 5 0 0 1-6 0zV7"/><path d="M3 7h1a17 17 0 0 0 8-2 17 17 0 0 0 8 2h1"/><path d="m5 8 3 8a5 5 0 0 1-6 0zV7"/><path d="M7 21h10"/></svg></span>The Laws of the Land</h1>
       <p>These principles keep event production from collapsing. Most restate what is above; keep them in one place as your non-negotiables.</p>
-      <ul>
+      <ul class="icon-list">
         <li><b>The script template is sacred:</b> One per session or deck, no exceptions. If it is not in the script, it is not happening.</li>
         <li><b>Content and creative partnership:</b> They co-develop from the start. The anti-pattern, where content writes the script and throws it over the wall to designers, produces mediocre work.</li>
         <li><b>Closing the script:</b> 48 to 72 hours before the event, changes stop and only approved edits get through. Start enforcing in-person communication and strict file ownership.</li>
@@ -2152,7 +2273,7 @@ h1,h2,h3,h4,h5,h6{ margin:0 0 .5em; font-weight:700; line-height:1.15; }
         <h2>Event Checklist</h2>
         <p>Before you start designing, confirm these details.</p>
         <p><b>Pre-Production:</b></p>
-        <ul>
+        <ul class="check-list">
           <li>Confirm screen dimensions and types early (16:9, 16:10, ultrawide?)</li>
           <li>Kick off with the AV/production team and agree on file formats and timelines</li>
           <li>Review venue renderings and, if possible, visit the site to check sightlines. You don&rsquo;t want to find out 2 days before the event half of your content is too low on the screen to be visible.</li>
@@ -2160,21 +2281,21 @@ h1,h2,h3,h4,h5,h6{ margin:0 0 .5em; font-weight:700; line-height:1.15; }
           <li>Plan vendor/contractor engagement: decide which tasks will be outsourced and build relationships early</li>
         </ul>
         <p><b>Technical:</b></p>
-        <ul>
+        <ul class="check-list">
           <li>Agree on primary software (Keynote, PowerPoint, Google Slides)</li>
           <li>Document Keynote &rarr; Google Slides conversion process (if needed; lean on contractors for labor-intensive conversions)</li>
           <li>Test clicker compatibility with presentation software</li>
           <li>Create backup plan for technical failures (USB drives, cloud backup, secondary laptop)</li>
         </ul>
         <p><b>Onsite:</b></p>
-        <ul>
+        <ul class="check-list">
           <li>Do a final click-through at the venue to test transitions and cues</li>
           <li>Confirm lighting conditions (will slides be readable?) Is pure white too bright?</li>
           <li>Test audio/video playback</li>
           <li>Walk through presenter entrances, exits, and stage blocking</li>
         </ul>
         <p><b>Post-Event:</b></p>
-        <ul>
+        <ul class="check-list">
           <li>Run a post-mortem: capture feedback, list session titles/speakers, note what worked</li>
           <li>File recap slides for future reference</li>
           <li>Archive all versions of scripts, decks, and production docs</li>
@@ -2185,7 +2306,7 @@ h1,h2,h3,h4,h5,h6{ margin:0 0 .5em; font-weight:700; line-height:1.15; }
         <h2>Common Failure Patterns</h2>
         <p>These are not event problems, they are process problems, and your value is spotting them early and redirecting quietly.</p>
         <p><b>Watch for:</b></p>
-        <ul>
+        <ul class="icon-list">
           <li>Multiple versions of the same content (script in Docs, slides in Keynote, notes in Slack)</li>
           <li>Unclear decision-makers</li>
           <li>Feedback arriving in side channels (DMs, hallways, email instead of centralized comments)</li>
@@ -2199,7 +2320,7 @@ h1,h2,h3,h4,h5,h6{ margin:0 0 .5em; font-weight:700; line-height:1.15; }
         <div class="callout__inner">
           <span class="callout__tag">Instructions</span>
           <p><b>When things go wrong, and they will, work this decision tree:</b></p>
-          <ul>
+          <ul class="icon-list">
             <li>Can it be resolved or negotiated today? If a person can unlock it, call, text, or find them onsite.</li>
             <li>Can we pivot the workflow to meet expectations? Adjust milestones, shift resources, compress timelines where possible.</li>
             <li>Can we strategize the level of delivery across projects? Re-prioritize, simplifying or deprioritizing to protect the hero moments.</li>
@@ -2213,38 +2334,48 @@ h1,h2,h3,h4,h5,h6{ margin:0 0 .5em; font-weight:700; line-height:1.15; }
     <article class="second-block reveal" id="m5-s5" data-nav-id="m5-s5">
       <h1><span class="h1-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M10 14.66v1.626a2 2 0 0 1-.976 1.696A5 5 0 0 0 7 21.978"/><path d="M14 14.66v1.626a2 2 0 0 0 .976 1.696A5 5 0 0 1 17 21.978"/><path d="M18 9h1.5a1 1 0 0 0 0-5H18"/><path d="M4 22h16"/><path d="M6 9a6 6 0 0 0 12 0V3a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1z"/><path d="M6 9H4.5a1 1 0 0 1 0-5H6"/></svg></span>What Success Looks Like</h1>
       <p>When event production is done well, you achieve:</p>
-      <p><b>For the organization:</b></p>
-      <ul>
-        <li>Streamlined content development</li>
-        <li>Informed and transparent collaboration</li>
-        <li>Building a habit of alignment across teams</li>
-      </ul>
-      <p><b>For the speakers:</b></p>
-      <ul>
-        <li>Confidence in their material</li>
-        <li>Rehearsed, polished delivery</li>
-        <li>Trust in the creative team supporting them</li>
-      </ul>
-      <p><b>For the audience:</b></p>
-      <ul>
-        <li>Clear, compelling storytelling</li>
-        <li>Memorable visual experience</li>
-        <li>Trust in the brand presenting</li>
-      </ul>
-      <p><b>For you (the designer):</b></p>
-      <ul>
-        <li>Predictable, repeatable process</li>
-        <li>Reduced stress and last-minute chaos</li>
-        <li>Professional growth and portfolio-worthy work</li>
-        <li>Recognition as a strategic partner, not just a production hand</li>
-      </ul>
+      <div class="feature-grid">
+        <div class="feature-card">
+          <h4>For the Organization</h4>
+          <ul>
+            <li>Streamlined content development</li>
+            <li>Informed and transparent collaboration</li>
+            <li>Building a habit of alignment across teams</li>
+          </ul>
+        </div>
+        <div class="feature-card">
+          <h4>For the Speakers</h4>
+          <ul>
+            <li>Confidence in their material</li>
+            <li>Rehearsed, polished delivery</li>
+            <li>Trust in the creative team supporting them</li>
+          </ul>
+        </div>
+        <div class="feature-card">
+          <h4>For the Audience</h4>
+          <ul>
+            <li>Clear, compelling storytelling</li>
+            <li>Memorable visual experience</li>
+            <li>Trust in the brand presenting</li>
+          </ul>
+        </div>
+        <div class="feature-card">
+          <h4>For You (the Designer)</h4>
+          <ul>
+            <li>Predictable, repeatable process</li>
+            <li>Reduced stress and last-minute chaos</li>
+            <li>Professional growth and portfolio-worthy work</li>
+            <li>Recognition as a strategic partner, not just a production hand</li>
+          </ul>
+        </div>
+      </div>
       <p><b>Remember:</b> The event will happen. Then it will end. Your job is to create the conditions for it to succeed, not through heroics, but through steady, reliable process.</p>
 
       <div class="subsection">
         <h2>Exercise: Event Scenario Walkthrough</h2>
         <p>You&rsquo;re supporting a keynote happening in three weeks.</p>
         <p><b>The situation:</b></p>
-        <ul>
+        <ul class="icon-list">
           <li>The CEO hasn&rsquo;t reviewed content</li>
           <li>Marketing wants brand control</li>
           <li>Product wants more demos</li>
@@ -2252,7 +2383,7 @@ h1,h2,h3,h4,h5,h6{ margin:0 0 .5em; font-weight:700; line-height:1.15; }
           <li>Everyone says it&rsquo;s urgent</li>
         </ul>
         <p><b>Your task:</b></p>
-        <ul>
+        <ul class="icon-list">
           <li>Identify the single source of truth. Where will all content and decisions live?</li>
           <li>Define when the script locks. When do changes stop?</li>
           <li>Decide how feedback flows. What&rsquo;s the process for reviews and approvals?</li>
@@ -2261,7 +2392,7 @@ h1,h2,h3,h4,h5,h6{ margin:0 0 .5em; font-weight:700; line-height:1.15; }
         </ul>
         <p>There is no perfect answer. There are only controlled ones.</p>
         <p><b>Walk through this scenario and document your approach. Consider:</b></p>
-        <ul>
+        <ul class="icon-list">
           <li>What artifacts do you create first?</li>
           <li>Who do you meet with and in what order?</li>
           <li>What boundaries do you set?</li>
@@ -2270,7 +2401,7 @@ h1,h2,h3,h4,h5,h6{ margin:0 0 .5em; font-weight:700; line-height:1.15; }
       </div>
 
       <div class="inset-panel inset-panel--practice">
-        <span class="inset-panel__label">Put It Into Practice</span>
+        <span class="inset-panel__label"><svg viewBox="0 0 24 24"><path d="M13 21h8"/><path d="m15 5 4 4"/><path d="M21.174 6.812a1 1 0 0 0-3.986-3.987L3.842 16.174a2 2 0 0 0-.5.83l-1.321 4.352a.5.5 0 0 0 .623.622l4.353-1.32a2 2 0 0 0 .83-.497z"/></svg>Put It Into Practice</span>
         <p>Using the script template provided in the Resources section, translate your deck into a script.</p>
         <p><b>For each slide:</b></p>
         <ul>
@@ -2358,7 +2489,7 @@ h1,h2,h3,h4,h5,h6{ margin:0 0 .5em; font-weight:700; line-height:1.15; }
       <h1><span class="h1-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M16 7h6v6"/><path d="m22 7-8.5 8.5-5-5L2 17"/></svg></span>The Core Career Shift: From Production to Partnership</h1>
       <p>Every presentation designer starts in production. That is not a failure, it is the apprenticeship.</p>
       <p><b>Early-stage work looks like:</b></p>
-      <ul>
+      <ul class="icon-list">
         <li>Formatting</li>
         <li>Cleanup</li>
         <li>Brand compliance</li>
@@ -2370,7 +2501,7 @@ h1,h2,h3,h4,h5,h6{ margin:0 0 .5em; font-weight:700; line-height:1.15; }
       <div class="subsection">
         <h2>How Designers Actually Move Upstream</h2>
         <p>Designers do not move upstream by declaring themselves strategic. They move upstream by being useful first.</p>
-        <ul>
+        <ul class="icon-list">
           <li><b>Serve the immediate need well.</b> Do the work cleanly, be reliable, reduce friction, show up on time, and deliver what you said you would. This builds trust.</li>
           <li><b>Overdeliver selectively.</b> Not by making more slides, but by noticing patterns, gaps, and inefficiencies and quietly improving them. You notice the same slide type built manually across decks, so you add it to the template. You see stakeholders confused about the review process, so you document it.</li>
           <li><b>Ask better questions.</b> Stop asking what they want it to look like. Start asking why it exists, who it is for, what happens if it fails, and what decision you are trying to enable. Better questions reveal deeper problems, and deeper problems create opportunities for strategic value.</li>
@@ -2500,7 +2631,7 @@ h1,h2,h3,h4,h5,h6{ margin:0 0 .5em; font-weight:700; line-height:1.15; }
           <p>Most freelance relationships are transactional by default. The client sends work, you do it, you invoice, and the relationship depends entirely on them continuing to have work and continuing to think of you. There is a better model, and it starts with a foundational piece of work that lives inside the company, that they use every day, and that only you fully understand.</p>
           <p>A well-built template system is that thing.</p>
           <p>When you build a company&rsquo;s presentation template, you build context that&rsquo;s difficult to replicate:</p>
-          <ul>
+          <ul class="icon-list">
             <li>You know why every layout exists</li>
             <li>You know which user behaviors it was designed to account for</li>
             <li>You know what will break if someone makes a change without thinking it through</li>
@@ -2512,7 +2643,7 @@ h1,h2,h3,h4,h5,h6{ margin:0 0 .5em; font-weight:700; line-height:1.15; }
           <p><b>The play:</b> reach out to the hiring manager, not HR, not to apply but to have a conversation. Ask what they are building, what is broken today, and how presentations currently get made. You will almost always discover they need more than production work; they need a system, a process, a template, and someone to help them understand what to hire for.</p>
           <p>That conversation costs you 30 minutes and often leads to an engagement worth months of invoices.</p>
           <p><b>If you can identify a company in or near a brand refresh or significant growth stage:</b></p>
-          <ul>
+          <ul class="icon-list">
             <li>Propose starting with a template engagement: an audit of existing materials, a template build, and a launch plan.</li>
             <li>Scope the reskin of their 10 to 20 most-used decks as a separate add-on deliverable.</li>
             <li>As the template goes live, flag the event assets that will need to be updated or built in the new brand.</li>
@@ -2538,7 +2669,7 @@ h1,h2,h3,h4,h5,h6{ margin:0 0 .5em; font-weight:700; line-height:1.15; }
       <div class="subsection">
         <h3>Resumes: Focus on Impact, Not Tasks</h3>
         <p>Weak framing describes activity: &ldquo;designed executive decks,&rdquo; &ldquo;created templates,&rdquo; &ldquo;supported events.&rdquo; Strong framing describes results:</p>
-        <ul>
+        <ul class="icon-list">
           <li>&ldquo;Enabled faster content production across 200+ employees through scalable template system&rdquo;</li>
           <li>&ldquo;Created alignment across sales, product, and marketing teams through unified presentation framework&rdquo;</li>
           <li>&ldquo;Increased speaker confidence and reduced last-minute changes through script template system&rdquo;</li>
@@ -2553,7 +2684,7 @@ h1,h2,h3,h4,h5,h6{ margin:0 0 .5em; font-weight:700; line-height:1.15; }
         </div>
 
         <p>When presenting your work, always include:</p>
-        <ul>
+        <ul class="icon-list">
           <li>The problem (What was broken? What pain existed?)</li>
           <li>The constraints (Timeline? Resources? Stakeholder complexity?)</li>
           <li>The system you introduced (What did you build or change?)</li>
@@ -2566,7 +2697,7 @@ h1,h2,h3,h4,h5,h6{ margin:0 0 .5em; font-weight:700; line-height:1.15; }
         <h3>Portfolio: Show Thinking, Not Just Polish</h3>
         <p>Here&rsquo;s the trap: If your portfolio looks like a collection of pretty slides with no context, you will get buried in make-it-pretty work and never move upstream.</p>
         <p>Hiring managers want to see problem-solving rather than aesthetics, your process rather than just the final output, and strategic thinking rather than execution alone. Present each piece in four beats:</p>
-        <ul>
+        <ul class="lead-list">
           <li><b>Lead with the problem:</b> &ldquo;This company had 15 different sales decks with no brand consistency and no shared narrative. Sales reps were spending hours rebuilding slides from scratch.&rdquo;</li>
           <li><b>Explain the constraints:</b> &ldquo;We had 6 weeks, a distributed team across 3 time zones, and needed buy-in from sales leadership who were skeptical of templates.&rdquo;</li>
           <li><b>Show the system you built:</b> &ldquo;I conducted an audit of existing decks, identified the 12 most common slide types, built a modular template system in Google Slides, and created a slide library with 50+ pre-designed examples.&rdquo;</li>
@@ -2580,7 +2711,7 @@ h1,h2,h3,h4,h5,h6{ margin:0 0 .5em; font-weight:700; line-height:1.15; }
         <h3>How to Present Yourself (Interviews, Pitches, Conversations)</h3>
         <p>Physical presence matters, and conviction beats volume. You do not need to talk more to have influence; you need to speak with clarity and confidence when you do speak.</p>
         <p><b>Appearance best practices:</b></p>
-        <ul>
+        <ul class="icon-list">
           <li>Stand up if presenting (even on Zoom, it changes your energy)</li>
           <li>Breathe (4-second breathing if you&rsquo;re nervous: 4 in, 4 hold, 4 out, 4 hold)</li>
           <li>Move your body beforehand (pushups, jumping jacks, anything to get energy flowing)</li>
@@ -2593,7 +2724,7 @@ h1,h2,h3,h4,h5,h6{ margin:0 0 .5em; font-weight:700; line-height:1.15; }
       <div class="subsection">
         <h3>Interviews: How to Be Taken Seriously</h3>
         <p>Hiring managers evaluate based on confidence, clarity, and your answers to questions in the following areas:</p>
-        <ul>
+        <ul class="icon-list">
           <li><b>Character and likability:</b> Would I want to work with this person?</li>
           <li><b>Quality of work samples and process:</b> Can they think, not just execute?</li>
           <li><b>Ability to speak in depth with knowledge:</b> Do they understand their craft?</li>
@@ -2627,7 +2758,7 @@ h1,h2,h3,h4,h5,h6{ margin:0 0 .5em; font-weight:700; line-height:1.15; }
       <h1><span class="h1-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M16 7h6v6"/><path d="m22 7-8.5 8.5-5-5L2 17"/></svg></span>Measuring Growth Without Titles</h1>
       <p>Progress in this field often shows up before promotions do.</p>
       <p><b>Indicators that show you&rsquo;re growing:</b></p>
-      <ul>
+      <ul class="icon-list">
         <li>You&rsquo;re brought in earlier. Stakeholders loop you into projects at the strategy phase, not just execution</li>
         <li>Fewer people question your decisions. Your recommendations are trusted, not debated</li>
         <li>Stakeholders ask for your opinion, not just execution. They want your perspective, not just your hands</li>
@@ -2654,7 +2785,7 @@ h1,h2,h3,h4,h5,h6{ margin:0 0 .5em; font-weight:700; line-height:1.15; }
         <h4><span class="h1-icon h1-icon--sm" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12.8 19.6A2 2 0 1 0 14 16H2"/><path d="M17.5 8a2.5 2.5 0 1 1 2 4H2"/><path d="M9.8 4.4A2 2 0 1 1 11 8H2"/></svg></span>Calm</h4>
         <p>The designer who stays steady when everything around them is chaos becomes the person everyone relies on. Events are chaotic, executives are stressed, timelines collapse, and last-minute changes arrive at 11 PM. Most people panic; the designer who does not becomes the anchor. Calm is not passive or indifferent, it is an operational advantage. When you stay calm you make better decisions under pressure, reduce everyone else&rsquo;s stress, signal confidence that earns trust, and become the person people want in the room when things go wrong.</p>
         <p>The practices are simple and were introduced in Module 5:</p>
-        <ul>
+        <ul class="icon-list">
           <li><b>Reframe urgency:</b> Most things that feel urgent aren&rsquo;t actually unsolvable. Separate real emergencies from manufactured panic.</li>
           <li><b>Control what you can:</b> You can&rsquo;t control the timeline. You can control your process, your communication, and your response.</li>
           <li><b>Use grounding mantras:</b> &ldquo;The event will happen, and then it will end.&rdquo; &ldquo;Panic doesn&rsquo;t improve outcomes.&rdquo; Simple truths that ground you.</li>
@@ -2685,7 +2816,7 @@ h1,h2,h3,h4,h5,h6{ margin:0 0 .5em; font-weight:700; line-height:1.15; }
       </div>
 
       <div class="inset-panel inset-panel--practice">
-        <span class="inset-panel__label">Put It Into Practice</span>
+        <span class="inset-panel__label"><svg viewBox="0 0 24 24"><path d="M13 21h8"/><path d="m15 5 4 4"/><path d="M21.174 6.812a1 1 0 0 0-3.986-3.987L3.842 16.174a2 2 0 0 0-.5.83l-1.321 4.352a.5.5 0 0 0 .623.622l4.353-1.32a2 2 0 0 0 .83-.497z"/></svg>Put It Into Practice</span>
         <p>Record yourself presenting your Module 1 deck. Use Zoom, Loom, QuickTime, or any screen recording tool that captures your screen, your face, and your voice. Watch it back and answer:</p>
         <ul>
           <li>How did you feel presenting? (Nervous? Confident? Rushed? Comfortable?)</li>
@@ -2707,10 +2838,10 @@ h1,h2,h3,h4,h5,h6{ margin:0 0 .5em; font-weight:700; line-height:1.15; }
 
   </div>
 
-  <button class="strip strip--onblack" data-advance="6" aria-label="You've completed the course" disabled>
-    <span class="strip__chevrons"><span class="chevron"></span><span class="chevron"></span><span class="chevron"></span></span>
+  <div class="strip strip--onblack strip--end" aria-label="You've completed the course">
+    <span class="strip__end-mark"><svg viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg></span>
     <span class="strip__label">End of Course</span>
-  </button>
+  </div>
 </section>
 
 <!-- ============================================================
