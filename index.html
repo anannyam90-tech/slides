@@ -296,6 +296,22 @@ h1,h2,h3,h4,h5,h6{ margin:0 0 .5em; font-weight:700; line-height:1.15; }
 .callout__inner .feature-card h4{ color:#fff; }
 @media (max-width:720px){ .feature-grid{ grid-template-columns:1fr; } }
 
+/* dark variant: mini-callout card (black, green border) for use inside a pale second-block */
+.feature-card--dark{ background: var(--black); border-color: var(--border-green); }
+.feature-card--dark h4{ color: var(--green); }
+.feature-card--dark p{ color: rgba(255,255,255,.85); }
+.feature-card--dark .feature-card__icon{ border-color: var(--green); }
+.feature-card--dark .feature-card__icon svg{ stroke: var(--green); }
+.feature-card--dark .feature-card__num, .feature-card--dark .feature-card__badge{ border-color: var(--green); color: var(--green); }
+
+/* solid-green variant: filled green card, white text (for emphasis inside a pale second-block) */
+.feature-card--solid-green{ background: var(--green); border-color: var(--green); }
+.feature-card--solid-green h4{ color: #fff; }
+.feature-card--solid-green p{ color: rgba(255,255,255,.9); }
+.feature-card--solid-green .feature-card__icon{ border-color: rgba(255,255,255,.7); }
+.feature-card--solid-green .feature-card__icon svg{ stroke: #fff; }
+.feature-card--solid-green .feature-card__icon--solid{ background: rgba(255,255,255,.2); border-color:transparent; }
+
 /* keyword tag-chips (short 1-4 word list items) */
 .tag-row{ display:flex; flex-wrap:wrap; gap:10px; margin: 1em 0 1.3em; }
 .tag-chip{
@@ -315,18 +331,17 @@ h1,h2,h3,h4,h5,h6{ margin:0 0 .5em; font-weight:700; line-height:1.15; }
 .lead-list li{ padding-left:0 !important; }
 .lead-list li::before{ content:none !important; }
 
-/* icon-list: default graphic marker (chevron corner) replacing the plain dot, no markup changes needed per item */
+/* icon-list: default graphic marker (checkmark in a circle) replacing the plain dot, no markup changes needed per item */
 .icon-list{ display:flex; flex-direction:column; gap:.7em; margin:0 0 1.1em; }
-.icon-list li{ padding-left:1.5em !important; }
-.icon-list li::before{ content:none !important; }
-.icon-list li::after{
-  content:""; position:absolute; left:1px; top:.5em;
-  width:9px; height:9px;
-  border-right: 2.5px solid var(--green); border-bottom: 2.5px solid var(--green);
-  transform: rotate(-45deg);
-  border-radius: 0 0 2px 0;
+.icon-list li{ padding-left:1.85em !important; }
+.icon-list li::before{
+  content:"" !important; position:absolute; left:0; top:.22em;
+  width:18px !important; height:18px !important; border-radius:50% !important;
+  background-color: var(--green) !important;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M20 6 9 17l-5-5'/%3E%3C/svg%3E") !important;
+  background-repeat:no-repeat !important; background-position:center !important; background-size:10px 10px !important;
 }
-.callout__inner .icon-list li::after{ border-color: var(--green); }
+.icon-list li::after{ content:none !important; }
 
 /* check-list: checkbox-square marker for literal checklists */
 .check-list{ display:flex; flex-direction:column; gap:.7em; margin:0 0 1.1em; }
@@ -346,7 +361,9 @@ h1,h2,h3,h4,h5,h6{ margin:0 0 .5em; font-weight:700; line-height:1.15; }
   display:flex; align-items:center; justify-content:center;
 }
 .divided-columns__icon svg{ width:22px; height:22px; stroke:var(--green); stroke-width:2; fill:none; }
+.divided-columns__col h4{ font-family:var(--font-display); font-weight:800; color:var(--black); font-size:clamp(14.5px,1.1vw,16.5px); margin-bottom:.4em; }
 .divided-columns__col p{ font-family:var(--font-body); font-size:clamp(14px,1vw,15.5px); line-height:1.55; color:var(--black); margin:0; }
+.callout__inner .divided-columns__col h4{ color:#fff; }
 .callout__inner .divided-columns__col p{ color: rgba(255,255,255,.88); }
 .callout__inner .divided-columns__col:not(:first-child){ border-left-color: rgba(31,198,103,.35); }
 @media (max-width:820px){
@@ -370,6 +387,74 @@ h1,h2,h3,h4,h5,h6{ margin:0 0 .5em; font-weight:700; line-height:1.15; }
 .feature-card ul li::before{ content:""; position:absolute; left:0; top:.55em; width:6px; height:6px; border-radius:50%; background:var(--green); }
 .callout__inner .feature-card ul li{ color: rgba(255,255,255,.88); }
 @media (max-width:900px){ .feature-grid--3col{ grid-template-columns:1fr; } }
+
+/* wrap variant: for odd counts (5 items) — wraps 3-over-2, centered, instead of leaving a lopsided orphan */
+.feature-grid--wrap{ display:flex; flex-wrap:wrap; justify-content:center; }
+.feature-grid--wrap .feature-card{ flex: 1 1 clamp(220px, 30%, 320px); }
+@media (max-width:720px){ .feature-grid--wrap .feature-card{ flex: 1 1 100%; } }
+
+/* solid variant of the icon badge: filled green circle, white icon — for emphasis/warning use */
+.feature-card__icon--solid{
+  border-color: transparent; background: var(--green); border-radius:50%;
+}
+.feature-card__icon--solid svg{ stroke: var(--white); }
+
+/* big-line row: 3 very short standalone statements, set large and boxed, arranged horizontally */
+.big-line-row{ display:flex; align-items:stretch; gap: clamp(16px,2.5vw,24px); margin: 1.3em 0; }
+.big-line-row__item{
+  flex:1; min-width:0;
+  background: rgba(31,198,103,.06); border:1px solid rgba(31,198,103,.22); border-radius:16px;
+  padding: clamp(20px,2.6vw,26px);
+  font-family: var(--font-serif); font-weight:600; font-style:italic; color: var(--black);
+  font-size: clamp(18px,1.9vw,22px); line-height:1.35;
+}
+.callout__inner .big-line-row__item{ background: rgba(31,198,103,.12); border-color:rgba(31,198,103,.32); color:#fff; }
+@media (max-width:820px){ .big-line-row{ flex-direction:column; } }
+
+/* phase-block: numbered phase header + connecting spine, ties a sequence of h2 phases into one visible process */
+.phase-block{ position:relative; padding-left: clamp(52px,6vw,62px); }
+.phase-block__num{
+  position:absolute; left:0; top:2px;
+  width:40px; height:40px; border-radius:50%;
+  background: var(--green); color: var(--white);
+  display:flex; align-items:center; justify-content:center;
+  font-family: var(--font-display); font-weight:800; font-size:16px;
+  z-index:1;
+}
+.phase-block:not(:last-child)::before{
+  content:""; position:absolute; left:19px; top:42px; bottom:-2.4em;
+  width:2px; background: rgba(31,198,103,.3);
+}
+.phase-block h2{ margin-bottom:.6em; }
+
+/* meeting-card: one recurring meeting/session within a phase — name, description, topics, who's involved */
+.meeting-card{
+  background: rgba(31,198,103,.05); border:1px solid rgba(31,198,103,.2); border-radius:14px;
+  padding: clamp(18px,2.2vw,24px); margin: 0 0 1.1em;
+}
+.meeting-card > *:not(:last-child){ margin-bottom:.7em; }
+.meeting-card h4{ margin-bottom:0; }
+.meeting-card .tag-row{ margin: .3em 0; }
+.meeting-card__meta{
+  font-family: var(--font-display); font-weight:700; font-size:12px;
+  color: var(--green-dim); text-transform:uppercase; letter-spacing:.06em;
+}
+
+/* icon-line-list: inline icon + text row, no bullet marker (for use where a plain icon accent is wanted instead of a dot/chevron) */
+.icon-line-list{ display:flex; flex-direction:column; gap: 1em; margin: 1.1em 0; }
+.icon-line-list__item{ display:flex; align-items:flex-start; gap: 14px; }
+.icon-line-list__item svg{ flex:0 0 auto; width:20px; height:20px; stroke:#fff; stroke-width:2; fill:none; margin-top:.2em; }
+.icon-line-list__item p{ margin:0; }
+
+/* doc-facts: recurring 3-fact strip (Who uses it / Why it matters / Who owns it) shown as boxed columns instead of stacked bold-lead paragraphs */
+.doc-facts{
+  display:grid; grid-template-columns:repeat(3,1fr); gap: clamp(16px,2.5vw,24px);
+  margin: 1.2em 0; padding: clamp(16px,2.2vw,22px);
+  background: rgba(31,198,103,.05); border:1px solid rgba(31,198,103,.18); border-radius:14px;
+}
+.doc-facts > div > h6{ margin-bottom:.4em; }
+.doc-facts > div > p{ margin:0; font-size: clamp(13.5px,.95vw,15px); line-height:1.55; }
+@media (max-width:720px){ .doc-facts{ grid-template-columns:1fr; } }
 
 /* pro/con checkmark list (Strengths vs Tradeoffs, two columns) */
 .pro-con{ display:grid; grid-template-columns:1fr 1fr; gap: clamp(20px,4vw,40px); margin: 1.1em 0; }
@@ -430,6 +515,15 @@ h1,h2,h3,h4,h5,h6{ margin:0 0 .5em; font-weight:700; line-height:1.15; }
   line-height:1.3;
 }
 .callout__inner .pull-quote{ color:#fff; }
+
+/* formula-line: a short symbolic pattern/equation, set large, uppercase, and centered for maximum prominence */
+.formula-line{
+  text-align:center;
+  font-family: var(--font-display); font-weight:800; color: var(--green);
+  text-transform:uppercase; letter-spacing:.05em;
+  font-size: clamp(16px,2.1vw,22px);
+  line-height:1.5;
+}
 
 /* small icon accent for h4 subheadings (e.g. Calm / Communication / Craft) */
 .h1-icon--sm{ width:32px; height:32px; }
@@ -568,16 +662,13 @@ h1,h2,h3,h4,h5,h6{ margin:0 0 .5em; font-weight:700; line-height:1.15; }
   display:flex; flex-direction:column; align-items:center; gap:8px;
 }
 .chevron{
-  width: 44px; height:12px;
-  position:relative;
+  width: 14px; height:14px;
   flex: 0 0 auto;
+  border-right: 3.5px solid var(--white);
+  border-bottom: 3.5px solid var(--white);
+  border-radius: 0 0 2px 0;
+  transform: rotate(45deg);
 }
-.chevron::before,.chevron::after{
-  content:""; position:absolute; top:0; width:50%; height:4px; border-radius:3px;
-  background: var(--white);
-}
-.chevron::before{ left:0; transform-origin: right center; transform: rotate(35deg); }
-.chevron::after{ right:0; transform-origin: left center; transform: rotate(-35deg); }
 .chevron:nth-child(1){ opacity:.35; }
 .chevron:nth-child(2){ opacity:.65; }
 .chevron:nth-child(3){ opacity:1; }
@@ -854,14 +945,38 @@ h1,h2,h3,h4,h5,h6{ margin:0 0 .5em; font-weight:700; line-height:1.15; }
         <p>The uncomfortable truth: sometimes we are these things, and that is fine at certain stages of a career.</p>
         <p>Everyone starts somewhere. Early on you will do production work, polish other people&rsquo;s ideas, and execute someone else&rsquo;s vision. That is not failure, it is the foundation. You learn the craft by doing the work, understanding the constraints, and mastering the tools. The problem is not starting as a production designer. The problem is staying there because you never developed the strategic skills, business acumen, and communication expertise to level up.</p>
         <p>The move from production to strategy requires:</p>
-        <ul class="icon-list">
-          <li>Asking better questions upfront (What is the goal? Who is the audience? What action do we want them to take?)</li>
-          <li>Learning their language (mirroring common terms and acronyms builds familiarity and common ground)</li>
-          <li>Understanding the business context behind the presentation (Why does this deck matter? What is at stake?)</li>
-          <li>Developing a point of view and the confidence to push back when needed</li>
-          <li>Building trust so stakeholders want your input early</li>
-          <li>Demonstrating value beyond aesthetics, showing how design decisions affect outcomes</li>
-        </ul>
+        <div class="feature-grid">
+          <div class="feature-card">
+            <span class="feature-card__icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><path d="M12 17h.01"/></svg></span>
+            <h4>Ask better questions upfront</h4>
+            <p>What is the goal? Who is the audience? What action do we want them to take?</p>
+          </div>
+          <div class="feature-card">
+            <span class="feature-card__icon"><svg viewBox="0 0 24 24"><path d="m5 8 6 6"/><path d="m4 14 6-6 2-3"/><path d="M2 5h12"/><path d="M7 2h1"/><path d="m22 22-5-10-5 10"/><path d="M14 18h6"/></svg></span>
+            <h4>Learn their language</h4>
+            <p>Mirroring common terms and acronyms builds familiarity and common ground.</p>
+          </div>
+          <div class="feature-card">
+            <span class="feature-card__icon"><svg viewBox="0 0 24 24"><rect width="16" height="20" x="4" y="2" rx="2" ry="2"/><path d="M9 22v-4h6v4"/><path d="M8 6h.01"/><path d="M16 6h.01"/><path d="M12 6h.01"/><path d="M12 10h.01"/><path d="M12 14h.01"/><path d="M16 10h.01"/><path d="M16 14h.01"/><path d="M8 10h.01"/><path d="M8 14h.01"/></svg></span>
+            <h4>Understand the business context</h4>
+            <p>Why does this deck matter? What is at stake?</p>
+          </div>
+          <div class="feature-card">
+            <span class="feature-card__icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"/></svg></span>
+            <h4>Develop a point of view</h4>
+            <p>And the confidence to push back when needed.</p>
+          </div>
+          <div class="feature-card">
+            <span class="feature-card__icon"><svg viewBox="0 0 24 24"><path d="M11 21c0 1-1 1-1 1H6a1 1 0 0 1-1-1v-1a2 2 0 0 1 2-2h6"/><path d="m14 21 3-3 4 4"/><path d="M15.5 10.5a2.5 2.5 0 0 1 5 0V16"/><path d="M10 10h4"/><path d="M4 6a1 1 0 0 1 1-1h6a2 2 0 0 1 2 2v9"/><path d="M6.5 13.5a2.5 2.5 0 0 0 5 0V5"/></svg></span>
+            <h4>Build trust</h4>
+            <p>So stakeholders want your input early.</p>
+          </div>
+          <div class="feature-card">
+            <span class="feature-card__icon"><svg viewBox="0 0 24 24"><path d="M16 7h6v6"/><path d="m22 7-8.5 8.5-5-5L2 17"/></svg></span>
+            <h4>Demonstrate value</h4>
+            <p>Beyond aesthetics, showing how design decisions affect outcomes.</p>
+          </div>
+        </div>
         <p class="pull-quote">You do not demand a seat at the strategic table. You earn it by proving you belong there.</p>
         <p>The misconception is not wrong because we are never production workers. It is limiting because it assumes that is all we can be.</p>
       </div>
@@ -869,11 +984,20 @@ h1,h2,h3,h4,h5,h6{ margin:0 0 .5em; font-weight:700; line-height:1.15; }
       <div class="subsection">
         <h2>Why This Matters</h2>
         <p>If we let others define our craft, they will reduce it to busy work. They will compare us to the untrained person who threw slides together in an hour, not to the strategic communication designer who shapes narratives and drives outcomes. That is why we have to control the narrative.</p>
-        <ul class="icon-list">
-          <li>We are not slide decorators, we are communication architects.</li>
-          <li>We do not just make things pretty, we make complex ideas accessible.</li>
-          <li>We do not work in presentation software, we work in audience psychology, information hierarchy, and visual storytelling.</li>
-        </ul>
+        <div class="divided-columns">
+          <div class="divided-columns__col">
+            <span class="divided-columns__icon"><svg viewBox="0 0 24 24"><path d="M3 21h18"/><path d="M5 21V7l8-4v18"/><path d="M19 21V11l-6-4"/></svg></span>
+            <p>We are not slide decorators, we are communication architects.</p>
+          </div>
+          <div class="divided-columns__col">
+            <span class="divided-columns__icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"/></svg></span>
+            <p>We do not just make things pretty, we make complex ideas accessible.</p>
+          </div>
+          <div class="divided-columns__col">
+            <span class="divided-columns__icon"><svg viewBox="0 0 24 24"><path d="M12 5a3 3 0 1 0-5.997.125 4 4 0 0 0-2.526 5.77 4 4 0 0 0 .556 6.588A4 4 0 1 0 12 18Z"/><path d="M12 5a3 3 0 1 1 5.997.125 4 4 0 0 1 2.526 5.77 4 4 0 0 1-.556 6.588A4 4 0 1 1 12 18Z"/></svg></span>
+            <p>We do not work in presentation software, we work in audience psychology, information hierarchy, and visual storytelling.</p>
+          </div>
+        </div>
         <p>And while we are most valuable when involved from the start, that involvement is earned through experience and proven value.</p>
         <p>The way you talk about your work shapes how others value it. Start using this language now, in interviews, in Slack messages, in kickoff conversations. The shift happens gradually, then all at once. But you cannot simply claim this value, you have to demonstrate it through the quality of your questions, the depth of your thinking, and the measurable impact of your work.</p>
       </div>
@@ -969,11 +1093,23 @@ h1,h2,h3,h4,h5,h6{ margin:0 0 .5em; font-weight:700; line-height:1.15; }
       <p>That has changed.</p>
       <p>Over the past decade the field has steadily expanded. Today the largest and most sophisticated companies, the Fortune 500 tech giants, consulting firms, and enterprise organizations, either run dedicated presentation design teams or invest heavily in agencies like Duarte. That is not coincidence, it is recognition. These companies understand that high-stakes communication requires specialized expertise, and they are willing to pay for it.</p>
       <p>I expect the trend to keep accelerating, for three reasons.</p>
-      <ul class="icon-list">
-        <li>The volume and complexity of presentations keeps rising. More remote work means more decks, more stakeholders mean more alignment presentations, and more competition means higher standards for sales and pitch materials.</li>
-        <li>AI is accelerating the same pattern we have seen before. More people producing more slides with less skill. That raises the floor for everyone and widens the gap between generic output and genuinely strategic work. The designers who will feel AI most are the ones doing purely production work. The ones who will not are the ones who understand why a presentation needs to exist, who it is for, and what it needs to do. A prompt does not solve that.</li>
-        <li>Companies are connecting presentation quality directly to business outcomes. A poorly designed investor deck can cost millions in lost funding, a confusing product launch can tank adoption, and a messy sales presentation loses deals. Organizations are starting to invest in the people who can deliver results.</li>
-      </ul>
+      <div class="feature-grid feature-grid--3col">
+        <div class="feature-card">
+          <span class="feature-card__icon"><svg viewBox="0 0 24 24"><path d="M3 3v18h18"/><path d="m19 9-5 5-4-4-3 3"/></svg></span>
+          <h4>Volume and complexity keep rising</h4>
+          <p>More remote work means more decks, more stakeholders mean more alignment presentations, and more competition means higher standards for sales and pitch materials.</p>
+        </div>
+        <div class="feature-card">
+          <span class="feature-card__icon"><svg viewBox="0 0 24 24"><path d="M12 8V4H8"/><rect width="16" height="12" x="4" y="8" rx="2"/><path d="M2 14h2"/><path d="M20 14h2"/><path d="M15 13v2"/><path d="M9 13v2"/></svg></span>
+          <h4>AI raises the floor, not the ceiling</h4>
+          <p>More people producing more slides with less skill widens the gap between generic output and genuinely strategic work. The designers who understand why a presentation needs to exist, who it is for, and what it needs to do are the ones a prompt cannot replace.</p>
+        </div>
+        <div class="feature-card">
+          <span class="feature-card__icon"><svg viewBox="0 0 24 24"><line x1="12" x2="12" y1="2" y2="22"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg></span>
+          <h4>Quality is now tied to business outcomes</h4>
+          <p>A poorly designed investor deck can cost millions in lost funding, a confusing product launch can tank adoption, and a messy sales presentation loses deals. Organizations are starting to invest in the people who can deliver results.</p>
+        </div>
+      </div>
 
       <div class="subsection">
         <h2>The Scope Problem</h2>
@@ -1038,7 +1174,7 @@ h1,h2,h3,h4,h5,h6{ margin:0 0 .5em; font-weight:700; line-height:1.15; }
       <p>A comprehensive audit examines five layers of a presentation ecosystem.</p>
 
       <h6>The 5 Layers</h6>
-      <div class="feature-grid">
+      <div class="feature-grid feature-grid--wrap">
         <div class="feature-card">
           <span class="feature-card__num">1</span>
           <h4>Slide Surface</h4>
@@ -1080,12 +1216,24 @@ h1,h2,h3,h4,h5,h6{ margin:0 0 .5em; font-weight:700; line-height:1.15; }
 
         <h4>How I Execute the Audit</h4>
         <p>I search through a dozen or more decks from around the company or department and begin filtering down slide types until I have a clear collection of their most common needs. I document:</p>
-        <ul class="icon-list">
-          <li>The 10&ndash;15 most frequently used slide layouts</li>
-          <li>Recurring content types (data tables, image grids, timelines, process diagrams, quotes, etc.)</li>
-          <li>User pain points (slides that consistently look broken or inconsistent)</li>
-          <li>Brand deviations (where the template fails to support brand standards)</li>
-        </ul>
+        <div class="divided-columns">
+          <div class="divided-columns__col">
+            <span class="divided-columns__icon"><svg viewBox="0 0 24 24"><rect width="7" height="7" x="3" y="3" rx="1"/><rect width="7" height="7" x="14" y="3" rx="1"/><rect width="7" height="7" x="14" y="14" rx="1"/><rect width="7" height="7" x="3" y="14" rx="1"/></svg></span>
+            <p>The 10&ndash;15 most frequently used slide layouts</p>
+          </div>
+          <div class="divided-columns__col">
+            <span class="divided-columns__icon"><svg viewBox="0 0 24 24"><rect width="18" height="18" x="3" y="3" rx="2"/><path d="M3 9h18"/><path d="M3 15h18"/><path d="M9 3v18"/></svg></span>
+            <p>Recurring content types (data tables, image grids, timelines, process diagrams, quotes)</p>
+          </div>
+          <div class="divided-columns__col">
+            <span class="divided-columns__icon"><svg viewBox="0 0 24 24"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"/><path d="M12 9v4"/><path d="M12 17h.01"/></svg></span>
+            <p>User pain points (slides that consistently look broken or inconsistent)</p>
+          </div>
+          <div class="divided-columns__col">
+            <span class="divided-columns__icon"><svg viewBox="0 0 24 24"><path d="M12 9v4"/><path d="M12 17h.01"/><path d="M3 12a9 9 0 1 0 18 0 9 9 0 0 0-18 0"/></svg></span>
+            <p>Brand deviations (where the template fails to support brand standards)</p>
+          </div>
+        </div>
         <p>Only after all of this work can I fully communicate to a client the direction we should go and how we should execute an improved template that&rsquo;s tailored to their business.</p>
 
         <h4>Where Designers Fail Without an Audit</h4>
@@ -1097,12 +1245,28 @@ h1,h2,h3,h4,h5,h6{ margin:0 0 .5em; font-weight:700; line-height:1.15; }
       <div class="subsection">
         <h2>Audits Beyond Templates: Live Events</h2>
         <p>Audits are also essential in event work. When taking on a conference or keynote, I start by auditing:</p>
-        <ul class="lead-list">
-          <li><b>Previous years&rsquo; keynotes and breakout sessions:</b> What was the level of execution? What worked visually? What felt disconnected or rushed?</li>
-          <li><b>Event branding and visual identity:</b> How cohesive was the brand experience across stages, signage, and digital assets?</li>
-          <li><b>Production constraints:</b> Screen dimensions, AV capabilities, lighting conditions, file handoff processes.</li>
-          <li><b>Stakeholder interviews:</b> Talking with organizers, producers, and past speakers surfaces process (or its absence), pain points raised in post-mortems, and lessons learned.</li>
-        </ul>
+        <div class="divided-columns">
+          <div class="divided-columns__col">
+            <span class="divided-columns__icon"><svg viewBox="0 0 24 24"><path d="M15.6 11.6 22 7v10l-6.4-4.5v-1z"/><rect width="14" height="12" x="2" y="6" rx="2"/></svg></span>
+            <h4>Previous keynotes and sessions</h4>
+            <p>What was the level of execution? What worked visually? What felt disconnected or rushed?</p>
+          </div>
+          <div class="divided-columns__col">
+            <span class="divided-columns__icon"><svg viewBox="0 0 24 24"><path d="M12 2a10 10 0 1 0 10 10 4 4 0 0 1-5-5 4 4 0 0 1-5-5"/><circle cx="7.5" cy="10.5" r=".5" fill="currentColor"/><circle cx="12" cy="7.5" r=".5" fill="currentColor"/><circle cx="16.5" cy="10.5" r=".5" fill="currentColor"/></svg></span>
+            <h4>Event branding &amp; visual identity</h4>
+            <p>How cohesive was the brand experience across stages, signage, and digital assets?</p>
+          </div>
+          <div class="divided-columns__col">
+            <span class="divided-columns__icon"><svg viewBox="0 0 24 24"><rect width="20" height="14" x="2" y="3" rx="2"/><line x1="8" x2="16" y1="21" y2="21"/><line x1="12" x2="12" y1="17" y2="21"/></svg></span>
+            <h4>Production constraints</h4>
+            <p>Screen dimensions, AV capabilities, lighting conditions, file handoff processes.</p>
+          </div>
+          <div class="divided-columns__col">
+            <span class="divided-columns__icon"><svg viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></span>
+            <h4>Stakeholder interviews</h4>
+            <p>Talking with organizers, producers, and past speakers surfaces process (or its absence), pain points, and lessons learned.</p>
+          </div>
+        </div>
         <p>All of this is free information that gives you a framework for success. Showing up to a first event meeting with audit findings from the previous year signals immediately that you are a professional, not a vendor. It is one of the fastest ways to establish credibility before you design a single slide.</p>
       </div>
 
@@ -1115,11 +1279,23 @@ h1,h2,h3,h4,h5,h6{ margin:0 0 .5em; font-weight:700; line-height:1.15; }
       <div class="subsection">
         <h2>Turn Your Audit Into a Deliverable</h2>
         <p>Write your findings down, not just as personal notes but as a formatted document you can share. That turns subjective observations into a proposal. It is the difference between saying &ldquo;there are problems&rdquo; and showing the problems, their impact, and your recommended path forward. For each finding, capture:</p>
-        <ul class="lead-list">
-          <li><b>What I found.</b> Specific, observable problems (for example, &ldquo;there are 6 variations of themes found in the majority of user decks&rdquo;).</li>
-          <li><b>Why it matters.</b> Business impact, not design opinion (&ldquo;this can lead to bloated files that stall in a live setting or result in brand inconsistency at scale.&rdquo;).</li>
-          <li><b>What I recommend.</b> The fix and the effort level involved.</li>
-        </ul>
+        <div class="feature-grid feature-grid--3col">
+          <div class="feature-card feature-card--dark">
+            <span class="feature-card__icon"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg></span>
+            <h4>What I found</h4>
+            <p>Specific, observable problems (for example, &ldquo;there are 6 variations of themes found in the majority of user decks&rdquo;).</p>
+          </div>
+          <div class="feature-card feature-card--dark">
+            <span class="feature-card__icon"><svg viewBox="0 0 24 24"><path d="m12 8-9.04 9.06a2.82 2.82 0 1 0 3.98 3.98L16 12"/><circle cx="17" cy="7" r="5"/></svg></span>
+            <h4>Why it matters</h4>
+            <p>Business impact, not design opinion (&ldquo;this can lead to bloated files that stall in a live setting or result in brand inconsistency at scale.&rdquo;).</p>
+          </div>
+          <div class="feature-card feature-card--dark">
+            <span class="feature-card__icon"><svg viewBox="0 0 24 24"><path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10Z"/><path d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12"/></svg></span>
+            <h4>What I recommend</h4>
+            <p>The fix and the effort level involved.</p>
+          </div>
+        </div>
         <p>Call it an <b>Optimizations Document</b> or an <b>Audit Summary</b>, something clinical and constructive rather than critical. The framing signals that you are diagnosing a system, not judging someone&rsquo;s work.</p>
         <p>One cohort participant used this approach to pause a global brand template rollout. The document halted the deployment because it revealed issues the global marketing team hadn&rsquo;t caught. That&rsquo;s what a well-packaged audit can do.</p>
       </div>
@@ -1360,12 +1536,28 @@ h1,h2,h3,h4,h5,h6{ margin:0 0 .5em; font-weight:700; line-height:1.15; }
 
       <h4>Why Boundaries Matter for Your Career</h4>
       <p class="pull-quote">Boundaries are not selfish, they are professional.</p>
-      <ul class="lead-list">
-        <li><b>Prevents burnout:</b> Presentation design is high-pressure work with constant deadlines. Without boundaries, you&rsquo;ll burn out within a year and either leave the role or become resentful and disengaged.</li>
-        <li><b>Trains stakeholders to plan better:</b> When you&rsquo;re always available for last-minute requests, stakeholders never learn to plan ahead. When you enforce boundaries, they start bringing you into projects earlier and thinking more strategically about timelines.</li>
-        <li><b>Protects your quality of work:</b> Tired, overworked designers make mistakes. Rushed projects look rushed. When you protect your time, you protect the quality of your output, which protects your reputation.</li>
-        <li><b>Models healthy work culture:</b> If you&rsquo;re ever in a position to hire or mentor other designers, you&rsquo;ll want to pass on healthy work habits. You can&rsquo;t do that if you&rsquo;ve normalized being available 24/7.</li>
-      </ul>
+      <div class="feature-grid">
+        <div class="feature-card">
+          <span class="feature-card__icon"><svg viewBox="0 0 24 24"><path d="M12 2v4"/><path d="m6.41 6.41 2.83 2.83"/><path d="M2 12h4"/><path d="m6.41 17.59 2.83-2.83"/><path d="M12 18v4"/><path d="m14.76 14.76 2.83 2.83"/><path d="M18 12h4"/><path d="m14.76 9.24 2.83-2.83"/></svg></span>
+          <h4>Prevents burnout</h4>
+          <p>Presentation design is high-pressure work with constant deadlines. Without boundaries, you&rsquo;ll burn out within a year and either leave the role or become resentful and disengaged.</p>
+        </div>
+        <div class="feature-card">
+          <span class="feature-card__icon"><svg viewBox="0 0 24 24"><rect width="18" height="18" x="3" y="4" rx="2"/><path d="M3 10h18"/><path d="M8 2v4"/><path d="M16 2v4"/><path d="m9 16 2 2 4-4"/></svg></span>
+          <h4>Trains stakeholders to plan better</h4>
+          <p>When you&rsquo;re always available for last-minute requests, stakeholders never learn to plan ahead. Enforcing boundaries brings them into projects earlier and gets them thinking strategically about timelines.</p>
+        </div>
+        <div class="feature-card">
+          <span class="feature-card__icon"><svg viewBox="0 0 24 24"><path d="M11.525 2.295a.53.53 0 0 1 .95 0l2.31 4.679a2.12 2.12 0 0 0 1.595 1.16l5.166.756a.53.53 0 0 1 .294.904l-3.736 3.638a2.12 2.12 0 0 0-.611 1.878l.882 5.14a.53.53 0 0 1-.771.56l-4.618-2.428a2.12 2.12 0 0 0-1.973 0L6.396 21.01a.53.53 0 0 1-.77-.56l.881-5.139a2.12 2.12 0 0 0-.611-1.879L2.16 9.795a.53.53 0 0 1 .294-.906l5.165-.755a2.12 2.12 0 0 0 1.597-1.16z"/></svg></span>
+          <h4>Protects your quality of work</h4>
+          <p>Tired, overworked designers make mistakes. Rushed projects look rushed. Protecting your time protects the quality of your output, which protects your reputation.</p>
+        </div>
+        <div class="feature-card">
+          <span class="feature-card__icon"><svg viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></span>
+          <h4>Models healthy work culture</h4>
+          <p>If you&rsquo;re ever in a position to hire or mentor other designers, you&rsquo;ll want to pass on healthy work habits. You can&rsquo;t do that if you&rsquo;ve normalized being available 24/7.</p>
+        </div>
+      </div>
 
       <div class="inset-panel">
         <span class="inset-panel__label">Reflection</span>
@@ -1628,11 +1820,23 @@ h1,h2,h3,h4,h5,h6{ margin:0 0 .5em; font-weight:700; line-height:1.15; }
         </div>
 
         <p>The way to manage this is to treat the template like a product with a roadmap, not a request queue. When a new layout is requested:</p>
-        <ul class="lead-list">
-          <li><b>Ask who else needs it:</b> If it&rsquo;s one person&rsquo;s edge case, it doesn&rsquo;t belong in the master template. It belongs in the slide library.</li>
-          <li><b>Ask how often:</b> Frequency justifies inclusion. &ldquo;I&rsquo;ve needed this three times this month&rdquo; is different from &ldquo;I might need this someday.&rdquo;</li>
-          <li><b>Name an owner:</b> Someone has to be responsible for what goes in the template. If you&rsquo;re not able to own that role long-term (common for freelancers), surface it explicitly during the engagement and help the client identify who should.</li>
-        </ul>
+        <div class="divided-columns">
+          <div class="divided-columns__col">
+            <span class="divided-columns__icon"><svg viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></span>
+            <h4>Ask who else needs it</h4>
+            <p>If it&rsquo;s one person&rsquo;s edge case, it doesn&rsquo;t belong in the master template. It belongs in the slide library.</p>
+          </div>
+          <div class="divided-columns__col">
+            <span class="divided-columns__icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg></span>
+            <h4>Ask how often</h4>
+            <p>Frequency justifies inclusion. &ldquo;I&rsquo;ve needed this three times this month&rdquo; is different from &ldquo;I might need this someday.&rdquo;</p>
+          </div>
+          <div class="divided-columns__col">
+            <span class="divided-columns__icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="5"/><path d="M20 21a8 8 0 0 0-16 0"/></svg></span>
+            <h4>Name an owner</h4>
+            <p>Someone has to be responsible for what goes in the template. If you can&rsquo;t own that role long-term, surface it explicitly and help the client identify who should.</p>
+          </div>
+        </div>
       </div>
 
       <div class="subsection">
@@ -1671,12 +1875,31 @@ h1,h2,h3,h4,h5,h6{ margin:0 0 .5em; font-weight:700; line-height:1.15; }
             <span class="callout__tag">Freelancer</span>
             <p>For freelancers, the reskin is also a separate service worth pricing explicitly. Clients may not even think to ask what to do with their existing decks; most do not have the bandwidth to update hundreds of files and are hoping you will figure it out.</p>
             <p>You can fast-track replacement by reskinning all priority decks at launch, which is resource-intensive but highly effective.</p>
-            <ul class="icon-list">
-              <li>Identify the top 10 to 20 most frequently used decks (sales pitch decks, onboarding presentations, product overviews).</li>
-              <li>Rebuild them in the new template.</li>
-              <li>Launch the new template alongside the reskinned decks as examples.</li>
-              <li>Users see the new standard immediately and have working examples to reference.</li>
-            </ul>
+            <div class="phase-track">
+              <div class="phase-track__item">
+                <span class="phase-track__badge">1</span>
+                <h4>Identify</h4>
+                <ul><li>The top 10&ndash;20 most frequently used decks (sales pitch decks, onboarding presentations, product overviews)</li></ul>
+              </div>
+              <div class="phase-track__connector"></div>
+              <div class="phase-track__item">
+                <span class="phase-track__badge">2</span>
+                <h4>Rebuild</h4>
+                <ul><li>Rebuild them in the new template</li></ul>
+              </div>
+              <div class="phase-track__connector"></div>
+              <div class="phase-track__item">
+                <span class="phase-track__badge">3</span>
+                <h4>Launch</h4>
+                <ul><li>Launch the new template alongside the reskinned decks as examples</li></ul>
+              </div>
+              <div class="phase-track__connector"></div>
+              <div class="phase-track__item">
+                <span class="phase-track__badge">4</span>
+                <h4>Result</h4>
+                <ul><li>Users see the new standard immediately and have working examples to reference</li></ul>
+              </div>
+            </div>
             <p>Offer it proactively: identify the 10 to 20 most-used decks, propose a reskin package, and price it by volume and complexity. This is money most freelance designers leave on the table, not because clients do not want it, but because no one presented it as an option. The reskin also extends the relationship by weeks or months, during which you build deeper brand knowledge and become harder to replace.</p>
           </div>
         </div>
@@ -1693,25 +1916,36 @@ h1,h2,h3,h4,h5,h6{ margin:0 0 .5em; font-weight:700; line-height:1.15; }
       <div class="subsection">
         <h2>Launch Plan: Adoption Strategy</h2>
         <p>Launching a template is not a one-time event, it&rsquo;s a campaign.</p>
-        <p><b>Pre-launch:</b></p>
-        <ul class="icon-list">
-          <li>Identify champions in each department who will advocate for the new template</li>
-          <li>Run a beta test with a small group of power users</li>
-          <li>Gather feedback and refine before wide release</li>
-        </ul>
-        <p><b>Launch:</b></p>
-        <ul class="icon-list">
-          <li>Host a live walkthrough or training session (record it for async viewing)</li>
-          <li>Send an email announcement with clear benefits (faster slide creation, brand consistency, better-looking decks)</li>
-          <li>Provide a quick-start guide or one-pager that shows the most common use cases</li>
-        </ul>
-        <p><b>Post-launch:</b></p>
-        <ul class="icon-list">
-          <li>Offer office hours for troubleshooting and questions</li>
-          <li>Create a feedback loop (Slack channel, form, regular check-ins)</li>
-          <li>Track adoption metrics (how many people are using the new template vs. old ones)</li>
-          <li>Always treat the launch as a beta. No matter how much you test, users will find edge cases. Plan for iteration.</li>
-        </ul>
+        <div class="feature-grid feature-grid--3col">
+          <div class="feature-card">
+            <span class="feature-card__badge">Pre</span>
+            <h4>Pre-launch</h4>
+            <ul>
+              <li>Identify champions in each department who will advocate for the new template</li>
+              <li>Run a beta test with a small group of power users</li>
+              <li>Gather feedback and refine before wide release</li>
+            </ul>
+          </div>
+          <div class="feature-card">
+            <span class="feature-card__badge">Go</span>
+            <h4>Launch</h4>
+            <ul>
+              <li>Host a live walkthrough or training session (record it for async viewing)</li>
+              <li>Send an email announcement with clear benefits (faster slide creation, brand consistency, better-looking decks)</li>
+              <li>Provide a quick-start guide or one-pager showing the most common use cases</li>
+            </ul>
+          </div>
+          <div class="feature-card">
+            <span class="feature-card__badge">Post</span>
+            <h4>Post-launch</h4>
+            <ul>
+              <li>Offer office hours for troubleshooting and questions</li>
+              <li>Create a feedback loop (Slack channel, form, regular check-ins)</li>
+              <li>Track adoption metrics (new template vs. old)</li>
+              <li>Treat the launch as a beta &mdash; plan for iteration as edge cases surface</li>
+            </ul>
+          </div>
+        </div>
       </div>
 
       <div class="subsection">
@@ -1723,11 +1957,11 @@ h1,h2,h3,h4,h5,h6{ margin:0 0 .5em; font-weight:700; line-height:1.15; }
           <div class="callout__inner">
             <span class="callout__tag">Freelancer</span>
             <h4>For Freelancers, the Playbook</h4>
-            <ul class="icon-list">
-              <li>Watch for companies announcing rebrands on LinkedIn</li>
-              <li>Find the internal marketing lead or creative director (not the brand agency)</li>
+            <ol>
+              <li>Watch for companies announcing rebrands on LinkedIn.</li>
+              <li>Find the internal marketing lead or creative director (not the brand agency).</li>
               <li>Your opening is simple: &ldquo;I saw your rebrand launched. I work with organizations to build presentation systems that match the new brand and actually get adopted internally. Companies typically have a backlog of existing decks that need updating alongside the new template. Worth a 20-minute call?&rdquo;</li>
-            </ul>
+            </ol>
           </div>
         </div>
 
@@ -1739,25 +1973,36 @@ h1,h2,h3,h4,h5,h6{ margin:0 0 .5em; font-weight:700; line-height:1.15; }
           <span class="callout__tag">Instructions</span>
           <h2>Extra Credit Enablement: Where You Shine</h2>
           <p>This is where you go from &ldquo;good template designer&rdquo; to &ldquo;indispensable strategic partner.&rdquo; The goal: Make it so easy to use the template correctly that doing it wrong feels harder.</p>
-          <p><b>Upfront instructions in the template</b></p>
-          <ul class="icon-list">
-            <li>Overview of slide types and when to use them</li>
-            <li>Tips for maintaining brand consistency</li>
-            <li>Common mistakes to avoid</li>
-          </ul>
-          <p><b>Link out to resources</b></p>
-          <ul class="icon-list">
-            <li>Brand guidelines and logo files</li>
-            <li>Image libraries (stock photography, brand imagery)</li>
-            <li>Tips and tricks documentation</li>
-            <li>Video tutorials or walkthroughs</li>
-          </ul>
-          <p><b>Ongoing support</b></p>
-          <ul class="icon-list">
-            <li>Monthly template tips (email or Slack updates)</li>
-            <li>&ldquo;Slide of the Month&rdquo; showcasing great examples from across the org</li>
-            <li>Template update changelogs (so users know what&rsquo;s new)</li>
-          </ul>
+          <div class="feature-grid feature-grid--3col">
+            <div class="feature-card">
+              <span class="feature-card__icon"><svg viewBox="0 0 24 24"><path d="M12 7v14"/><path d="M3 18a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h5a4 4 0 0 1 4 4 4 4 0 0 1 4-4h5a1 1 0 0 1 1 1v13a1 1 0 0 1-1 1h-6a3 3 0 0 0-3 3 3 3 0 0 0-3-3z"/></svg></span>
+              <h4>Upfront instructions in the template</h4>
+              <ul>
+                <li>Overview of slide types and when to use them</li>
+                <li>Tips for maintaining brand consistency</li>
+                <li>Common mistakes to avoid</li>
+              </ul>
+            </div>
+            <div class="feature-card">
+              <span class="feature-card__icon"><svg viewBox="0 0 24 24"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></span>
+              <h4>Link out to resources</h4>
+              <ul>
+                <li>Brand guidelines and logo files</li>
+                <li>Image libraries (stock photography, brand imagery)</li>
+                <li>Tips and tricks documentation</li>
+                <li>Video tutorials or walkthroughs</li>
+              </ul>
+            </div>
+            <div class="feature-card">
+              <span class="feature-card__icon"><svg viewBox="0 0 24 24"><path d="M21 12a9 9 0 1 1-9-9c2.52 0 4.93 1 6.74 2.74L21 8"/><path d="M21 3v5h-5"/></svg></span>
+              <h4>Ongoing support</h4>
+              <ul>
+                <li>Monthly template tips (email or Slack updates)</li>
+                <li>&ldquo;Slide of the Month&rdquo; showcasing great examples from across the org</li>
+                <li>Template update changelogs</li>
+              </ul>
+            </div>
+          </div>
         </div>
       </div>
 
@@ -1883,7 +2128,7 @@ h1,h2,h3,h4,h5,h6{ margin:0 0 .5em; font-weight:700; line-height:1.15; }
 
       <p>The stakes are higher, the timelines tighter, and the number of stakeholders multiplies. That is why events require dedicated systems and protocols.</p>
       <p>The goal of event design is control of:</p>
-      <div class="feature-grid">
+      <div class="feature-grid feature-grid--wrap">
         <div class="feature-card">
           <span class="feature-card__num">1</span>
           <h4>Information</h4>
@@ -1969,9 +2214,11 @@ h1,h2,h3,h4,h5,h6{ margin:0 0 .5em; font-weight:700; line-height:1.15; }
         <span class="tag-chip">Team and DRIs</span>
         <span class="tag-chip">Announcements and key milestones</span>
       </div>
-      <p><b>Who uses it:</b> Anyone looking to understand what this event is shaping up to be. This is your &ldquo;send this link to new stakeholders&rdquo; resource.</p>
-      <p><b>Why it matters:</b> Without this, every new person joining the project asks the same questions repeatedly. This deck answers them once.</p>
-      <p><b>Who owns it:</b> This is typically owned by the events team and rarely requires your involvement to produce.</p>
+      <div class="doc-facts">
+        <div><h6>Who Uses It</h6><p>Anyone looking to understand what this event is shaping up to be &mdash; your &ldquo;send this link to new stakeholders&rdquo; resource.</p></div>
+        <div><h6>Why It Matters</h6><p>Without this, every new person joining the project asks the same questions repeatedly. This deck answers them once.</p></div>
+        <div><h6>Who Owns It</h6><p>Typically the events team &mdash; rarely requires your involvement to produce.</p></div>
+      </div>
 
       <h4>2 | Event Workbook (Production Bible)</h4>
       <p><b>Format:</b> Google Sheets</p>
@@ -2009,21 +2256,23 @@ h1,h2,h3,h4,h5,h6{ margin:0 0 .5em; font-weight:700; line-height:1.15; }
           <p>Who needs to be where and when</p>
         </div>
       </div>
-      <p><b>Who uses it:</b> Production team, AV partners, venue staff, designers, content leads.</p>
-      <p><b>Why it matters:</b> This is your operational command center. If it&rsquo;s not in the workbook, it doesn&rsquo;t exist.</p>
-      <p><b>Who owns it:</b> This is owned by the Project/Events Manager, but requires individual owners for each work-stream. In your case it&rsquo;s the creative deliverables of the presentation. You don&rsquo;t typically own anything else, but should be heavily invested in the run-of-show and general scheduling as they impact your deliverables and timing.</p>
+      <div class="doc-facts">
+        <div><h6>Who Uses It</h6><p>Production team, AV partners, venue staff, designers, content leads.</p></div>
+        <div><h6>Why It Matters</h6><p>This is your operational command center. If it&rsquo;s not in the workbook, it doesn&rsquo;t exist.</p></div>
+        <div><h6>Who Owns It</h6><p>The Project/Events Manager, with individual owners per work-stream. You typically own the creative deliverables and stay invested in run-of-show and scheduling.</p></div>
+      </div>
 
       <h4>3 | Keynote Script Template (The Anchor)</h4>
       <p><b>Format:</b> Google Docs</p>
       <p><b>Purpose:</b> The most critical artifact. All content stakeholders align on and work from this as the source of truth for keynotes.</p>
       <p><b>Functions:</b></p>
-      <ul class="icon-list">
-        <li>Centralizes content decisions</li>
-        <li>Tracks narrative changes</li>
-        <li>Aligns content and creative</li>
-        <li>Reduces interpretation errors</li>
-        <li>Eliminates parallel documents</li>
-      </ul>
+      <div class="tag-row">
+        <span class="tag-chip">Centralizes content decisions</span>
+        <span class="tag-chip">Tracks narrative changes</span>
+        <span class="tag-chip">Aligns content and creative</span>
+        <span class="tag-chip">Reduces interpretation errors</span>
+        <span class="tag-chip">Eliminates parallel documents</span>
+      </div>
       <p><b>Includes:</b></p>
       <div class="tag-row">
         <span class="tag-chip">Official keynote title</span>
@@ -2040,12 +2289,24 @@ h1,h2,h3,h4,h5,h6{ margin:0 0 .5em; font-weight:700; line-height:1.15; }
         <div class="callout__inner">
           <span class="callout__tag">Takeaway</span>
           <h6>The Script Is Where</h6>
-          <ul class="icon-list">
-            <li>Content owners commit</li>
-            <li>Creative reviews happen</li>
-            <li>Feedback is captured</li>
-            <li>Decisions are made visible</li>
-          </ul>
+          <div class="feature-grid">
+            <div class="feature-card">
+              <span class="feature-card__icon"><svg viewBox="0 0 24 24"><path d="m9 12 2 2 4-4"/><path d="M12 3c-1.2 0-2.4.6-3 1.7A3.6 3.6 0 0 0 4.6 9c-1 .6-1.7 1.8-1.7 3s.7 2.4 1.7 3c-.2 1.2.2 2.5 1.1 3.4.9.9 2.2 1.3 3.4 1.1.6 1 1.8 1.7 3 1.7s2.4-.7 3-1.7c1.2.2 2.5-.2 3.4-1.1.9-.9 1.3-2.2 1.1-3.4 1-.6 1.7-1.8 1.7-3s-.7-2.4-1.7-3c.2-1.2-.2-2.5-1.1-3.4A3.6 3.6 0 0 0 15 4.7c-.6-1-1.8-1.7-3-1.7Z"/></svg></span>
+              <h4>Content owners commit</h4>
+            </div>
+            <div class="feature-card">
+              <span class="feature-card__icon"><svg viewBox="0 0 24 24"><path d="M2.062 12.348a1 1 0 0 1 0-.696 10.75 10.75 0 0 1 19.876 0 1 1 0 0 1 0 .696 10.75 10.75 0 0 1-19.876 0"/><circle cx="12" cy="12" r="3"/></svg></span>
+              <h4>Creative reviews happen</h4>
+            </div>
+            <div class="feature-card">
+              <span class="feature-card__icon"><svg viewBox="0 0 24 24"><path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"/></svg></span>
+              <h4>Feedback is captured</h4>
+            </div>
+            <div class="feature-card">
+              <span class="feature-card__icon"><svg viewBox="0 0 24 24"><path d="M12 9v4"/><path d="M12 17h.01"/><path d="M3 12a9 9 0 1 0 18 0 9 9 0 0 0-18 0"/></svg></span>
+              <h4>Decisions are made visible</h4>
+            </div>
+          </div>
           <h5>Slides are downstream from the script. Always.</h5>
         </div>
       </div>
@@ -2057,21 +2318,27 @@ h1,h2,h3,h4,h5,h6{ margin:0 0 .5em; font-weight:700; line-height:1.15; }
       <div class="subsection">
         <h2>Why &ldquo;Just Share the Deck&rdquo; Breaks Everything</h2>
         <p>Here&rsquo;s a common mistake: sharing editable keynote files too early. Sharing editable files early is the single fastest way to lose the control you just built.</p>
-        <h6>What Happens When You Do This</h6>
-        <ul class="icon-list">
-          <li><b>Silent edits:</b> People make changes without any form of documentation</li>
-          <li><b>Conflicting feedback:</b> Multiple people editing simultaneously with different directions</li>
-          <li><b>Version confusion:</b> Which file is the latest? Who has what version?</li>
-          <li><b>Designers losing ownership:</b> You become a production hand, not a creative partner</li>
-          <li><b>Last-minute surprises:</b> Changes you didn&rsquo;t know about surface during rehearsal</li>
-        </ul>
-        <h6>A Better Model</h6>
-        <ul class="lead-list">
-          <li><b>Early collaboration happens in the script:</b> All stakeholders work from the same Google Doc</li>
-          <li><b>Design rounds are time-stamped:</b> Version 1, Version 2, Version 3 with clear dates</li>
-          <li><b>Feedback is routed intentionally:</b> Comments in the script, reviews in scheduled meetings</li>
-          <li><b>Edit access narrows as the event approaches:</b> Fewer people can make changes as you get closer to showtime</li>
-        </ul>
+        <div class="pro-con">
+          <div class="pro-con__col pro-con__col--con">
+            <h6>What Happens When You Do This</h6>
+            <ul>
+              <li><span class="pro-con__mark"><svg viewBox="0 0 24 24"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg></span><span><b>Silent edits:</b> People make changes without any form of documentation</span></li>
+              <li><span class="pro-con__mark"><svg viewBox="0 0 24 24"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg></span><span><b>Conflicting feedback:</b> Multiple people editing simultaneously with different directions</span></li>
+              <li><span class="pro-con__mark"><svg viewBox="0 0 24 24"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg></span><span><b>Version confusion:</b> Which file is the latest? Who has what version?</span></li>
+              <li><span class="pro-con__mark"><svg viewBox="0 0 24 24"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg></span><span><b>Designers losing ownership:</b> You become a production hand, not a creative partner</span></li>
+              <li><span class="pro-con__mark"><svg viewBox="0 0 24 24"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg></span><span><b>Last-minute surprises:</b> Changes you didn&rsquo;t know about surface during rehearsal</span></li>
+            </ul>
+          </div>
+          <div class="pro-con__col pro-con__col--pro">
+            <h6>A Better Model</h6>
+            <ul>
+              <li><span class="pro-con__mark"><svg viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg></span><span><b>Early collaboration happens in the script:</b> All stakeholders work from the same Google Doc</span></li>
+              <li><span class="pro-con__mark"><svg viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg></span><span><b>Design rounds are time-stamped:</b> Version 1, Version 2, Version 3 with clear dates</span></li>
+              <li><span class="pro-con__mark"><svg viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg></span><span><b>Feedback is routed intentionally:</b> Comments in the script, reviews in scheduled meetings</span></li>
+              <li><span class="pro-con__mark"><svg viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg></span><span><b>Edit access narrows as the event approaches:</b> Fewer people can make changes as you get closer to showtime</span></li>
+            </ul>
+          </div>
+        </div>
         <h6>This Protects</h6>
         <div class="tag-row">
           <span class="tag-chip">Version control</span>
@@ -2099,22 +2366,33 @@ h1,h2,h3,h4,h5,h6{ margin:0 0 .5em; font-weight:700; line-height:1.15; }
       <div class="subsection">
         <h2>Locking the Script</h2>
         <p>When multiple stakeholders collaborate at all hours, you will struggle to keep up. Pre-scheduling times to lock the script lets creative keep pace with content, which matters for rehearsals and day-to-day accuracy.</p>
-        <h6>Locking the Script</h6>
-        <ul class="icon-list">
-          <li>Forces alignment (everyone must commit to what&rsquo;s in the doc)</li>
-          <li>Creates a decision boundary (no more major changes after this point)</li>
-          <li>Protects the final stretch (designers can finalize without chasing moving targets)</li>
-          <li>Enables rehearsal confidence (speakers practice the actual content they&rsquo;ll deliver)</li>
-        </ul>
-        <h6>When the Script Is Locked</h6>
-        <ul class="icon-list">
-          <li>Feedback becomes discussion, not edits</li>
-          <li>Changes move to verbal communication (in-person or scheduled calls)</li>
-          <li>Designers own the final artifact</li>
-        </ul>
-        <h6>When to Close the Script</h6>
-        <p>48&ndash;72 hours before the event. After this point, all changes go through a formal approval process.</p>
-        <p>This is how you shift from &ldquo;support&rdquo; to &ldquo;partner&rdquo; without asking permission.</p>
+        <div class="feature-grid feature-grid--3col">
+          <div class="feature-card">
+            <span class="feature-card__icon"><svg viewBox="0 0 24 24"><rect width="18" height="11" x="3" y="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></span>
+            <h4>Why Lock It</h4>
+            <ul>
+              <li>Forces alignment (everyone must commit to what&rsquo;s in the doc)</li>
+              <li>Creates a decision boundary (no more major changes after this point)</li>
+              <li>Protects the final stretch (designers finalize without chasing moving targets)</li>
+              <li>Enables rehearsal confidence (speakers practice the actual content)</li>
+            </ul>
+          </div>
+          <div class="feature-card">
+            <span class="feature-card__icon"><svg viewBox="0 0 24 24"><path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"/></svg></span>
+            <h4>When the Script Is Locked</h4>
+            <ul>
+              <li>Feedback becomes discussion, not edits</li>
+              <li>Changes move to verbal communication (in-person or scheduled calls)</li>
+              <li>Designers own the final artifact</li>
+            </ul>
+          </div>
+          <div class="feature-card">
+            <span class="feature-card__icon"><svg viewBox="0 0 24 24"><path d="M8 2v4"/><path d="M16 2v4"/><rect width="18" height="18" x="3" y="4" rx="2"/><path d="M3 10h18"/><path d="M17 14h-6"/><path d="M13 18H7"/><path d="M7 14h.01"/><path d="M17 18h.01"/></svg></span>
+            <h4>When to Close the Script</h4>
+            <p>48&ndash;72 hours before the event. After this point, all changes go through a formal approval process.</p>
+          </div>
+        </div>
+        <p class="pull-quote">This is how you shift from &ldquo;support&rdquo; to &ldquo;partner&rdquo; without asking permission.</p>
       </div>
     </article>
 
@@ -2123,137 +2401,169 @@ h1,h2,h3,h4,h5,h6{ margin:0 0 .5em; font-weight:700; line-height:1.15; }
       <h1><span class="h1-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M8 2v4"/><path d="M16 2v4"/><rect width="18" height="18" x="3" y="4" rx="2"/><path d="M3 10h18"/><path d="M8 14h.01"/><path d="M12 14h.01"/><path d="M16 14h.01"/><path d="M8 18h.01"/><path d="M12 18h.01"/><path d="M16 18h.01"/></svg></span>The Event Process: Phases and Meetings</h1>
       <p>Event production is iterative, not linear, but there is a clear sequence of meetings and milestones.</p>
 
-      <div class="subsection">
+      <div class="subsection phase-block">
+        <span class="phase-block__num">1</span>
         <h2>Phase 1: Kickoff and Alignment</h2>
-        <h6>Comms Internal Kickoff</h6>
-        <p>Communicate the official start of event production, the process, key members, and capacity planning.</p>
-        <p><b>Topics covered:</b></p>
-        <ul class="icon-list">
-          <li>Who (team roles)</li>
-          <li>What (event scope and goals)</li>
-          <li>Where (venue details)</li>
-          <li>How (process and tools)</li>
-          <li>When (timeline and milestones)</li>
-        </ul>
-        <p><b>Individuals involved:</b> Internal creative team, production leads, project managers</p>
 
-        <p><b>Internal Partner Kickoff:</b> Align with cross-functional partners (product, marketing, sales, policy) on the event process and rules of engagement.</p>
-        <p><b>Topics covered:</b></p>
-        <ul class="icon-list">
-          <li>Who&rsquo;s involved and their roles</li>
-          <li>What we&rsquo;re building toward</li>
-          <li>Where collaboration happens (script template, workbook)</li>
-          <li>How feedback works (comment workflow, approval process)</li>
-          <li>When key milestones are</li>
-        </ul>
-        <p><b>Individuals involved:</b> Content leads, product marketing, comms, brand</p>
+        <div class="meeting-card">
+          <h4>Comms Internal Kickoff</h4>
+          <p>Communicate the official start of event production, the process, key members, and capacity planning.</p>
+          <div class="tag-row">
+            <span class="tag-chip">Who: team roles</span>
+            <span class="tag-chip">What: scope and goals</span>
+            <span class="tag-chip">Where: venue details</span>
+            <span class="tag-chip">How: process and tools</span>
+            <span class="tag-chip">When: timeline and milestones</span>
+          </div>
+          <p class="meeting-card__meta">Involved: Internal creative team, production leads, project managers</p>
+        </div>
 
-        <p><b>Exec Kickoff (Agile):</b> A more agile effort to get the message in front of captive exec and EA attention. This is where you build relationships with leadership and set expectations.</p>
-        <p><b>Topics covered:</b></p>
-        <ul class="icon-list">
-          <li>Time commitment required from execs</li>
-          <li>Key DRIs and who they&rsquo;ll work with</li>
-          <li>Agreed-upon milestones (script review dates, rehearsal dates)</li>
-          <li>Convenience efforts (how we&rsquo;re making this easy for them)</li>
-        </ul>
-        <p><b>Individuals involved:</b> Executive speakers, EAs, content leads, creative leads</p>
-        <p><b>Why this matters:</b> Without exec buy-in on the process, you&rsquo;ll fight last-minute chaos at every turn.</p>
+        <div class="meeting-card">
+          <h4>Internal Partner Kickoff</h4>
+          <p>Align with cross-functional partners (product, marketing, sales, policy) on the event process and rules of engagement.</p>
+          <div class="tag-row">
+            <span class="tag-chip">Who&rsquo;s involved</span>
+            <span class="tag-chip">What we&rsquo;re building toward</span>
+            <span class="tag-chip">Where collaboration happens</span>
+            <span class="tag-chip">How feedback works</span>
+            <span class="tag-chip">When milestones are</span>
+          </div>
+          <p class="meeting-card__meta">Involved: Content leads, product marketing, comms, brand</p>
+        </div>
+
+        <div class="meeting-card">
+          <h4>Exec Kickoff (Agile)</h4>
+          <p>A more agile effort to get the message in front of captive exec and EA attention. This is where you build relationships with leadership and set expectations.</p>
+          <div class="tag-row">
+            <span class="tag-chip">Time commitment required</span>
+            <span class="tag-chip">Key DRIs</span>
+            <span class="tag-chip">Agreed-upon milestones</span>
+            <span class="tag-chip">Convenience efforts</span>
+          </div>
+          <p class="meeting-card__meta">Involved: Executive speakers, EAs, content leads, creative leads</p>
+        </div>
+        <p class="pull-quote">Without exec buy-in on the process, you&rsquo;ll fight last-minute chaos at every turn.</p>
       </div>
 
-      <div class="subsection">
+      <div class="subsection phase-block">
+        <span class="phase-block__num">2</span>
         <h2>Phase 2: Content and Creative Development</h2>
-        <h6>Process Owners Check-Ins (Weekly Cadence)</h6>
-        <p>Regular check-ins with process owners/collaborators to ensure blockers are removed and the process is protected.</p>
-        <p><b>Topics covered:</b></p>
-        <ul class="icon-list">
-          <li>Adherence to key artifacts (are people using the script template?)</li>
-          <li>Timeline concerns (are we on track?)</li>
-          <li>&ldquo;Downed helicopters&rdquo; (what&rsquo;s stalling progress and who can clear it?)</li>
-          <li>Reining in key people (who needs to be pulled back into alignment?)</li>
-          <li>Resolving blockers</li>
-        </ul>
-        <p><b>Individuals involved:</b> Creative lead, content lead, project manager, production lead</p>
 
-        <p><b>Content Reviews:</b> Check-ins on content progress, including re-committing to timelines every time. Design is included in these meetings. If possible, this should take place shortly after each exec review.</p>
-        <p><b>Topics covered:</b></p>
-        <ul class="icon-list">
-          <li>Content updates (what&rsquo;s changed since last review?)</li>
-          <li>Parallel workflows (demos, videos, graphics in progress)</li>
-          <li>Demos (live demo walkthroughs and technical requirements)</li>
-        </ul>
-        <p><b>Individuals involved:</b> Key content owners and decision-makers</p>
+        <div class="meeting-card">
+          <h4>Process Owners Check-Ins <span style="opacity:.6; font-weight:600;">(Weekly Cadence)</span></h4>
+          <p>Regular check-ins with process owners/collaborators to ensure blockers are removed and the process is protected.</p>
+          <div class="tag-row">
+            <span class="tag-chip">Adherence to key artifacts</span>
+            <span class="tag-chip">Timeline concerns</span>
+            <span class="tag-chip">&ldquo;Downed helicopters&rdquo;</span>
+            <span class="tag-chip">Reining in key people</span>
+            <span class="tag-chip">Resolving blockers</span>
+          </div>
+          <p class="meeting-card__meta">Involved: Creative lead, content lead, project manager, production lead</p>
+        </div>
 
-        <p><b>Creative Reviews:</b> Check-ins on design progress, including re-committing to timelines every time. This should take place at least 24 hours prior to exec reviews and/or rehearsals.</p>
-        <p><b>Topics covered:</b></p>
-        <ul class="icon-list">
-          <li>Creative concepts (visual direction, theme, storytelling approach)</li>
-          <li>Presentation functionality (transitions, animations, technical execution)</li>
-          <li>Expectations (are we aligned on what &ldquo;done&rdquo; looks like?)</li>
-        </ul>
-        <p><b>Individuals involved:</b> Key content owners, decision-makers, and creative team</p>
+        <div class="meeting-card">
+          <h4>Content Reviews</h4>
+          <p>Check-ins on content progress, including re-committing to timelines every time. Design is included in these meetings. If possible, this should take place shortly after each exec review.</p>
+          <div class="tag-row">
+            <span class="tag-chip">Content updates</span>
+            <span class="tag-chip">Parallel workflows</span>
+            <span class="tag-chip">Demos</span>
+          </div>
+          <p class="meeting-card__meta">Involved: Key content owners and decision-makers</p>
+        </div>
+
+        <div class="meeting-card">
+          <h4>Creative Reviews</h4>
+          <p>Check-ins on design progress, including re-committing to timelines every time. This should take place at least 24 hours prior to exec reviews and/or rehearsals.</p>
+          <div class="tag-row">
+            <span class="tag-chip">Creative concepts</span>
+            <span class="tag-chip">Presentation functionality</span>
+            <span class="tag-chip">Expectations</span>
+          </div>
+          <p class="meeting-card__meta">Involved: Key content owners, decision-makers, and creative team</p>
+        </div>
       </div>
 
-      <div class="subsection">
+      <div class="subsection phase-block">
+        <span class="phase-block__num">3</span>
         <h2>Phase 3: Rehearsals and Refinement</h2>
-        <h6>Practice Makes Perfect</h6>
         <p class="pull-quote">Rehearsals are not optional. They are part of the design process.</p>
         <p><b>Good rehearsals:</b></p>
-        <ul class="icon-list">
-          <li>Reveal broken pacing</li>
-          <li>Expose unclear visuals</li>
-          <li>Surface narrative gaps</li>
-          <li>Reduce speaker anxiety</li>
-          <li>Prevent last-minute chaos</li>
-        </ul>
+        <div class="tag-row">
+          <span class="tag-chip">Reveal broken pacing</span>
+          <span class="tag-chip">Expose unclear visuals</span>
+          <span class="tag-chip">Surface narrative gaps</span>
+          <span class="tag-chip">Reduce speaker anxiety</span>
+          <span class="tag-chip">Prevent last-minute chaos</span>
+        </div>
         <p>Designers who treat rehearsals as interruptions miss their biggest leverage point. This is where calm is earned.</p>
 
         <h6>Prior to Onsite</h6>
-        <p><b>Table Read #1: Content Focus</b></p>
-        <ul class="icon-list">
-          <li>Focus: Script clarity, narrative flow, messaging alignment</li>
-          <li>No visuals yet, just reading through content</li>
-        </ul>
-        <p><b>Table Read #2: Content + Creative</b></p>
-        <ul class="icon-list">
-          <li>Focus: Content with initial visual concepts</li>
-          <li>Designers present early creative direction</li>
-        </ul>
-        <p><b>Rehearsal #1 (Full Production in Forum/Office)</b></p>
-        <ul class="icon-list">
-          <li>Focus: Full run-through with slides, timing, and production elements</li>
-          <li>This is the stress test. Find what breaks before you&rsquo;re onsite</li>
-        </ul>
-        <p><b>Table Read #3: Unofficial Rehearsal (Optional)</b></p>
-        <ul class="icon-list">
-          <li>Password-protected keynote files can be shared with presenters for practicing</li>
-          <li>This ensures any changes are communicated directly back to design to avoid version control issues</li>
-        </ul>
+        <div class="feature-grid">
+          <div class="feature-card">
+            <span class="feature-card__badge">1</span>
+            <h4>Table Read #1: Content Focus</h4>
+            <p>Script clarity, narrative flow, messaging alignment. No visuals yet, just reading through content.</p>
+          </div>
+          <div class="feature-card">
+            <span class="feature-card__badge">2</span>
+            <h4>Table Read #2: Content + Creative</h4>
+            <p>Content with initial visual concepts. Designers present early creative direction.</p>
+          </div>
+          <div class="feature-card">
+            <span class="feature-card__badge">3</span>
+            <h4>Rehearsal #1: Full Production</h4>
+            <p>Full run-through with slides, timing, and production elements &mdash; in the forum or office. This is the stress test: find what breaks before you&rsquo;re onsite.</p>
+          </div>
+          <div class="feature-card">
+            <span class="feature-card__badge">4</span>
+            <h4>Table Read #3: Unofficial (Optional)</h4>
+            <p>Password-protected keynote files shared with presenters for practicing. Any changes get communicated directly back to design to avoid version control issues.</p>
+          </div>
+        </div>
 
         <h6>Officially Onsite</h6>
-        <p><b>Keynote Room: Full Onstage Run-Through</b></p>
-        <ul class="icon-list">
-          <li>Full production environment (stage, screens, AV, lighting)</li>
-          <li>Script notes and edits managed live</li>
-          <li>Production details finalized (clicker compatibility, screen dimensions, fallback plans)</li>
-        </ul>
-        <p><b>Offline Room: Quiet Refinement Space</b></p>
-        <ul class="icon-list">
-          <li>Quiet space to refine slides with design partners and practice clicking through</li>
-          <li>Secure environment to facilitate final adjustments 24 hours before showtime</li>
-          <li>No distractions, just presenters, designers, and final polish</li>
-        </ul>
+        <div class="divided-columns">
+          <div class="divided-columns__col">
+            <span class="divided-columns__icon"><svg viewBox="0 0 24 24"><path d="M15.6 11.6 22 7v10l-6.4-4.5v-1z"/><rect width="14" height="12" x="2" y="6" rx="2"/></svg></span>
+            <h4>Keynote Room: Full Onstage Run-Through</h4>
+            <p>Full production environment (stage, screens, AV, lighting). Script notes and edits managed live. Production details finalized (clicker compatibility, screen dimensions, fallback plans).</p>
+          </div>
+          <div class="divided-columns__col">
+            <span class="divided-columns__icon"><svg viewBox="0 0 24 24"><path d="M12 22v-6"/><path d="M12 8V2"/><path d="M4.93 10.93 9 15"/><path d="m14.83 9.17 4.24-4.24"/><path d="M14.83 14.83 19.07 19.07"/><path d="M9 9 4.93 4.93"/><circle cx="12" cy="12" r="4"/></svg></span>
+            <h4>Offline Room: Quiet Refinement Space</h4>
+            <p>Quiet space to refine slides with design partners and practice clicking through. Secure environment for final adjustments 24 hours before showtime &mdash; no distractions, just presenters, designers, and final polish.</p>
+          </div>
+        </div>
       </div>
 
       <div class="subsection">
         <h2>Working Onsite as a Production Team</h2>
         <p>Once you&rsquo;re on-site, the process shifts. You&rsquo;re no longer iterating freely. You&rsquo;re in a controlled environment where every change has to be tracked, owned, and confirmed. Even small events benefit from role clarity. You may hold multiple roles, and that&rsquo;s fine. What matters is that ownership is explicit, responsibilities are understood, and decisions have a home. Ambiguity creates panic.</p>
         <p>At minimum, someone must own:</p>
-        <ul class="lead-list">
-          <li><b>Content decisions:</b> Who approves script changes?</li>
-          <li><b>Creative execution:</b> Who owns the visual design?</li>
-          <li><b>Production logistics:</b> Who coordinates with AV/venue?</li>
-          <li><b>Live edits:</b> Who makes changes during rehearsals?</li>
-        </ul>
+        <div class="feature-grid">
+          <div class="feature-card feature-card--solid-green">
+            <span class="feature-card__icon feature-card__icon--solid"><svg viewBox="0 0 24 24"><path d="M12 7v14"/><path d="M3 18a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h5a4 4 0 0 1 4 4 4 4 0 0 1 4-4h5a1 1 0 0 1 1 1v13a1 1 0 0 1-1 1h-6a3 3 0 0 0-3 3 3 3 0 0 0-3-3z"/></svg></span>
+            <h4>Content decisions</h4>
+            <p>Who approves script changes?</p>
+          </div>
+          <div class="feature-card feature-card--solid-green">
+            <span class="feature-card__icon feature-card__icon--solid"><svg viewBox="0 0 24 24"><path d="m12 19 7-7 3 3-7 7-3-3z"/><path d="m18 13-1.5-7.5L2 2l3.5 14.5L13 18l5-5z"/><path d="M2 2l7.586 7.586"/><circle cx="11" cy="11" r="2"/></svg></span>
+            <h4>Creative execution</h4>
+            <p>Who owns the visual design?</p>
+          </div>
+          <div class="feature-card feature-card--solid-green">
+            <span class="feature-card__icon feature-card__icon--solid"><svg viewBox="0 0 24 24"><rect width="20" height="14" x="2" y="3" rx="2"/><line x1="8" x2="16" y1="21" y2="21"/><line x1="12" x2="12" y1="17" y2="21"/></svg></span>
+            <h4>Production logistics</h4>
+            <p>Who coordinates with AV/venue?</p>
+          </div>
+          <div class="feature-card feature-card--solid-green">
+            <span class="feature-card__icon feature-card__icon--solid"><svg viewBox="0 0 24 24"><path d="M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z"/></svg></span>
+            <h4>Live edits</h4>
+            <p>Who makes changes during rehearsals?</p>
+          </div>
+        </div>
         <h3>The Four Roles That Matter Onsite</h3>
         <div class="feature-grid">
           <div class="feature-card">
@@ -2282,12 +2592,12 @@ h1,h2,h3,h4,h5,h6{ margin:0 0 .5em; font-weight:700; line-height:1.15; }
       <div class="subsection">
         <h2>Version Control Onsite Is a Handoff Protocol</h2>
         <p>The moment the file leaves your hands and goes to the graphics operator, you lose direct control. That is fine, but it requires a clear process:</p>
-        <ul class="icon-list">
+        <ol>
           <li>You send the graphics operator the final version. That is the working file. No one else has edit access.</li>
           <li>During rehearsal, the operator handles in-the-moment changes (click timing, minor speaker-note edits), logged in an edits tracker: the change, who requested it, confirmed or pending.</li>
           <li>After each rehearsal pass, the operator returns the file with all tracked edits. You review, make design-level adjustments, and send back a clean version. That becomes the new working file.</li>
           <li>The deck freezes 24 hours before showtime. After that, emergency changes only, routed through the PM rather than directly to the designer.</li>
-        </ul>
+        </ol>
         <p>On speaker clickers: At large events, the speaker&rsquo;s clicker usually does not advance slides directly. It signals the graphics operator, who advances on their behalf. This matters because nervous speakers double-click; an operator absorbs that error, a speaker advancing their own deck does not. Know which setup you are in before rehearsal, and test it.</p>
         <p><b>The edits tracker:</b> Keep a live document during onsite rehearsals. Every change request goes in, who asked for it, what slide, what the change is, and whether it&rsquo;s been confirmed by the requester after implementation. During a busy rehearsal with multiple stakeholders asking for changes simultaneously, this is the only way to avoid implementing conflicting edits or missing something someone flagged in the hallway.</p>
       </div>
@@ -2297,13 +2607,33 @@ h1,h2,h3,h4,h5,h6{ margin:0 0 .5em; font-weight:700; line-height:1.15; }
     <article class="second-block reveal" id="m5-s4" data-nav-id="m5-s4">
       <h1><span class="h1-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 3v18"/><path d="m19 8 3 8a5 5 0 0 1-6 0zV7"/><path d="M3 7h1a17 17 0 0 0 8-2 17 17 0 0 0 8 2h1"/><path d="m5 8 3 8a5 5 0 0 1-6 0zV7"/><path d="M7 21h10"/></svg></span>The Laws of the Land</h1>
       <p>These principles keep event production from collapsing. Most restate what is above; keep them in one place as your non-negotiables.</p>
-      <ul class="icon-list">
-        <li><b>The script template is sacred:</b> One per session or deck, no exceptions. If it is not in the script, it is not happening.</li>
-        <li><b>Content and creative partnership:</b> They co-develop from the start. The anti-pattern, where content writes the script and throws it over the wall to designers, produces mediocre work.</li>
-        <li><b>Closing the script:</b> 48 to 72 hours before the event, changes stop and only approved edits get through. Start enforcing in-person communication and strict file ownership.</li>
-        <li><b>Cascade approvals:</b> Reduce the number of chefs. SMEs and DRIs drive initial decisions, leadership signs off along the way, and final deliverable owners close it out. If everyone has equal say, no one has final say.</li>
-        <li><b>Version control:</b> Defined roles, an edits tracker with a point of contact per change, and a 24-hour freeze before showtime. It matters enough to be worth repeating.</li>
-      </ul>
+      <div class="feature-grid feature-grid--wrap">
+        <div class="feature-card">
+          <span class="feature-card__icon"><svg viewBox="0 0 24 24"><path d="M15 4.5A6.5 6.5 0 1 0 21.5 11"/><path d="m21 3-9 9"/><path d="M15 3h6v6"/></svg></span>
+          <h4>The script template is sacred</h4>
+          <p>One per session or deck, no exceptions. If it is not in the script, it is not happening.</p>
+        </div>
+        <div class="feature-card">
+          <span class="feature-card__icon"><svg viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></span>
+          <h4>Content and creative partnership</h4>
+          <p>They co-develop from the start. The anti-pattern, where content writes the script and throws it over the wall to designers, produces mediocre work.</p>
+        </div>
+        <div class="feature-card">
+          <span class="feature-card__icon"><svg viewBox="0 0 24 24"><rect width="18" height="11" x="3" y="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></span>
+          <h4>Closing the script</h4>
+          <p>48 to 72 hours before the event, changes stop and only approved edits get through. Start enforcing in-person communication and strict file ownership.</p>
+        </div>
+        <div class="feature-card">
+          <span class="feature-card__icon"><svg viewBox="0 0 24 24"><path d="M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z"/></svg></span>
+          <h4>Cascade approvals</h4>
+          <p>Reduce the number of chefs. SMEs and DRIs drive initial decisions, leadership signs off along the way, and final deliverable owners close it out. If everyone has equal say, no one has final say.</p>
+        </div>
+        <div class="feature-card">
+          <span class="feature-card__icon"><svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10"/></svg></span>
+          <h4>Version control</h4>
+          <p>Defined roles, an edits tracker with a point of contact per change, and a 24-hour freeze before showtime. It matters enough to be worth repeating.</p>
+        </div>
+      </div>
       <p>Law 6, 7, 8 and 9: Version control (because it&rsquo;s that important).</p>
 
       <div class="subsection">
@@ -2357,13 +2687,28 @@ h1,h2,h3,h4,h5,h6{ margin:0 0 .5em; font-weight:700; line-height:1.15; }
         <h2>Common Failure Patterns</h2>
         <p>These are not event problems, they are process problems, and your value is spotting them early and redirecting quietly.</p>
         <p><b>Watch for:</b></p>
-        <ul class="icon-list">
-          <li>Multiple versions of the same content (script in Docs, slides in Keynote, notes in Slack)</li>
-          <li>Unclear decision-makers</li>
-          <li>Feedback arriving in side channels (DMs, hallways, email instead of centralized comments)</li>
-          <li>Late involvement of speakers (execs seeing content for the first time at rehearsal)</li>
-          <li>No rehearsal plan, and no lock moment (the script never closes)</li>
-        </ul>
+        <div class="feature-grid feature-grid--wrap">
+          <div class="feature-card">
+            <span class="feature-card__icon feature-card__icon--solid"><svg viewBox="0 0 24 24"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg></span>
+            <p>Multiple versions of the same content (script in Docs, slides in Keynote, notes in Slack)</p>
+          </div>
+          <div class="feature-card">
+            <span class="feature-card__icon feature-card__icon--solid"><svg viewBox="0 0 24 24"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg></span>
+            <p>Unclear decision-makers</p>
+          </div>
+          <div class="feature-card">
+            <span class="feature-card__icon feature-card__icon--solid"><svg viewBox="0 0 24 24"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg></span>
+            <p>Feedback arriving in side channels (DMs, hallways, email instead of centralized comments)</p>
+          </div>
+          <div class="feature-card">
+            <span class="feature-card__icon feature-card__icon--solid"><svg viewBox="0 0 24 24"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg></span>
+            <p>Late involvement of speakers (execs seeing content for the first time at rehearsal)</p>
+          </div>
+          <div class="feature-card">
+            <span class="feature-card__icon feature-card__icon--solid"><svg viewBox="0 0 24 24"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg></span>
+            <p>No rehearsal plan, and no lock moment (the script never closes)</p>
+          </div>
+        </div>
         <p>When you see these emerging, redirect feedback to the script, clarify decision-making authority, advocate for rehearsal time, and push for a lock date.</p>
       </div>
 
@@ -2371,12 +2716,24 @@ h1,h2,h3,h4,h5,h6{ margin:0 0 .5em; font-weight:700; line-height:1.15; }
         <div class="callout__inner">
           <span class="callout__tag">Instructions</span>
           <p><b>When things go wrong, and they will, work this decision tree:</b></p>
-          <ul class="icon-list">
-            <li>Can it be resolved or negotiated today? If a person can unlock it, call, text, or find them onsite.</li>
-            <li>Can we pivot the workflow to meet expectations? Adjust milestones, shift resources, compress timelines where possible.</li>
-            <li>Can we strategize the level of delivery across projects? Re-prioritize, simplifying or deprioritizing to protect the hero moments.</li>
-            <li>Can we pull in more people? Bring in contractors, vendors, or internal reinforcements, and know your emergency contacts before you need them.</li>
-          </ul>
+          <div class="icon-line-list">
+            <div class="icon-line-list__item">
+              <svg viewBox="0 0 24 24"><path d="M12 2v4"/><path d="m16.2 7.8 2.9-2.9"/><path d="M18 12h4"/><path d="m16.2 16.2 2.9 2.9"/><path d="M12 18v4"/><path d="m4.9 19.1 2.9-2.9"/><path d="M2 12h4"/><path d="m4.9 4.9 2.9 2.9"/></svg>
+              <p><b>Can it be resolved or negotiated today?</b> If a person can unlock it, call, text, or find them onsite.</p>
+            </div>
+            <div class="icon-line-list__item">
+              <svg viewBox="0 0 24 24"><path d="M16 3.128a4 4 0 0 1 0 7.744"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M4 21v-2a4 4 0 0 1 4-4h4a4 4 0 0 1 4 4v2"/><circle cx="10" cy="8" r="4"/></svg>
+              <p><b>Can we pivot the workflow to meet expectations?</b> Adjust milestones, shift resources, compress timelines where possible.</p>
+            </div>
+            <div class="icon-line-list__item">
+              <svg viewBox="0 0 24 24"><path d="M3 3v18h18"/><path d="M18.4 8.6 15 12l-3-3-4.3 4.3"/></svg>
+              <p><b>Can we strategize the level of delivery across projects?</b> Re-prioritize, simplifying or deprioritizing to protect the hero moments.</p>
+            </div>
+            <div class="icon-line-list__item">
+              <svg viewBox="0 0 24 24"><path d="M2 21a8 8 0 0 1 13.292-6"/><circle cx="10" cy="8" r="5"/><path d="M19 16v6"/><path d="M22 19h-6"/></svg>
+              <p><b>Can we pull in more people?</b> Bring in contractors, vendors, or internal reinforcements, and know your emergency contacts before you need them.</p>
+            </div>
+          </div>
         </div>
       </div>
     </article>
@@ -2426,29 +2783,44 @@ h1,h2,h3,h4,h5,h6{ margin:0 0 .5em; font-weight:700; line-height:1.15; }
         <h2>Exercise: Event Scenario Walkthrough</h2>
         <p>You&rsquo;re supporting a keynote happening in three weeks.</p>
         <p><b>The situation:</b></p>
-        <ul class="icon-list">
-          <li>The CEO hasn&rsquo;t reviewed content</li>
-          <li>Marketing wants brand control</li>
-          <li>Product wants more demos</li>
-          <li>Production needs files early</li>
-          <li>Everyone says it&rsquo;s urgent</li>
-        </ul>
+        <div class="feature-grid feature-grid--wrap">
+          <div class="feature-card">
+            <span class="feature-card__icon feature-card__icon--solid"><svg viewBox="0 0 24 24"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg></span>
+            <p>The CEO hasn&rsquo;t reviewed content</p>
+          </div>
+          <div class="feature-card">
+            <span class="feature-card__icon feature-card__icon--solid"><svg viewBox="0 0 24 24"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg></span>
+            <p>Marketing wants brand control</p>
+          </div>
+          <div class="feature-card">
+            <span class="feature-card__icon feature-card__icon--solid"><svg viewBox="0 0 24 24"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg></span>
+            <p>Product wants more demos</p>
+          </div>
+          <div class="feature-card">
+            <span class="feature-card__icon feature-card__icon--solid"><svg viewBox="0 0 24 24"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg></span>
+            <p>Production needs files early</p>
+          </div>
+          <div class="feature-card">
+            <span class="feature-card__icon feature-card__icon--solid"><svg viewBox="0 0 24 24"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg></span>
+            <p>Everyone says it&rsquo;s urgent</p>
+          </div>
+        </div>
         <p><b>Your task:</b></p>
-        <ul class="icon-list">
-          <li>Identify the single source of truth. Where will all content and decisions live?</li>
-          <li>Define when the script locks. When do changes stop?</li>
-          <li>Decide how feedback flows. What&rsquo;s the process for reviews and approvals?</li>
-          <li>Protect rehearsal time. When and how will rehearsals happen?</li>
-          <li>Explain your approach calmly. How would you communicate this plan to stakeholders?</li>
-        </ul>
+        <ol>
+          <li><b>Identify the single source of truth.</b> Where will all content and decisions live?</li>
+          <li><b>Define when the script locks.</b> When do changes stop?</li>
+          <li><b>Decide how feedback flows.</b> What&rsquo;s the process for reviews and approvals?</li>
+          <li><b>Protect rehearsal time.</b> When and how will rehearsals happen?</li>
+          <li><b>Explain your approach calmly.</b> How would you communicate this plan to stakeholders?</li>
+        </ol>
         <p class="pull-quote">There is no perfect answer. There are only controlled ones.</p>
         <p><b>Walk through this scenario and document your approach. Consider:</b></p>
-        <ul class="icon-list">
-          <li>What artifacts do you create first?</li>
-          <li>Who do you meet with and in what order?</li>
-          <li>What boundaries do you set?</li>
-          <li>How do you communicate calmness while advocating for process?</li>
-        </ul>
+        <div class="tag-row">
+          <span class="tag-chip">What artifacts do you create first?</span>
+          <span class="tag-chip">Who do you meet with, and in what order?</span>
+          <span class="tag-chip">What boundaries do you set?</span>
+          <span class="tag-chip">How do you communicate calmness while advocating for process?</span>
+        </div>
       </div>
 
       <div class="inset-panel inset-panel--practice">
@@ -2540,25 +2912,60 @@ h1,h2,h3,h4,h5,h6{ margin:0 0 .5em; font-weight:700; line-height:1.15; }
       <h1><span class="h1-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M16 7h6v6"/><path d="m22 7-8.5 8.5-5-5L2 17"/></svg></span>The Core Career Shift: From Production to Partnership</h1>
       <p>Every presentation designer starts in production. That is not a failure, it is the apprenticeship.</p>
       <p><b>Early-stage work looks like:</b></p>
-      <ul class="icon-list">
-        <li>Formatting</li>
-        <li>Cleanup</li>
-        <li>Brand compliance</li>
-        <li>Executing someone else&rsquo;s ideas</li>
-        <li>Working downstream</li>
-      </ul>
+      <div class="divided-columns">
+        <div class="divided-columns__col">
+          <span class="divided-columns__icon"><svg viewBox="0 0 24 24"><path d="M4 7V4a1 1 0 0 1 1-1h4"/><path d="M4 17v3a1 1 0 0 0 1 1h4"/><path d="M15 3h4a1 1 0 0 1 1 1v3"/><path d="M15 21h4a1 1 0 0 0 1-1v-3"/></svg></span>
+          <p>Formatting</p>
+        </div>
+        <div class="divided-columns__col">
+          <span class="divided-columns__icon"><svg viewBox="0 0 24 24"><path d="m9 11-6 6v3h9l3-3"/><path d="m22 12-4.6 4.6a2 2 0 0 1-2.8 0l-5.2-5.2a2 2 0 0 1 0-2.8L14 4"/></svg></span>
+          <p>Cleanup</p>
+        </div>
+        <div class="divided-columns__col">
+          <span class="divided-columns__icon"><svg viewBox="0 0 24 24"><path d="M12 9v4"/><path d="M12 17h.01"/><path d="M3 12a9 9 0 1 0 18 0 9 9 0 0 0-18 0"/></svg></span>
+          <p>Brand compliance</p>
+        </div>
+        <div class="divided-columns__col">
+          <span class="divided-columns__icon"><svg viewBox="0 0 24 24"><path d="M12 20h9"/><path d="M16.376 3.622a1 1 0 0 1 3.002 3.002L7.368 18.635a2 2 0 0 1-.855.506l-2.872.838a.5.5 0 0 1-.62-.62l.838-2.872a2 2 0 0 1 .506-.854z"/></svg></span>
+          <p>Executing someone else&rsquo;s ideas</p>
+        </div>
+        <div class="divided-columns__col">
+          <span class="divided-columns__icon"><svg viewBox="0 0 24 24"><path d="M17 7 7 17"/><path d="M7 7v10h10"/></svg></span>
+          <p>Working downstream</p>
+        </div>
+      </div>
       <p>The problem is not starting there. The problem is staying there. The shift happens when you move from &ldquo;tell me what to do&rdquo; to &ldquo;let me help you think through this,&rdquo; and that shift is not achieved through titles. It is achieved through behavior.</p>
 
       <div class="subsection">
         <h2>How Designers Actually Move Upstream</h2>
         <p>Designers do not move upstream by declaring themselves strategic. They move upstream by being useful first.</p>
-        <ul class="icon-list">
-          <li><b>Serve the immediate need well.</b> Do the work cleanly, be reliable, reduce friction, show up on time, and deliver what you said you would. This builds trust.</li>
-          <li><b>Overdeliver selectively.</b> Not by making more slides, but by noticing patterns, gaps, and inefficiencies and quietly improving them. You notice the same slide type built manually across decks, so you add it to the template. You see stakeholders confused about the review process, so you document it.</li>
-          <li><b>Ask better questions.</b> Stop asking what they want it to look like. Start asking why it exists, who it is for, what happens if it fails, and what decision you are trying to enable. Better questions reveal deeper problems, and deeper problems create opportunities for strategic value.</li>
-          <li><b>Solve a process problem.</b> Templates, script templates, intake clarity, version control, one small system at a time. When you solve process problems, you improve every future project, not just one.</li>
-          <li><b>Build champions.</b> Champions are the people who feel calmer, clearer, and more confident because you were involved. They remember you, advocate for you, and bring you into projects earlier. Once trust exists, you do not need permission to participate earlier. You are invited.</li>
-        </ul>
+        <div class="feature-grid feature-grid--wrap">
+          <div class="feature-card">
+            <span class="feature-card__icon"><svg viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg></span>
+            <h4>Serve the immediate need well</h4>
+            <p>Do the work cleanly, be reliable, reduce friction, show up on time, and deliver what you said you would. This builds trust.</p>
+          </div>
+          <div class="feature-card">
+            <span class="feature-card__icon"><svg viewBox="0 0 24 24"><path d="M16 7h6v6"/><path d="m22 7-8.5 8.5-5-5L2 17"/></svg></span>
+            <h4>Overdeliver selectively</h4>
+            <p>Not by making more slides, but by noticing patterns, gaps, and inefficiencies and quietly improving them &mdash; the same slide type built manually across decks gets added to the template; confusion about the review process gets documented.</p>
+          </div>
+          <div class="feature-card">
+            <span class="feature-card__icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><path d="M12 17h.01"/></svg></span>
+            <h4>Ask better questions</h4>
+            <p>Stop asking what they want it to look like. Start asking why it exists, who it is for, what happens if it fails, and what decision you are trying to enable.</p>
+          </div>
+          <div class="feature-card">
+            <span class="feature-card__icon"><svg viewBox="0 0 24 24"><path d="M9 3H5a2 2 0 0 0-2 2v4m6-6h10a2 2 0 0 1 2 2v4M9 3v18m0 0h10a2 2 0 0 0 2-2V9M9 21H5a2 2 0 0 1-2-2V9m0 0h18"/></svg></span>
+            <h4>Solve a process problem</h4>
+            <p>Templates, script templates, intake clarity, version control, one small system at a time. Solving process problems improves every future project, not just one.</p>
+          </div>
+          <div class="feature-card">
+            <span class="feature-card__icon"><svg viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></span>
+            <h4>Build champions</h4>
+            <p>Champions feel calmer, clearer, and more confident because you were involved. They remember you, advocate for you, and bring you into projects earlier. You are invited, not just permitted.</p>
+          </div>
+        </div>
       </div>
     </article>
 
@@ -2571,22 +2978,22 @@ h1,h2,h3,h4,h5,h6{ margin:0 0 .5em; font-weight:700; line-height:1.15; }
         <h2>In-House</h2>
         <p>The real advantage of in-house is not only the stability, it&rsquo;s context. When you understand a company&rsquo;s business deeply enough, you stop being a vendor and start being a partner. That shift is where the most interesting work happens.</p>
         <div class="path-card">
-          <div class="path-card__cols">
-            <div>
-              <h3>Pros</h3>
+          <div class="pro-con">
+            <div class="pro-con__col pro-con__col--pro">
+              <h6>Pros</h6>
               <ul>
-                <li>Stability (salary, benefits, PTO)</li>
-                <li>Deep brand knowledge (you become the expert on this brand&rsquo;s presentation ecosystem)</li>
-                <li>Long-term influence (you can build systems that compound over time)</li>
-                <li>Proximity to decision-making (you&rsquo;re in the room where strategy happens)</li>
+                <li><span class="pro-con__mark"><svg viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg></span><span>Stability (salary, benefits, PTO)</span></li>
+                <li><span class="pro-con__mark"><svg viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg></span><span>Deep brand knowledge (you become the expert on this brand&rsquo;s presentation ecosystem)</span></li>
+                <li><span class="pro-con__mark"><svg viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg></span><span>Long-term influence (you can build systems that compound over time)</span></li>
+                <li><span class="pro-con__mark"><svg viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg></span><span>Proximity to decision-making (you&rsquo;re in the room where strategy happens)</span></li>
               </ul>
             </div>
-            <div>
-              <h3>Tradeoffs</h3>
+            <div class="pro-con__col pro-con__col--con">
+              <h6>Tradeoffs</h6>
               <ul>
-                <li>Slower financial upside (capped salary growth compared to freelance)</li>
-                <li>Risk of being pigeonholed (same brand, same problems, limited variety)</li>
-                <li>Often solo or under-resourced (you may be the only presentation designer)</li>
+                <li><span class="pro-con__mark"><svg viewBox="0 0 24 24"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg></span><span>Slower financial upside (capped salary growth compared to freelance)</span></li>
+                <li><span class="pro-con__mark"><svg viewBox="0 0 24 24"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg></span><span>Risk of being pigeonholed (same brand, same problems, limited variety)</span></li>
+                <li><span class="pro-con__mark"><svg viewBox="0 0 24 24"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg></span><span>Often solo or under-resourced (you may be the only presentation designer)</span></li>
               </ul>
             </div>
           </div>
@@ -2597,21 +3004,21 @@ h1,h2,h3,h4,h5,h6{ margin:0 0 .5em; font-weight:700; line-height:1.15; }
       <div class="subsection">
         <h2>Agency</h2>
         <div class="path-card">
-          <div class="path-card__cols">
-            <div>
-              <h3>Pros</h3>
+          <div class="pro-con">
+            <div class="pro-con__col pro-con__col--pro">
+              <h6>Pros</h6>
               <ul>
-                <li>Fast learning (exposure to many clients, industries, and problems)</li>
-                <li>Exposure to many brands (diverse portfolio development)</li>
-                <li>Mentorship and structure (you&rsquo;re surrounded by other designers; you learn from seniors)</li>
+                <li><span class="pro-con__mark"><svg viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg></span><span>Fast learning (exposure to many clients, industries, and problems)</span></li>
+                <li><span class="pro-con__mark"><svg viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg></span><span>Exposure to many brands (diverse portfolio development)</span></li>
+                <li><span class="pro-con__mark"><svg viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg></span><span>Mentorship and structure (you&rsquo;re surrounded by other designers; you learn from seniors)</span></li>
               </ul>
             </div>
-            <div>
-              <h3>Tradeoffs</h3>
+            <div class="pro-con__col pro-con__col--con">
+              <h6>Tradeoffs</h6>
               <ul>
-                <li>Lower pay ceilings (agencies often underpay compared to in-house or freelance)</li>
-                <li>Client-driven timelines (you don&rsquo;t control the schedule; clients do)</li>
-                <li>Burnout risk (high volume, tight deadlines, constant context-switching)</li>
+                <li><span class="pro-con__mark"><svg viewBox="0 0 24 24"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg></span><span>Lower pay ceilings (agencies often underpay compared to in-house or freelance)</span></li>
+                <li><span class="pro-con__mark"><svg viewBox="0 0 24 24"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg></span><span>Client-driven timelines (you don&rsquo;t control the schedule; clients do)</span></li>
+                <li><span class="pro-con__mark"><svg viewBox="0 0 24 24"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg></span><span>Burnout risk (high volume, tight deadlines, constant context-switching)</span></li>
               </ul>
             </div>
           </div>
@@ -2622,21 +3029,21 @@ h1,h2,h3,h4,h5,h6{ margin:0 0 .5em; font-weight:700; line-height:1.15; }
       <div class="subsection">
         <h2>Freelance</h2>
         <div class="path-card">
-          <div class="path-card__cols">
-            <div>
-              <h3>Pros</h3>
+          <div class="pro-con">
+            <div class="pro-con__col pro-con__col--pro">
+              <h6>Pros</h6>
               <ul>
-                <li>Autonomy (you choose clients, projects, and how you work)</li>
-                <li>High earning potential (no salary cap; you set your rates)</li>
-                <li>Control over scope (you define what you will and won&rsquo;t do)</li>
+                <li><span class="pro-con__mark"><svg viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg></span><span>Autonomy (you choose clients, projects, and how you work)</span></li>
+                <li><span class="pro-con__mark"><svg viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg></span><span>High earning potential (no salary cap; you set your rates)</span></li>
+                <li><span class="pro-con__mark"><svg viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg></span><span>Control over scope (you define what you will and won&rsquo;t do)</span></li>
               </ul>
             </div>
-            <div>
-              <h3>Tradeoffs</h3>
+            <div class="pro-con__col pro-con__col--con">
+              <h6>Tradeoffs</h6>
               <ul>
-                <li>Inconsistent income (feast or famine cycles)</li>
-                <li>No built-in support (no team, no feedback loop, you&rsquo;re on your own)</li>
-                <li>Business development overhead (you&rsquo;re not just designing, you&rsquo;re selling, invoicing, negotiating contracts)</li>
+                <li><span class="pro-con__mark"><svg viewBox="0 0 24 24"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg></span><span>Inconsistent income (feast or famine cycles)</span></li>
+                <li><span class="pro-con__mark"><svg viewBox="0 0 24 24"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg></span><span>No built-in support (no team, no feedback loop, you&rsquo;re on your own)</span></li>
+                <li><span class="pro-con__mark"><svg viewBox="0 0 24 24"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg></span><span>Business development overhead (you&rsquo;re not just designing, you&rsquo;re selling, invoicing, negotiating contracts)</span></li>
               </ul>
             </div>
           </div>
@@ -2682,11 +3089,20 @@ h1,h2,h3,h4,h5,h6{ margin:0 0 .5em; font-weight:700; line-height:1.15; }
           <p>Most freelance relationships are transactional by default. The client sends work, you do it, you invoice, and the relationship depends entirely on them continuing to have work and continuing to think of you. There is a better model, and it starts with a foundational piece of work that lives inside the company, that they use every day, and that only you fully understand.</p>
           <p>A well-built template system is that thing.</p>
           <p>When you build a company&rsquo;s presentation template, you build context that&rsquo;s difficult to replicate:</p>
-          <ul class="icon-list">
-            <li>You know why every layout exists</li>
-            <li>You know which user behaviors it was designed to account for</li>
-            <li>You know what will break if someone makes a change without thinking it through</li>
-          </ul>
+          <div class="divided-columns">
+            <div class="divided-columns__col">
+              <span class="divided-columns__icon"><svg viewBox="0 0 24 24"><rect width="7" height="7" x="3" y="3" rx="1"/><rect width="7" height="7" x="14" y="3" rx="1"/><rect width="7" height="7" x="14" y="14" rx="1"/><rect width="7" height="7" x="3" y="14" rx="1"/></svg></span>
+              <p>You know why every layout exists</p>
+            </div>
+            <div class="divided-columns__col">
+              <span class="divided-columns__icon"><svg viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></span>
+              <p>You know which user behaviors it was designed to account for</p>
+            </div>
+            <div class="divided-columns__col">
+              <span class="divided-columns__icon"><svg viewBox="0 0 24 24"><path d="M12 9v4"/><path d="M12 17h.01"/><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"/></svg></span>
+              <p>You know what will break if someone makes a change without thinking it through</p>
+            </div>
+          </div>
           <p>That context is valuable. And because you built it, you&rsquo;re the natural person to extend it, into a reskin of existing decks, into event assets, into a slide library, into hiring guidance when they start looking for an in-house designer.</p>
 
           <h3>How to Find This Kind of Client</h3>
@@ -2694,12 +3110,31 @@ h1,h2,h3,h4,h5,h6{ margin:0 0 .5em; font-weight:700; line-height:1.15; }
           <p><b>The play:</b> reach out to the hiring manager, not HR, not to apply but to have a conversation. Ask what they are building, what is broken today, and how presentations currently get made. You will almost always discover they need more than production work; they need a system, a process, a template, and someone to help them understand what to hire for.</p>
           <p>That conversation costs you 30 minutes and often leads to an engagement worth months of invoices.</p>
           <p><b>If you can identify a company in or near a brand refresh or significant growth stage:</b></p>
-          <ul class="icon-list">
-            <li>Propose starting with a template engagement: an audit of existing materials, a template build, and a launch plan.</li>
-            <li>Scope the reskin of their 10 to 20 most-used decks as a separate add-on deliverable.</li>
-            <li>As the template goes live, flag the event assets that will need to be updated or built in the new brand.</li>
-            <li>Stay involved. Check in quarterly. Offer a template maintenance retainer.</li>
-          </ul>
+          <div class="phase-track">
+            <div class="phase-track__item">
+              <span class="phase-track__badge">1</span>
+              <h4>Propose a template engagement</h4>
+              <ul><li>An audit of existing materials, a template build, and a launch plan</li></ul>
+            </div>
+            <div class="phase-track__connector"></div>
+            <div class="phase-track__item">
+              <span class="phase-track__badge">2</span>
+              <h4>Scope the reskin</h4>
+              <ul><li>Their 10&ndash;20 most-used decks, as a separate add-on deliverable</li></ul>
+            </div>
+            <div class="phase-track__connector"></div>
+            <div class="phase-track__item">
+              <span class="phase-track__badge">3</span>
+              <h4>Flag event assets</h4>
+              <ul><li>As the template goes live, flag what needs updating or building in the new brand</li></ul>
+            </div>
+            <div class="phase-track__connector"></div>
+            <div class="phase-track__item">
+              <span class="phase-track__badge">4</span>
+              <h4>Stay involved</h4>
+              <ul><li>Check in quarterly. Offer a template maintenance retainer</li></ul>
+            </div>
+          </div>
           <p>By the time you have done all of that, you have been inside their brand for six to twelve months. You understand the communication patterns, the stakeholders, and the quirks, and you have made their lives measurably easier. That is not a transactional relationship anymore. You are the person they think of when something important is happening.</p>
 
           <h3>Two Types of Company, Two Approaches</h3>
@@ -2730,17 +3165,36 @@ h1,h2,h3,h4,h5,h6{ margin:0 0 .5em; font-weight:700; line-height:1.15; }
         <div class="callout">
           <div class="callout__inner">
             <span class="callout__tag">Takeaway</span>
-            <p>The pattern: [Action] &rarr; [Measurable Outcome] &rarr; [Method/System]</p>
+            <p class="formula-line">Action &rarr; Measurable Outcome &rarr; Method/System</p>
           </div>
         </div>
 
         <p>When presenting your work, always include:</p>
-        <ul class="icon-list">
-          <li>The problem (What was broken? What pain existed?)</li>
-          <li>The constraints (Timeline? Resources? Stakeholder complexity?)</li>
-          <li>The system you introduced (What did you build or change?)</li>
-          <li>What changed because of it (Measurable impact)</li>
-        </ul>
+        <div class="phase-track">
+          <div class="phase-track__item">
+            <span class="phase-track__badge">1</span>
+            <h4>The Problem</h4>
+            <ul><li>What was broken? What pain existed?</li></ul>
+          </div>
+          <div class="phase-track__connector"></div>
+          <div class="phase-track__item">
+            <span class="phase-track__badge">2</span>
+            <h4>The Constraints</h4>
+            <ul><li>Timeline? Resources? Stakeholder complexity?</li></ul>
+          </div>
+          <div class="phase-track__connector"></div>
+          <div class="phase-track__item">
+            <span class="phase-track__badge">3</span>
+            <h4>The System</h4>
+            <ul><li>What you introduced &mdash; what did you build or change?</li></ul>
+          </div>
+          <div class="phase-track__connector"></div>
+          <div class="phase-track__item">
+            <span class="phase-track__badge">4</span>
+            <h4>The Impact</h4>
+            <ul><li>What changed because of it (measurable impact)</li></ul>
+          </div>
+        </div>
         <p>Understand your impact and the KPIs; they are yours too. Even if you are &ldquo;just a designer,&rdquo; if your work helped a sales team close deals faster, that is revenue impact. If your template saved executives ten hours a week, that is productivity impact. Own it.</p>
       </div>
 
@@ -2762,29 +3216,73 @@ h1,h2,h3,h4,h5,h6{ margin:0 0 .5em; font-weight:700; line-height:1.15; }
         <h3>How to Present Yourself (Interviews, Pitches, Conversations)</h3>
         <p>Physical presence matters, and conviction beats volume. You do not need to talk more to have influence; you need to speak with clarity and confidence when you do speak.</p>
         <p><b>Appearance best practices:</b></p>
-        <ul class="icon-list">
-          <li>Stand up if presenting (even on Zoom, it changes your energy)</li>
-          <li>Breathe (4-second breathing if you&rsquo;re nervous: 4 in, 4 hold, 4 out, 4 hold)</li>
-          <li>Move your body beforehand (pushups, jumping jacks, anything to get energy flowing)</li>
-          <li>Be yourself (weird is memorable; generic is forgettable)</li>
-          <li>Practice, but not too much (rehearse enough to be confident, not so much you sound robotic)</li>
-          <li>Trust what you know (you&rsquo;re the expert on your own work. Own it)</li>
-        </ul>
+        <div class="feature-grid feature-grid--3col">
+          <div class="feature-card">
+            <span class="feature-card__icon"><svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10"/></svg></span>
+            <h4>Stand up if presenting</h4>
+            <p>Even on Zoom, it changes your energy.</p>
+          </div>
+          <div class="feature-card">
+            <span class="feature-card__icon"><svg viewBox="0 0 24 24"><path d="M6 12c0-4.4 3.6-8 8-8s8 3.6 8 8-3.6 8-8 8"/><path d="M2 12c0 4.4 3.6 8 8 8"/><path d="M6 12h12"/></svg></span>
+            <h4>Breathe</h4>
+            <p>4-second breathing if you&rsquo;re nervous: 4 in, 4 hold, 4 out, 4 hold.</p>
+          </div>
+          <div class="feature-card">
+            <span class="feature-card__icon"><svg viewBox="0 0 24 24"><path d="M13 4v16"/><path d="M17 4v16"/><path d="M21 7v10"/><path d="M3 7v10"/><path d="M7 4v16"/></svg></span>
+            <h4>Move your body beforehand</h4>
+            <p>Pushups, jumping jacks, anything to get energy flowing.</p>
+          </div>
+          <div class="feature-card">
+            <span class="feature-card__icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="5"/><path d="M20 21a8 8 0 0 0-16 0"/></svg></span>
+            <h4>Be yourself</h4>
+            <p>Weird is memorable; generic is forgettable.</p>
+          </div>
+          <div class="feature-card">
+            <span class="feature-card__icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg></span>
+            <h4>Practice, but not too much</h4>
+            <p>Rehearse enough to be confident, not so much you sound robotic.</p>
+          </div>
+          <div class="feature-card">
+            <span class="feature-card__icon"><svg viewBox="0 0 24 24"><path d="M11.525 2.295a.53.53 0 0 1 .95 0l2.31 4.679a2.12 2.12 0 0 0 1.595 1.16l5.166.756a.53.53 0 0 1 .294.904l-3.736 3.638a2.12 2.12 0 0 0-.611 1.878l.882 5.14a.53.53 0 0 1-.771.56l-4.618-2.428a2.12 2.12 0 0 0-1.973 0L6.396 21.01a.53.53 0 0 1-.77-.56l.881-5.139a2.12 2.12 0 0 0-.611-1.879L2.16 9.795a.53.53 0 0 1 .294-.906l5.165-.755a2.12 2.12 0 0 0 1.597-1.16z"/></svg></span>
+            <h4>Trust what you know</h4>
+            <p>You&rsquo;re the expert on your own work. Own it.</p>
+          </div>
+        </div>
       </div>
 
       <div class="subsection">
         <h3>Interviews: How to Be Taken Seriously</h3>
         <p>Hiring managers evaluate based on confidence, clarity, and your answers to questions in the following areas:</p>
-        <ul class="icon-list">
-          <li><b>Character and likability:</b> Would I want to work with this person?</li>
-          <li><b>Quality of work samples and process:</b> Can they think, not just execute?</li>
-          <li><b>Ability to speak in depth with knowledge:</b> Do they understand their craft?</li>
-          <li><b>Fluid ability to drive the interview when needed:</b> Can they lead a conversation?</li>
-          <li><b>Calmness and comfort under pressure:</b> Will they panic or stay steady?</li>
-          <li><b>Technical skills:</b> Can they actually do the work?</li>
-          <li><b>Understanding of their pain:</b> Do they get what we&rsquo;re struggling with?</li>
-        </ul>
-        <p>The last one is the leverage point.</p>
+        <div class="feature-grid feature-grid--wrap">
+          <div class="feature-card">
+            <h4>Character and likability</h4>
+            <p>Would I want to work with this person?</p>
+          </div>
+          <div class="feature-card">
+            <h4>Quality of work samples and process</h4>
+            <p>Can they think, not just execute?</p>
+          </div>
+          <div class="feature-card">
+            <h4>Ability to speak in depth with knowledge</h4>
+            <p>Do they understand their craft?</p>
+          </div>
+          <div class="feature-card">
+            <h4>Fluid ability to drive the interview</h4>
+            <p>Can they lead a conversation when needed?</p>
+          </div>
+          <div class="feature-card">
+            <h4>Calmness and comfort under pressure</h4>
+            <p>Will they panic or stay steady?</p>
+          </div>
+          <div class="feature-card">
+            <h4>Technical skills</h4>
+            <p>Can they actually do the work?</p>
+          </div>
+          <div class="feature-card feature-card--solid-green">
+            <h4>Understanding of their pain</h4>
+            <p>Do they get what we&rsquo;re struggling with? <b style="color:#fff;">This is the leverage point.</b></p>
+          </div>
+        </div>
       </div>
 
       <div class="callout">
@@ -2809,13 +3307,33 @@ h1,h2,h3,h4,h5,h6{ margin:0 0 .5em; font-weight:700; line-height:1.15; }
       <h1><span class="h1-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M16 7h6v6"/><path d="m22 7-8.5 8.5-5-5L2 17"/></svg></span>Measuring Growth Without Titles</h1>
       <p>Progress in this field often shows up before promotions do.</p>
       <p><b>Indicators that show you&rsquo;re growing:</b></p>
-      <ul class="icon-list">
-        <li>You&rsquo;re brought in earlier. Stakeholders loop you into projects at the strategy phase, not just execution</li>
-        <li>Fewer people question your decisions. Your recommendations are trusted, not debated</li>
-        <li>Stakeholders ask for your opinion, not just execution. They want your perspective, not just your hands</li>
-        <li>Work becomes less chaotic. Processes you&rsquo;ve built start preventing fires</li>
-        <li>Others depend on your systems. People use your templates, follow your processes, reference your documentation</li>
-      </ul>
+      <div class="feature-grid feature-grid--wrap">
+        <div class="feature-card">
+          <span class="feature-card__icon"><svg viewBox="0 0 24 24"><path d="M22 17H2a3 3 0 0 0 3-3V9a7 7 0 0 1 14 0v5a3 3 0 0 0 3 3"/><path d="M8 21a2 2 0 0 0 4 0"/></svg></span>
+          <h4>You&rsquo;re brought in earlier</h4>
+          <p>Stakeholders loop you into projects at the strategy phase, not just execution.</p>
+        </div>
+        <div class="feature-card">
+          <span class="feature-card__icon"><svg viewBox="0 0 24 24"><path d="M12 2v4"/><path d="m6.4 6.4 2.8 2.8"/><path d="M2 12h4"/><path d="m6.4 17.6 2.8-2.8"/><path d="M12 22v-4"/><path d="m17.6 17.6-2.8-2.8"/><path d="M22 12h-4"/><path d="m17.6 6.4-2.8 2.8"/></svg></span>
+          <h4>Fewer people question your decisions</h4>
+          <p>Your recommendations are trusted, not debated.</p>
+        </div>
+        <div class="feature-card">
+          <span class="feature-card__icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><path d="M12 17h.01"/></svg></span>
+          <h4>Stakeholders ask for your opinion</h4>
+          <p>Not just execution &mdash; they want your perspective, not just your hands.</p>
+        </div>
+        <div class="feature-card">
+          <span class="feature-card__icon"><svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10"/></svg></span>
+          <h4>Work becomes less chaotic</h4>
+          <p>Processes you&rsquo;ve built start preventing fires.</p>
+        </div>
+        <div class="feature-card">
+          <span class="feature-card__icon"><svg viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></span>
+          <h4>Others depend on your systems</h4>
+          <p>People use your templates, follow your processes, reference your documentation.</p>
+        </div>
+      </div>
 
       <div class="subsection">
         <h2>Visual Frameworks You Can Use</h2>
@@ -2836,13 +3354,33 @@ h1,h2,h3,h4,h5,h6{ margin:0 0 .5em; font-weight:700; line-height:1.15; }
         <h4><span class="h1-icon h1-icon--sm" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12.8 19.6A2 2 0 1 0 14 16H2"/><path d="M17.5 8a2.5 2.5 0 1 1 2 4H2"/><path d="M9.8 4.4A2 2 0 1 1 11 8H2"/></svg></span>Calm</h4>
         <p>The designer who stays steady when everything around them is chaos becomes the person everyone relies on. Events are chaotic, executives are stressed, timelines collapse, and last-minute changes arrive at 11 PM. Most people panic; the designer who does not becomes the anchor. Calm is not passive or indifferent, it is an operational advantage. When you stay calm you make better decisions under pressure, reduce everyone else&rsquo;s stress, signal confidence that earns trust, and become the person people want in the room when things go wrong.</p>
         <p>The practices are simple and were introduced in Module 5:</p>
-        <ul class="icon-list">
-          <li><b>Reframe urgency:</b> Most things that feel urgent aren&rsquo;t actually unsolvable. Separate real emergencies from manufactured panic.</li>
-          <li><b>Control what you can:</b> You can&rsquo;t control the timeline. You can control your process, your communication, and your response.</li>
-          <li><b>Use grounding mantras:</b> &ldquo;The event will happen, and then it will end.&rdquo; &ldquo;Panic doesn&rsquo;t improve outcomes.&rdquo; Simple truths that ground you.</li>
-          <li><b>Breathe intentionally:</b> Literally. 4 seconds in, 4 hold, 4 out, 4 hold. Sounds basic. Works every time.</li>
-          <li><b>Build systems that reduce chaos:</b> The more repeatable your process, the less reactive you have to be. Calm is easier when you&rsquo;re not constantly improvising.</li>
-        </ul>
+        <div class="feature-grid feature-grid--wrap">
+          <div class="feature-card">
+            <span class="feature-card__icon"><svg viewBox="0 0 24 24"><path d="M21 12a9 9 0 1 1-9-9c2.52 0 4.93 1 6.74 2.74L21 8"/><path d="M21 3v5h-5"/></svg></span>
+            <h4>Reframe urgency</h4>
+            <p>Most things that feel urgent aren&rsquo;t actually unsolvable. Separate real emergencies from manufactured panic.</p>
+          </div>
+          <div class="feature-card">
+            <span class="feature-card__icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg></span>
+            <h4>Control what you can</h4>
+            <p>You can&rsquo;t control the timeline. You can control your process, your communication, and your response.</p>
+          </div>
+          <div class="feature-card">
+            <span class="feature-card__icon"><svg viewBox="0 0 24 24"><path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"/></svg></span>
+            <h4>Use grounding mantras</h4>
+            <p>&ldquo;The event will happen, and then it will end.&rdquo; &ldquo;Panic doesn&rsquo;t improve outcomes.&rdquo; Simple truths that ground you.</p>
+          </div>
+          <div class="feature-card">
+            <span class="feature-card__icon"><svg viewBox="0 0 24 24"><path d="M6 12c0-4.4 3.6-8 8-8s8 3.6 8 8-3.6 8-8 8"/><path d="M2 12c0 4.4 3.6 8 8 8"/><path d="M6 12h12"/></svg></span>
+            <h4>Breathe intentionally</h4>
+            <p>Literally. 4 seconds in, 4 hold, 4 out, 4 hold. Sounds basic. Works every time.</p>
+          </div>
+          <div class="feature-card">
+            <span class="feature-card__icon"><svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10"/></svg></span>
+            <h4>Build systems that reduce chaos</h4>
+            <p>The more repeatable your process, the less reactive you have to be. Calm is easier when you&rsquo;re not constantly improvising.</p>
+          </div>
+        </div>
         <p>The most valuable version of calm is preventative: when your systems reduce chaos before it starts, you are not just staying calm in the storm, you are preventing the storm from forming. This is also why trust is currency. Once trust exists, access follows; you do not need permission to be strategic when people already rely on you.</p>
 
         <h4><span class="h1-icon h1-icon--sm" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M2.992 16.342a2 2 0 0 1 .094 1.167l-1.065 3.29a1 1 0 0 0 1.236 1.168l3.413-.998a2 2 0 0 1 1.099.092 10 10 0 1 0-4.777-4.719"/></svg></span>Communication</h4>
@@ -2858,9 +3396,11 @@ h1,h2,h3,h4,h5,h6{ margin:0 0 .5em; font-weight:700; line-height:1.15; }
         <p>For many designers, especially introverts, this clarity is also personal: taking complex, chaotic content and making it accessible is both a coping mechanism and a competitive advantage. Craft is not about being the best designer in the room. It is about being the most rigorous thinker, and it compounds.</p>
 
         <h4>How These Three Work Together</h4>
-        <p><b>Calm keeps you effective under pressure.</b></p>
-        <p><b>Communication gets you invited upstream.</b></p>
-        <p><b>Craft ensures you deliver work that earns trust.</b></p>
+        <div class="big-line-row">
+          <div class="big-line-row__item">Calm keeps you effective under pressure.</div>
+          <div class="big-line-row__item">Communication gets you invited upstream.</div>
+          <div class="big-line-row__item">Craft ensures you deliver work that earns trust.</div>
+        </div>
         <p>Together they create a reputation that precedes you. You become the designer people request by name, the one brought into projects early rather than late, the one who is consulted, not just tasked.</p>
         <p>Start small: practice staying calm in one meeting this week, ask one better question before your next project, hold yourself to one higher standard than last month. Over time these behaviors become automatic, and when they do, your trajectory changes. Not because you got louder, but because you became clearer, steadier, and more trusted. You stop chasing opportunities. They start finding you.</p>
         <p class="pull-quote">That is how presentation designers build careers that last.</p>
