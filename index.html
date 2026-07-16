@@ -283,6 +283,13 @@ h1,h2,h3,h4,h5,h6{ margin:0 0 .5em; font-weight:700; line-height:1.15; }
   margin-bottom: 14px;
 }
 .callout__inner .feature-card__num{ border-color: var(--green); color: var(--green); }
+.feature-card__icon{
+  display:inline-flex; align-items:center; justify-content:center;
+  width: 40px; height:40px; border-radius:10px;
+  background: transparent; border: 2px solid var(--green);
+  margin-bottom: 14px;
+}
+.feature-card__icon svg{ width:20px; height:20px; stroke:var(--green); stroke-width:2; fill:none; }
 .feature-card h4{ margin-bottom:.5em; }
 .feature-card p{ margin-bottom:0; }
 .callout__inner .feature-card{ background: rgba(31,198,103,.1); border-color:rgba(31,198,103,.3); }
@@ -329,6 +336,24 @@ h1,h2,h3,h4,h5,h6{ margin:0 0 .5em; font-weight:700; line-height:1.15; }
   background:transparent !important; border:2px solid var(--green) !important; top:.28em !important;
 }
 .callout__inner .check-list li::before{ border-color: var(--green) !important; }
+
+/* divided-columns: short plain-sentence lists laid out as columns with a thin divider, no card box */
+.divided-columns{ display:flex; align-items:stretch; margin: 1.3em 0; gap: clamp(20px,3vw,32px); }
+.divided-columns__col{ flex:1; min-width:0; }
+.divided-columns__col:not(:first-child){ padding-left: clamp(20px,3vw,32px); border-left: 2px solid rgba(31,198,103,.3); }
+.divided-columns__icon{
+  width:30px; height:30px; margin-bottom:12px;
+  display:flex; align-items:center; justify-content:center;
+}
+.divided-columns__icon svg{ width:22px; height:22px; stroke:var(--green); stroke-width:2; fill:none; }
+.divided-columns__col p{ font-family:var(--font-body); font-size:clamp(14px,1vw,15.5px); line-height:1.55; color:var(--black); margin:0; }
+.callout__inner .divided-columns__col p{ color: rgba(255,255,255,.88); }
+.callout__inner .divided-columns__col:not(:first-child){ border-left-color: rgba(31,198,103,.35); }
+@media (max-width:820px){
+  .divided-columns{ flex-direction:column; gap:18px; }
+  .divided-columns__col:not(:first-child){ padding-left:0; padding-top:18px; border-left:none; border-top: 2px solid rgba(31,198,103,.3); }
+  .callout__inner .divided-columns__col:not(:first-child){ border-top-color: rgba(31,198,103,.35); border-left:none; }
+}
 
 /* three-across variant of the feature grid (S/M/L, Tier 1/2/3, etc.) */
 .feature-grid--3col{ grid-template-columns:repeat(3,1fr); }
@@ -527,12 +552,12 @@ h1,h2,h3,h4,h5,h6{ margin:0 0 .5em; font-weight:700; line-height:1.15; }
   margin-top:auto;
   position:relative;
   width:100%;
-  height: clamp(120px,15vh,170px);
+  height: clamp(130px,16vh,180px);
   overflow:hidden;
   cursor:pointer;
   border:none;
-  padding: 18px 0 20px;
-  display:flex; flex-direction:column; align-items:center; justify-content:center; gap:14px;
+  padding: 30px 0 22px;
+  display:flex; flex-direction:column; align-items:center; justify-content:center; gap:16px;
 }
 .strip:disabled{ cursor:default; }
 .strip--onpale{ background: var(--green); }
@@ -540,19 +565,19 @@ h1,h2,h3,h4,h5,h6{ margin:0 0 .5em; font-weight:700; line-height:1.15; }
 .strip--onblack{ background: var(--green); }
 
 .strip__chevrons{
-  display:flex; flex-direction:column; align-items:center; gap:7px;
+  display:flex; flex-direction:column; align-items:center; gap:8px;
 }
 .chevron{
-  width: 46px; height:14px;
+  width: 44px; height:12px;
   position:relative;
   flex: 0 0 auto;
 }
 .chevron::before,.chevron::after{
-  content:""; position:absolute; top:0; width:56%; height:4px; border-radius:3px;
+  content:""; position:absolute; top:0; width:50%; height:4px; border-radius:3px;
   background: var(--white);
 }
-.chevron::before{ left:0; transform-origin: right center; transform: rotate(38deg); }
-.chevron::after{ right:0; transform-origin: left center; transform: rotate(-38deg); }
+.chevron::before{ left:0; transform-origin: right center; transform: rotate(35deg); }
+.chevron::after{ right:0; transform-origin: left center; transform: rotate(-35deg); }
 .chevron:nth-child(1){ opacity:.35; }
 .chevron:nth-child(2){ opacity:.65; }
 .chevron:nth-child(3){ opacity:1; }
@@ -560,7 +585,7 @@ h1,h2,h3,h4,h5,h6{ margin:0 0 .5em; font-weight:700; line-height:1.15; }
 .strip:not(:disabled) .strip__chevrons{ animation: chevron-float 2.2s ease-in-out infinite; }
 @keyframes chevron-float{
   0%,100%{ transform: translateY(0); }
-  50%{ transform: translateY(-6px); }
+  50%{ transform: translateY(-4px); }
 }
 .strip:disabled .strip__chevrons{ opacity:.3; }
 
@@ -735,7 +760,7 @@ h1,h2,h3,h4,h5,h6{ margin:0 0 .5em; font-weight:700; line-height:1.15; }
       <p>From chalkboards to overhead projectors to slide carousels, the fundamentals of presentation have stayed constant: one person with information, communicating to an audience that wants it. These early tools were the infant stage of what we do today. Each innovation changed how we delivered information, not why we delivered it.</p>
       <p>Desktop computers brought PowerPoint into widespread use beginning in the late 1980s and accelerating through the 1990s. It was not the first presentation software (Harvard Graphics came earlier, and rivals like Aldus Persuasion followed), but PowerPoint succeeded because it matched user behavior: easy editing, quick iteration, and minimal friction from idea to slide. It was the digital evolution of overhead transparencies and slide carousels, with far more control and flexibility.</p>
       <p>That accessibility had a consequence. It democratized presentation creation without democratizing presentation skill. As competitors emerged (Keynote for Mac users in 2003, Google Presentations in 2007, rebranded as Google Slides in 2012 and gaining enterprise traction through the mid-2010s as Chrome and cloud workflows became standard), the volume of presentations exploded. What teachers once crafted carefully on transparencies could now be assembled in minutes, and the volume of poorly designed slides grew with it.</p>
-      <p>This explosion created a new need: the presentation designer.</p>
+      <p class="pull-quote">This explosion created a new need: the presentation designer.</p>
       <p>AI is the next wave of democratization, and it follows the same pattern. More people with more tools still does not replace the expertise required to build systems, maintain brand integrity, and communicate at the highest level. AI raises the floor for everyone else. It does not lower the ceiling.</p>
       <p>Traditional presentation was simple: A to B, presenter to audience. Modern presentation design adds a third element: A and B to C, presenter and designer collaborating to reach the audience. The designer does what those early educators with chalkboards understood intuitively, that how you present information matters as much as the information itself. Today&rsquo;s designers turn dry content into narrative and move presentations from small conference rooms to worldwide stages that drive significant revenue for the largest companies in the world.</p>
 
@@ -818,7 +843,7 @@ h1,h2,h3,h4,h5,h6{ margin:0 0 .5em; font-weight:700; line-height:1.15; }
             <p>Organizations have invested decades in presentation software infrastructure, templates, training, and workflows.</p>
           </div>
         </div>
-        <p>Our challenge is not to fight the software. It&rsquo;s to master it.</p>
+        <p class="pull-quote">Our challenge is not to fight the software. It&rsquo;s to master it.</p>
         <p>The best presentation designers do not complain about these limits. They find workarounds, push the software past its intended capabilities, and deliver exceptional work despite the constraints. That is part of the craft. We are not just designers, we are problem-solvers working within real business requirements. Yes, the software is flawed, and yes, it enables mediocre work at scale. But these tools are also the common language of business communication. Our job is to speak that language fluently while raising the standard of what is possible within it.</p>
       </div>
 
@@ -1334,7 +1359,7 @@ h1,h2,h3,h4,h5,h6{ margin:0 0 .5em; font-weight:700; line-height:1.15; }
       <p>This doesn&rsquo;t mean you ignore urgency. It means you learn to distinguish real urgency from manufactured urgency, and you stop letting the manufactured kind own your schedule.</p>
 
       <h4>Why Boundaries Matter for Your Career</h4>
-      <p>Boundaries are not selfish, they are professional.</p>
+      <p class="pull-quote">Boundaries are not selfish, they are professional.</p>
       <ul class="lead-list">
         <li><b>Prevents burnout:</b> Presentation design is high-pressure work with constant deadlines. Without boundaries, you&rsquo;ll burn out within a year and either leave the role or become resentful and disengaged.</li>
         <li><b>Trains stakeholders to plan better:</b> When you&rsquo;re always available for last-minute requests, stakeholders never learn to plan ahead. When you enforce boundaries, they start bringing you into projects earlier and thinking more strategically about timelines.</li>
@@ -1440,12 +1465,24 @@ h1,h2,h3,h4,h5,h6{ margin:0 0 .5em; font-weight:700; line-height:1.15; }
         <h2>Managing Stakeholders and Your Project Manager</h2>
         <p>Aside from intake, you need to understand people, and active listening is vital.</p>
         <p>Your best ally is your project manager, if you have one. Coach them to be your champion; they are the first line of defense between you and burnout. They need to understand, in explicit detail:</p>
-        <ul class="icon-list">
-          <li>Why this request is L and this one is S</li>
-          <li>Why you need 3 weeks to complete vs. 2 days</li>
-          <li>What trade-offs exist if timelines are compressed</li>
-          <li>How to communicate your boundaries to stakeholders</li>
-        </ul>
+        <div class="divided-columns">
+          <div class="divided-columns__col">
+            <span class="divided-columns__icon"><svg viewBox="0 0 24 24"><path d="M21.3 15.3a2.4 2.4 0 0 1 0 3.4l-2.6 2.6a2.4 2.4 0 0 1-3.4 0L2.7 8.7a2.41 2.41 0 0 1 0-3.4l2.6-2.6a2.41 2.41 0 0 1 3.4 0Z"/><path d="m14.5 12.5 2-2"/><path d="m11.5 9.5 2-2"/><path d="m8.5 6.5 2-2"/><path d="m17.5 15.5 2-2"/></svg></span>
+            <p>Why this request is L and this one is S</p>
+          </div>
+          <div class="divided-columns__col">
+            <span class="divided-columns__icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg></span>
+            <p>Why you need 3 weeks to complete vs. 2 days</p>
+          </div>
+          <div class="divided-columns__col">
+            <span class="divided-columns__icon"><svg viewBox="0 0 24 24"><path d="M8 3 4 7l4 4"/><path d="M4 7h16"/><path d="m16 21 4-4-4-4"/><path d="M20 17H4"/></svg></span>
+            <p>What trade-offs exist if timelines are compressed</p>
+          </div>
+          <div class="divided-columns__col">
+            <span class="divided-columns__icon"><svg viewBox="0 0 24 24"><path d="M2.992 16.342a2 2 0 0 1 .094 1.167l-1.065 3.29a1 1 0 0 0 1.236 1.168l3.413-.998a2 2 0 0 1 1.099.092 10 10 0 1 0-4.777-4.719"/></svg></span>
+            <p>How to communicate your boundaries to stakeholders</p>
+          </div>
+        </div>
         <p>There will be compromise here, because you also need to understand their need to service clients. This balance is important in creating an efficient intake-to-delivery system.</p>
         <p>More than just a designer, you are a system builder, educator, and strategic partner. Work efficiently by building repeatability, designing for scalability, and enabling others. Prioritize ruthlessly, protect your boundaries, and focus your capacity on high-impact work.</p>
       </div>
@@ -1553,7 +1590,7 @@ h1,h2,h3,h4,h5,h6{ margin:0 0 .5em; font-weight:700; line-height:1.15; }
       <p>There should not be a one-size-fits-all template, because that shows the designer didn&rsquo;t do their homework.</p>
       <p>This becomes obvious during an audit. If you see a lot of master slides that aren&rsquo;t being used in actual decks, there&rsquo;s a red flag disconnect between what was built and what users actually need.</p>
       <p>Conversely, if you see users constantly creating the same slide type from scratch across multiple decks, that&rsquo;s a layout the template should have included.</p>
-      <p>Template design is evidence-based, not assumption-based.</p>
+      <p class="pull-quote">Template design is evidence-based, not assumption-based.</p>
 
       <div class="subsection">
         <h2>Ruthless Editing: The Art of What Not to Include</h2>
@@ -1896,7 +1933,7 @@ h1,h2,h3,h4,h5,h6{ margin:0 0 .5em; font-weight:700; line-height:1.15; }
         <p>Not &ldquo;mostly aligned.&rdquo;</p>
         <p>Not &ldquo;final-ish.&rdquo;</p>
         <p>Not &ldquo;this version unless something changes.&rdquo;</p>
-        <p>One source. Owned. Visible. Trusted.</p>
+        <p class="pull-quote">One source. Owned. Visible. Trusted.</p>
         <p>Without this:</p>
         <div class="tag-row">
           <span class="tag-chip">Teams work in silos</span>
@@ -2159,7 +2196,7 @@ h1,h2,h3,h4,h5,h6{ margin:0 0 .5em; font-weight:700; line-height:1.15; }
       <div class="subsection">
         <h2>Phase 3: Rehearsals and Refinement</h2>
         <h6>Practice Makes Perfect</h6>
-        <p>Rehearsals are not optional. They are part of the design process.</p>
+        <p class="pull-quote">Rehearsals are not optional. They are part of the design process.</p>
         <p><b>Good rehearsals:</b></p>
         <ul class="icon-list">
           <li>Reveal broken pacing</li>
@@ -2272,34 +2309,48 @@ h1,h2,h3,h4,h5,h6{ margin:0 0 .5em; font-weight:700; line-height:1.15; }
       <div class="subsection">
         <h2>Event Checklist</h2>
         <p>Before you start designing, confirm these details.</p>
-        <p><b>Pre-Production:</b></p>
-        <ul class="check-list">
-          <li>Confirm screen dimensions and types early (16:9, 16:10, ultrawide?)</li>
-          <li>Kick off with the AV/production team and agree on file formats and timelines</li>
-          <li>Review venue renderings and, if possible, visit the site to check sightlines. You don&rsquo;t want to find out 2 days before the event half of your content is too low on the screen to be visible.</li>
-          <li>Reserve an offline room for rehearsals and editing</li>
-          <li>Plan vendor/contractor engagement: decide which tasks will be outsourced and build relationships early</li>
-        </ul>
-        <p><b>Technical:</b></p>
-        <ul class="check-list">
-          <li>Agree on primary software (Keynote, PowerPoint, Google Slides)</li>
-          <li>Document Keynote &rarr; Google Slides conversion process (if needed; lean on contractors for labor-intensive conversions)</li>
-          <li>Test clicker compatibility with presentation software</li>
-          <li>Create backup plan for technical failures (USB drives, cloud backup, secondary laptop)</li>
-        </ul>
-        <p><b>Onsite:</b></p>
-        <ul class="check-list">
-          <li>Do a final click-through at the venue to test transitions and cues</li>
-          <li>Confirm lighting conditions (will slides be readable?) Is pure white too bright?</li>
-          <li>Test audio/video playback</li>
-          <li>Walk through presenter entrances, exits, and stage blocking</li>
-        </ul>
-        <p><b>Post-Event:</b></p>
-        <ul class="check-list">
-          <li>Run a post-mortem: capture feedback, list session titles/speakers, note what worked</li>
-          <li>File recap slides for future reference</li>
-          <li>Archive all versions of scripts, decks, and production docs</li>
-        </ul>
+        <div class="feature-grid">
+          <div class="feature-card">
+            <span class="feature-card__icon"><svg viewBox="0 0 24 24"><path d="M13 5h8"/><path d="M13 12h8"/><path d="M13 19h8"/><path d="m3 17 2 2 4-4"/><path d="m3 7 2 2 4-4"/></svg></span>
+            <h4>Pre-Production</h4>
+            <ul class="check-list">
+              <li>Confirm screen dimensions and types early (16:9, 16:10, ultrawide?)</li>
+              <li>Kick off with the AV/production team and agree on file formats and timelines</li>
+              <li>Review venue renderings and, if possible, visit the site to check sightlines</li>
+              <li>Reserve an offline room for rehearsals and editing</li>
+              <li>Plan vendor/contractor engagement early</li>
+            </ul>
+          </div>
+          <div class="feature-card">
+            <span class="feature-card__icon"><svg viewBox="0 0 24 24"><path d="M9.671 4.136a2.34 2.34 0 0 1 4.659 0 2.34 2.34 0 0 0 3.319 1.915 2.34 2.34 0 0 1 2.33 4.033 2.34 2.34 0 0 0 0 3.831 2.34 2.34 0 0 1-2.33 4.033 2.34 2.34 0 0 0-3.319 1.915 2.34 2.34 0 0 1-4.659 0 2.34 2.34 0 0 0-3.32-1.915 2.34 2.34 0 0 1-2.33-4.033 2.34 2.34 0 0 0 0-3.831A2.34 2.34 0 0 1 6.35 6.051a2.34 2.34 0 0 0 3.319-1.915"/><circle cx="12" cy="12" r="3"/></svg></span>
+            <h4>Technical</h4>
+            <ul class="check-list">
+              <li>Agree on primary software (Keynote, PowerPoint, Google Slides)</li>
+              <li>Document Keynote &rarr; Google Slides conversion process, if needed</li>
+              <li>Test clicker compatibility with presentation software</li>
+              <li>Create backup plan for technical failures</li>
+            </ul>
+          </div>
+          <div class="feature-card">
+            <span class="feature-card__icon"><svg viewBox="0 0 24 24"><path d="M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0"/><circle cx="12" cy="10" r="3"/></svg></span>
+            <h4>Onsite</h4>
+            <ul class="check-list">
+              <li>Do a final click-through at the venue to test transitions and cues</li>
+              <li>Confirm lighting conditions (will slides be readable?)</li>
+              <li>Test audio/video playback</li>
+              <li>Walk through presenter entrances, exits, and stage blocking</li>
+            </ul>
+          </div>
+          <div class="feature-card">
+            <span class="feature-card__icon"><svg viewBox="0 0 24 24"><rect width="20" height="5" x="2" y="3" rx="1"/><path d="M4 8v11a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8"/><path d="M10 12h4"/></svg></span>
+            <h4>Post-Event</h4>
+            <ul class="check-list">
+              <li>Run a post-mortem: capture feedback, note what worked</li>
+              <li>File recap slides for future reference</li>
+              <li>Archive all versions of scripts, decks, and production docs</li>
+            </ul>
+          </div>
+        </div>
       </div>
 
       <div class="subsection">
@@ -2390,7 +2441,7 @@ h1,h2,h3,h4,h5,h6{ margin:0 0 .5em; font-weight:700; line-height:1.15; }
           <li>Protect rehearsal time. When and how will rehearsals happen?</li>
           <li>Explain your approach calmly. How would you communicate this plan to stakeholders?</li>
         </ul>
-        <p>There is no perfect answer. There are only controlled ones.</p>
+        <p class="pull-quote">There is no perfect answer. There are only controlled ones.</p>
         <p><b>Walk through this scenario and document your approach. Consider:</b></p>
         <ul class="icon-list">
           <li>What artifacts do you create first?</li>
@@ -2471,7 +2522,7 @@ h1,h2,h3,h4,h5,h6{ margin:0 0 .5em; font-weight:700; line-height:1.15; }
       <h1><span class="h1-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><path d="M16 3.128a4 4 0 0 1 0 7.744"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><circle cx="9" cy="7" r="4"/></svg></span>Who We Are (And Why That Matters)</h1>
       <p>Recall from Module 1 that we are hybrids, half analytical and half creative, and the bridge between creative and business teams. That makes us hard to categorize and easy to underestimate, but it also gives us something rare: aside from creative directors, presentation designers are the only creative role with regular face-to-face access to every level of an organization, from individual contributors to the C-suite.</p>
       <p>We see how decisions are made and communicated, we touch the most visible artifacts a company produces, and we are in the room when strategy is discussed and deals are closed. That access is valuable, but access alone does nothing.</p>
-      <p>What you do with it determines your career ceiling.</p>
+      <p class="pull-quote">What you do with it determines your career ceiling.</p>
 
       <div class="subsection">
         <h2>Replaceable vs. Indispensable</h2>
@@ -2514,7 +2565,7 @@ h1,h2,h3,h4,h5,h6{ margin:0 0 .5em; font-weight:700; line-height:1.15; }
     <!-- Second Block 6.3 -->
     <article class="second-block reveal" id="m6-s3" data-nav-id="m6-s3">
       <h1><span class="h1-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 3v18"/><path d="m19 8 3 8a5 5 0 0 1-6 0zV7"/><path d="M3 7h1a17 17 0 0 0 8-2 17 17 0 0 0 8 2h1"/><path d="m5 8 3 8a5 5 0 0 1-6 0zV7"/><path d="M7 21h10"/></svg></span>The Three Primary Career Paths (And the Tradeoffs)</h1>
-      <p>There is no &ldquo;best&rdquo; path. There are only tradeoffs.</p>
+      <p class="pull-quote">There is no &ldquo;best&rdquo; path. There are only tradeoffs.</p>
 
       <div class="subsection">
         <h2>In-House</h2>
@@ -2704,7 +2755,7 @@ h1,h2,h3,h4,h5,h6{ margin:0 0 .5em; font-weight:700; line-height:1.15; }
           <li><b>Share the outcome:</b> &ldquo;Sales deck creation time dropped from 8 hours to 2 hours. Sales leadership became champions of the system and requested we expand it to other teams.&rdquo;</li>
         </ul>
         <p>NDAs are real; design police are not. Be smart: password-protect sensitive work, do not show unique IP or confidential data, and anonymize client names if needed. But you can absolutely show your process, your thinking, anonymized examples, and the systems you built.</p>
-        <p>Focus on how you think, not just what you made.</p>
+        <p class="pull-quote">Focus on how you think, not just what you made.</p>
       </div>
 
       <div class="subsection">
@@ -2796,10 +2847,10 @@ h1,h2,h3,h4,h5,h6{ margin:0 0 .5em; font-weight:700; line-height:1.15; }
 
         <h4><span class="h1-icon h1-icon--sm" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M2.992 16.342a2 2 0 0 1 .094 1.167l-1.065 3.29a1 1 0 0 0 1.236 1.168l3.413-.998a2 2 0 0 1 1.099.092 10 10 0 1 0-4.777-4.719"/></svg></span>Communication</h4>
         <p>Your ability to ask the right questions, set clear expectations, and articulate value determines how far upstream you get invited. Most designers think their work speaks for itself. It does not. No matter how good your slides are, if you cannot communicate why they are good, what problem they solve, and how they support the business, you will stay downstream.</p>
-        <p>Communication is what moves you from production to partnership.</p>
+        <p class="pull-quote">Communication is what moves you from production to partnership.</p>
         <p>It looks like asking the right questions upfront (not &ldquo;what do you want this to look like?&rdquo; but &ldquo;why does this exist, who is the audience, what happens if it fails?&rdquo;), setting expectations early (&ldquo;this will take three days, not three hours, because we need to audit existing content first&rdquo;), and articulating value in business terms (not &ldquo;I made the slides look better&rdquo; but &ldquo;I reduced revision cycles from five rounds to two by implementing a structured feedback process&rdquo;).</p>
         <p>Stakeholders care about outcomes, not aesthetics, so learn to speak their language. Advocate for process without being rigid: when you explain why the script template eliminates version confusion and saves time, people follow it; when you just enforce rules, they resist. And communication is also listening. Truly hearing what stakeholders worry about, what constraints they are under, and what success looks like to them builds trust faster than anything else. The designers who advance are not the loudest, they are the clearest. They know when to speak, what to say, and how to frame a point so it lands.</p>
-        <p>Conviction comes from clarity, not volume.</p>
+        <p class="pull-quote">Conviction comes from clarity, not volume.</p>
 
         <h4><span class="h1-icon h1-icon--sm" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="m15 12-9.373 9.373a1 1 0 0 1-3.001-3L12 9"/><path d="m18 15 4-4"/><path d="m21.5 11.5-1.914-1.914A2 2 0 0 1 19 8.172v-.344a2 2 0 0 0-.586-1.414l-1.657-1.657A6 6 0 0 0 12.516 3H9l1.243 1.243A6 6 0 0 1 12 8.485V10l2 2h1.172a2 2 0 0 1 1.414.586L18.5 14.5"/></svg></span>Craft</h4>
         <p>Craft is not just how your slides look. It is the rigor, intentionality, and standard you bring to every decision. It is often mistaken for aesthetics; it is really the standard you hold yourself to when no one is watching.</p>
@@ -2812,7 +2863,7 @@ h1,h2,h3,h4,h5,h6{ margin:0 0 .5em; font-weight:700; line-height:1.15; }
         <p><b>Craft ensures you deliver work that earns trust.</b></p>
         <p>Together they create a reputation that precedes you. You become the designer people request by name, the one brought into projects early rather than late, the one who is consulted, not just tasked.</p>
         <p>Start small: practice staying calm in one meeting this week, ask one better question before your next project, hold yourself to one higher standard than last month. Over time these behaviors become automatic, and when they do, your trajectory changes. Not because you got louder, but because you became clearer, steadier, and more trusted. You stop chasing opportunities. They start finding you.</p>
-        <p>That is how presentation designers build careers that last.</p>
+        <p class="pull-quote">That is how presentation designers build careers that last.</p>
       </div>
 
       <div class="inset-panel inset-panel--practice">
