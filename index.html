@@ -179,9 +179,14 @@ h1,h2,h3,h4,h5,h6{ margin:0 0 .5em; font-weight:700; line-height:1.15; }
 }
 .second-block h1, .callout__inner h1{
   font-family: var(--font-display); font-weight:800; color: var(--green);
-  font-size: clamp(26px, 3vw, 38px);
+  font-size: clamp(29px, 3.5vw, 43px);
+  letter-spacing: -.01em;
   display:flex; align-items:center; gap: clamp(14px,2vw,18px);
+  padding-bottom: clamp(18px,2.4vh,26px);
+  margin-bottom: .9em;
+  border-bottom: 2px solid rgba(31,198,103,.22);
 }
+.callout__inner h1{ border-bottom-color: rgba(31,198,103,.3); }
 
 /* ---------- H1 icon badge (Lucide icons) ---------- */
 .h1-icon{
@@ -271,11 +276,12 @@ h1,h2,h3,h4,h5,h6{ margin:0 0 .5em; font-weight:700; line-height:1.15; }
 }
 .feature-card__num{
   display:inline-flex; align-items:center; justify-content:center;
-  width: 34px; height:34px; border-radius:50%;
-  background: var(--green); color: var(--white);
+  width: 32px; height:32px; border-radius:9px;
+  background: transparent; border: 2px solid var(--green); color: var(--green);
   font-family: var(--font-display); font-weight:800; font-size:14px;
   margin-bottom: 14px;
 }
+.callout__inner .feature-card__num{ border-color: var(--green); color: var(--green); }
 .feature-card h4{ margin-bottom:.5em; }
 .feature-card p{ margin-bottom:0; }
 .callout__inner .feature-card{ background: rgba(31,198,103,.1); border-color:rgba(31,198,103,.3); }
@@ -295,6 +301,82 @@ h1,h2,h3,h4,h5,h6{ margin:0 0 .5em; font-weight:700; line-height:1.15; }
   line-height:1.3;
 }
 .callout__inner .tag-chip{ background: rgba(31,198,103,.14); border-color: rgba(31,198,103,.45); color: var(--green); }
+
+/* three-across variant of the feature grid (S/M/L, Tier 1/2/3, etc.) */
+.feature-grid--3col{ grid-template-columns:repeat(3,1fr); }
+.feature-card__badge{
+  display:inline-flex; align-items:center; justify-content:center;
+  min-width: 32px; height:32px; padding:0 12px; border-radius:999px;
+  background: transparent; border:2px solid var(--green); color: var(--green);
+  font-family: var(--font-display); font-weight:800; font-size:13px;
+  margin-bottom: 14px;
+}
+.callout__inner .feature-card__badge{ border-color: var(--green); color: var(--green); }
+.feature-card ul{ display:flex; flex-direction:column; gap:.5em; margin:0; }
+.feature-card ul li{ font-size: clamp(14px,1vw,15.5px); line-height:1.55; padding-left:1.4em; position:relative; }
+.feature-card ul li::before{ content:""; position:absolute; left:0; top:.55em; width:6px; height:6px; border-radius:50%; background:var(--green); }
+.callout__inner .feature-card ul li{ color: rgba(255,255,255,.88); }
+@media (max-width:900px){ .feature-grid--3col{ grid-template-columns:1fr; } }
+
+/* pro/con checkmark list (Strengths vs Tradeoffs, two columns) */
+.pro-con{ display:grid; grid-template-columns:1fr 1fr; gap: clamp(20px,4vw,40px); margin: 1.1em 0; }
+.pro-con__col h6{ margin-bottom:.7em; }
+.pro-con__col ul{ display:flex; flex-direction:column; gap:.65em; margin:0; }
+.pro-con__col li{ display:flex; align-items:flex-start; gap:11px; padding-left:0; font-family:var(--font-body); font-size:clamp(15px,1.02vw,16.5px); line-height:1.6; }
+.pro-con__col ul li::before, .pro-con__col li::before{ content:none !important; }
+.pro-con__mark{
+  flex:0 0 auto; margin-top:.2em;
+  width:20px; height:20px; border-radius:50%;
+  display:flex; align-items:center; justify-content:center;
+  background: transparent;
+}
+.pro-con__mark svg{ width:13px; height:13px; stroke-width:3; fill:none; }
+.pro-con__col--pro .pro-con__mark{ border: 1.5px solid var(--green); }
+.pro-con__col--pro .pro-con__mark svg{ stroke: var(--green); }
+.pro-con__col--con .pro-con__mark{ border: 1.5px solid rgba(25,25,25,.35); }
+.pro-con__col--con .pro-con__mark svg{ stroke: rgba(25,25,25,.55); }
+.callout__inner .pro-con__col--con .pro-con__mark{ border-color: rgba(255,255,255,.4); }
+.callout__inner .pro-con__col--con .pro-con__mark svg{ stroke: rgba(255,255,255,.6); }
+@media (max-width:720px){ .pro-con{ grid-template-columns:1fr; gap:22px; } }
+
+/* horizontal phase-track (rollout phases / roadmaps) */
+.phase-track{ display:flex; align-items:stretch; gap:0; margin: 1.3em 0; }
+.phase-track__item{
+  flex:1; background: rgba(31,198,103,.055); border:1px solid rgba(31,198,103,.22);
+  border-radius:16px; padding: clamp(18px,2.2vw,22px);
+}
+.phase-track__badge{
+  display:inline-flex; align-items:center; justify-content:center;
+  width:28px; height:28px; border-radius:9px;
+  background: transparent; border:2px solid var(--green); color: var(--green);
+  font-family: var(--font-display); font-weight:800; font-size:13px;
+  margin-bottom: 12px;
+}
+.callout__inner .phase-track__badge{ border-color: var(--green); color: var(--green); }
+.phase-track__item h4{ margin-bottom:.5em; }
+.phase-track__item ul{ display:flex; flex-direction:column; gap:.4em; margin:0; }
+.phase-track__item ul li{ font-size: clamp(13.5px,.95vw,15px); line-height:1.5; padding-left:1.3em; position:relative; }
+.phase-track__item ul li::before{ content:""; position:absolute; left:0; top:.5em; width:5px; height:5px; border-radius:50%; background:var(--green); }
+.phase-track__connector{ flex:0 0 auto; width:24px; align-self:center; height:2px; background: rgba(31,198,103,.3); margin-top:-1.5em; }
+.callout__inner .phase-track__item{ background: rgba(31,198,103,.1); border-color:rgba(31,198,103,.3); }
+.callout__inner .phase-track__item h4{ color:#fff; }
+.callout__inner .phase-track__item ul li{ color: rgba(255,255,255,.88); }
+@media (max-width:900px){
+  .phase-track{ flex-direction:column; gap:0; }
+  .phase-track__connector{ width:2px; height:20px; align-self:flex-start; margin:0 0 0 15px; }
+}
+
+/* oversized pull-quote for standout one-liners */
+.pull-quote{
+  margin: 1.5em 0;
+  padding-left: clamp(20px,3vw,28px);
+  border-left: 4px solid var(--green);
+  font-family: var(--font-serif); font-weight:600; font-style:italic;
+  color: var(--black);
+  font-size: clamp(24px,3vw,32px);
+  line-height:1.3;
+}
+.callout__inner .pull-quote{ color:#fff; }
 
 /* small icon accent for h4 subheadings (e.g. Calm / Communication / Craft) */
 .h1-icon--sm{ width:32px; height:32px; }
@@ -678,7 +760,8 @@ h1,h2,h3,h4,h5,h6{ margin:0 0 .5em; font-weight:700; line-height:1.15; }
           <li>Building trust so stakeholders want your input early</li>
           <li>Demonstrating value beyond aesthetics, showing how design decisions affect outcomes</li>
         </ul>
-        <p>You do not demand a seat at the strategic table. You earn it by proving you belong there. The misconception is not wrong because we are never production workers. It is limiting because it assumes that is all we can be.</p>
+        <p class="pull-quote">You do not demand a seat at the strategic table. You earn it by proving you belong there.</p>
+        <p>The misconception is not wrong because we are never production workers. It is limiting because it assumes that is all we can be.</p>
       </div>
 
       <div class="subsection">
@@ -956,61 +1039,79 @@ h1,h2,h3,h4,h5,h6{ margin:0 0 .5em; font-weight:700; line-height:1.15; }
       <div class="subsection">
         <h3>PowerPoint: The Enterprise Standard</h3>
         <p>PowerPoint is the grandfather of presentation software and still the default for large organizations worldwide. It is the most feature-rich of the three.</p>
-        <h6>Strengths</h6>
-        <ul>
-          <li><b>Advanced template capabilities:</b> Master slides, layouts, and theme customization are the most robust of any platform.</li>
-          <li><b>Animation and transition power:</b> Unmatched control for motion design (morph transitions, custom animation paths, trigger-based interactions).</li>
-          <li><b>Customization and extensibility:</b> Highly hackable with VBA macros and add-ons like BrightSlide by BrightCarbon.</li>
-          <li><b>Cloud collaboration:</b> Available via Microsoft 365, though not as seamless as Google Slides.</li>
-        </ul>
-        <h6>Tradeoffs</h6>
-        <ul>
-          <li><b>Historically buggy:</b> File corruption and crashes were common enough that we joked at Duarte about PowerPoint &ldquo;having a bad day.&rdquo; Microsoft 365 versions are more stable, but large or corrupt files still misbehave.</li>
-          <li><b>Performance on large files:</b> Slow rendering, freezing, and crashes when file sizes balloon or when corrupt elements are introduced.</li>
-          <li><b>Limited file support:</b> Surprisingly poor at importing vector graphics from Adobe products (SVG support is inconsistent, requiring workarounds).</li>
-          <li><b>Slow evolution for designers:</b> Updates prioritize business users, leaving design-forward features underdeveloped.</li>
-        </ul>
+        <div class="pro-con">
+          <div class="pro-con__col pro-con__col--pro">
+            <h6>Strengths</h6>
+            <ul>
+              <li><span class="pro-con__mark"><svg viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg></span><span><b>Advanced template capabilities:</b> Master slides, layouts, and theme customization are the most robust of any platform.</span></li>
+              <li><span class="pro-con__mark"><svg viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg></span><span><b>Animation and transition power:</b> Unmatched control for motion design (morph transitions, custom animation paths, trigger-based interactions).</span></li>
+              <li><span class="pro-con__mark"><svg viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg></span><span><b>Customization and extensibility:</b> Highly hackable with VBA macros and add-ons like BrightSlide by BrightCarbon.</span></li>
+              <li><span class="pro-con__mark"><svg viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg></span><span><b>Cloud collaboration:</b> Available via Microsoft 365, though not as seamless as Google Slides.</span></li>
+            </ul>
+          </div>
+          <div class="pro-con__col pro-con__col--con">
+            <h6>Tradeoffs</h6>
+            <ul>
+              <li><span class="pro-con__mark"><svg viewBox="0 0 24 24"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg></span><span><b>Historically buggy:</b> File corruption and crashes were common enough that we joked at Duarte about PowerPoint &ldquo;having a bad day.&rdquo; Microsoft 365 versions are more stable, but large or corrupt files still misbehave.</span></li>
+              <li><span class="pro-con__mark"><svg viewBox="0 0 24 24"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg></span><span><b>Performance on large files:</b> Slow rendering, freezing, and crashes when file sizes balloon or when corrupt elements are introduced.</span></li>
+              <li><span class="pro-con__mark"><svg viewBox="0 0 24 24"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg></span><span><b>Limited file support:</b> Surprisingly poor at importing vector graphics from Adobe products (SVG support is inconsistent, requiring workarounds).</span></li>
+              <li><span class="pro-con__mark"><svg viewBox="0 0 24 24"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg></span><span><b>Slow evolution for designers:</b> Updates prioritize business users, leaving design-forward features underdeveloped.</span></li>
+            </ul>
+          </div>
+        </div>
         <p><b>Best for:</b> Enterprise organizations, complex animation needs, on-premise presentations, highly customized templates.</p>
       </div>
 
       <div class="subsection">
         <h3>Keynote: The Designer&rsquo;s Choice</h3>
         <p>Keynote reflects the Apple brand: restraint, polish, and an intuitive experience. It is the tool of choice for design-forward users who prioritize aesthetics and reliability.</p>
-        <h6>Strengths</h6>
-        <ul>
-          <li><b>Ease of use:</b> A clean interface that feels natural to Mac users.</li>
-          <li><b>Polished animations:</b> Slightly less complex than PowerPoint, but intentionally constrained so what you build looks good.</li>
-          <li><b>Stability and performance:</b> Rarely buggy, even with large files, which makes it the go-to for live event teams.</li>
-          <li><b>Visual quality:</b> Renders fonts, images, and graphics beautifully with minimal degradation.</li>
-        </ul>
-        <h6>Tradeoffs</h6>
-        <ul>
-          <li><b>Underwhelming template features:</b> Limited master slide flexibility compared to PowerPoint.</li>
-          <li><b>Animation ceiling:</b> Clean results, but limited complexity.</li>
-          <li><b>Collaboration not built for scale:</b> iCloud sharing exists, but lacks the same level of real-time collaborative editing of Google Slides.</li>
-          <li><b>Ecosystem lock-in:</b> Mac and iOS only, though PowerPoint exports are decent.</li>
-        </ul>
+        <div class="pro-con">
+          <div class="pro-con__col pro-con__col--pro">
+            <h6>Strengths</h6>
+            <ul>
+              <li><span class="pro-con__mark"><svg viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg></span><span><b>Ease of use:</b> A clean interface that feels natural to Mac users.</span></li>
+              <li><span class="pro-con__mark"><svg viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg></span><span><b>Polished animations:</b> Slightly less complex than PowerPoint, but intentionally constrained so what you build looks good.</span></li>
+              <li><span class="pro-con__mark"><svg viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg></span><span><b>Stability and performance:</b> Rarely buggy, even with large files, which makes it the go-to for live event teams.</span></li>
+              <li><span class="pro-con__mark"><svg viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg></span><span><b>Visual quality:</b> Renders fonts, images, and graphics beautifully with minimal degradation.</span></li>
+            </ul>
+          </div>
+          <div class="pro-con__col pro-con__col--con">
+            <h6>Tradeoffs</h6>
+            <ul>
+              <li><span class="pro-con__mark"><svg viewBox="0 0 24 24"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg></span><span><b>Underwhelming template features:</b> Limited master slide flexibility compared to PowerPoint.</span></li>
+              <li><span class="pro-con__mark"><svg viewBox="0 0 24 24"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg></span><span><b>Animation ceiling:</b> Clean results, but limited complexity.</span></li>
+              <li><span class="pro-con__mark"><svg viewBox="0 0 24 24"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg></span><span><b>Collaboration not built for scale:</b> iCloud sharing exists, but lacks the same level of real-time collaborative editing of Google Slides.</span></li>
+              <li><span class="pro-con__mark"><svg viewBox="0 0 24 24"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg></span><span><b>Ecosystem lock-in:</b> Mac and iOS only, though PowerPoint exports are decent.</span></li>
+            </ul>
+          </div>
+        </div>
         <p><b>Best for:</b> Mac users, live events, design-heavy presentations, solo creators prioritizing aesthetics and stability.</p>
       </div>
 
       <div class="subsection">
         <h3>Google Slides: The Collaboration King</h3>
         <p>Google Slides wins on collaboration and meets users where they already are, inside the Google ecosystem. For organizations on Google Workspace, it is the default.</p>
-        <h6>Strengths</h6>
-        <ul>
-          <li><b>Unmatched collaboration:</b> Real-time co-editing, commenting, version history, and seamless sharing for distributed teams.</li>
-          <li><b>Organizational scalability:</b> Template libraries, centralized storage, and permissions management work well at scale.</li>
-          <li><b>Accessibility:</b> Browser-based, no installation, works on any device.</li>
-          <li><b>Google ecosystem integration:</b> Seamless embedding of Sheets charts, Docs content, and other Workspace tools.</li>
-        </ul>
-        <h6>Tradeoffs</h6>
-        <ul>
-          <li><b>Clunky template UI:</b> The master slide interface is confusing compared to PowerPoint.</li>
-          <li><b>Minimal motion:</b> Limited animation makes it unsuitable for dynamic presentations.</li>
-          <li><b>File type limits:</b> No native video embedding (requires Drive links) and poor vector support.</li>
-          <li><b>Aggressive image compression:</b> Degrades quality. A larger custom canvas (13.33 x 7.5 inches rather than the default 10 x 5.63) helps, but compression still occurs.</li>
-          <li><b>Unsuitable for live events:</b> Compression and offline limits make it a liability on a high-stakes stage. Export to PDF or convert to Keynote or PowerPoint for any live delivery that matters.</li>
-        </ul>
+        <div class="pro-con">
+          <div class="pro-con__col pro-con__col--pro">
+            <h6>Strengths</h6>
+            <ul>
+              <li><span class="pro-con__mark"><svg viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg></span><span><b>Unmatched collaboration:</b> Real-time co-editing, commenting, version history, and seamless sharing for distributed teams.</span></li>
+              <li><span class="pro-con__mark"><svg viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg></span><span><b>Organizational scalability:</b> Template libraries, centralized storage, and permissions management work well at scale.</span></li>
+              <li><span class="pro-con__mark"><svg viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg></span><span><b>Accessibility:</b> Browser-based, no installation, works on any device.</span></li>
+              <li><span class="pro-con__mark"><svg viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg></span><span><b>Google ecosystem integration:</b> Seamless embedding of Sheets charts, Docs content, and other Workspace tools.</span></li>
+            </ul>
+          </div>
+          <div class="pro-con__col pro-con__col--con">
+            <h6>Tradeoffs</h6>
+            <ul>
+              <li><span class="pro-con__mark"><svg viewBox="0 0 24 24"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg></span><span><b>Clunky template UI:</b> The master slide interface is confusing compared to PowerPoint.</span></li>
+              <li><span class="pro-con__mark"><svg viewBox="0 0 24 24"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg></span><span><b>Minimal motion:</b> Limited animation makes it unsuitable for dynamic presentations.</span></li>
+              <li><span class="pro-con__mark"><svg viewBox="0 0 24 24"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg></span><span><b>File type limits:</b> No native video embedding (requires Drive links) and poor vector support.</span></li>
+              <li><span class="pro-con__mark"><svg viewBox="0 0 24 24"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg></span><span><b>Aggressive image compression:</b> Degrades quality. A larger custom canvas (13.33 x 7.5 inches rather than the default 10 x 5.63) helps, but compression still occurs.</span></li>
+              <li><span class="pro-con__mark"><svg viewBox="0 0 24 24"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg></span><span><b>Unsuitable for live events:</b> Compression and offline limits make it a liability on a high-stakes stage. Export to PDF or convert to Keynote or PowerPoint for any live delivery that matters.</span></li>
+            </ul>
+          </div>
+        </div>
         <p><b>Best for:</b> Google Workspace organizations, remote teams, collaboration-heavy projects, internal communications, and rapid iteration.</p>
       </div>
 
@@ -1191,27 +1292,38 @@ h1,h2,h3,h4,h5,h6{ margin:0 0 .5em; font-weight:700; line-height:1.15; }
 
           <h4>Method 1</h4>
           <p><b>Shirt sizing (effort and design lift):</b> This method focuses on the amount of work and complexity involved. Shirt sizing is useful for capacity planning. It helps you estimate bandwidth and communicate timelines clearly.</p>
-          <h6>Small (S)</h6>
-          <ul>
-            <li>Cleanup decks (formatting, brand compliance, polishing existing content)</li>
-            <li>Short slide decks (under 10 slides)</li>
-            <li>Quick turnaround requests (a few slides you&rsquo;re tagged into for feedback)</li>
-            <li>Timeline: Hours to 1&ndash;2 days</li>
-          </ul>
-          <h6>Medium (M)</h6>
-          <ul>
-            <li>Larger decks requiring design execution (20&ndash;40 slides)</li>
-            <li>Webinar decks that need visual design and structure</li>
-            <li>Customer-facing sales materials</li>
-            <li>Timeline: 3&ndash;7 days</li>
-          </ul>
-          <h6>Large (L)</h6>
-          <ul>
-            <li>Event decks (keynotes, conferences, high-stakes presentations)</li>
-            <li>Resource-intensive projects (custom illustrations, complex data visualization, animation)</li>
-            <li>C-suite keynotes</li>
-            <li>Timeline: 1&ndash;4+ weeks</li>
-          </ul>
+          <div class="feature-grid feature-grid--3col">
+            <div class="feature-card">
+              <span class="feature-card__badge">S</span>
+              <h4>Small</h4>
+              <ul>
+                <li>Cleanup decks (formatting, brand compliance, polishing existing content)</li>
+                <li>Short slide decks (under 10 slides)</li>
+                <li>Quick turnaround requests (a few slides you&rsquo;re tagged into for feedback)</li>
+                <li>Timeline: Hours to 1&ndash;2 days</li>
+              </ul>
+            </div>
+            <div class="feature-card">
+              <span class="feature-card__badge">M</span>
+              <h4>Medium</h4>
+              <ul>
+                <li>Larger decks requiring design execution (20&ndash;40 slides)</li>
+                <li>Webinar decks that need visual design and structure</li>
+                <li>Customer-facing sales materials</li>
+                <li>Timeline: 3&ndash;7 days</li>
+              </ul>
+            </div>
+            <div class="feature-card">
+              <span class="feature-card__badge">L</span>
+              <h4>Large</h4>
+              <ul>
+                <li>Event decks (keynotes, conferences, high-stakes presentations)</li>
+                <li>Resource-intensive projects (custom illustrations, complex data visualization, animation)</li>
+                <li>C-suite keynotes</li>
+                <li>Timeline: 1&ndash;4+ weeks</li>
+              </ul>
+            </div>
+          </div>
         </div>
       </div>
 
@@ -1221,20 +1333,29 @@ h1,h2,h3,h4,h5,h6{ margin:0 0 .5em; font-weight:700; line-height:1.15; }
           <h4>Method 2</h4>
           <p><b>Tiered impact (business criticality):</b> This method focuses on the strategic importance and visibility of the work. I think of these in reverse order: protect Tier 3 first, do Tier 2 daily, and handle Tier 1 through enablement.</p>
 
-          <h6>Tier 1 &mdash; Self-Service &amp; Enablement</h6>
-          <p>Not business-critical, but necessary for program progress. Systems to manage this tier protect your capacity for higher-value work while scaling your efforts company-wide.</p>
-          <p><b>Examples:</b> Webinars (routine, low-stakes), day-to-day internal communications, low-visibility speaking engagements, routine team updates.</p>
-          <p><b>Your role:</b> Enabler. You&rsquo;ve built the templates, documentation, and training. Stakeholders self-serve.</p>
-
-          <h6>Tier 2 &mdash; Production &amp; Collaboration</h6>
-          <p>Strategic work with immovable timelines or moderate visibility. This is the daily bread and butter where you build trust across the org.</p>
-          <p><b>Examples:</b> Templates and systems, customer-facing materials (case studies, sales decks), strategic sales materials (pitch decks, proposal presentations), resource hubs (slide libraries, brand toolkits), small-scale events (webinars, breakout sessions).</p>
-          <p><b>Your role:</b> Design partner, heavily involved but executing on an agreed direction.</p>
-
-          <h6>Tier 3 &mdash; Creative Partnership</h6>
-          <p>High-impact, high-visibility, business-critical communications. This work has the most value and the most risk; nail it and your credibility climbs fast.</p>
-          <p><b>Examples:</b> Marquee events (annual conferences, product launches), executive communications (earnings calls, all-hands presentations, board decks), high-stakes client pitches (deals worth millions).</p>
-          <p><b>Your role:</b> Strategic design partner from day one.</p>
+          <div class="feature-grid feature-grid--3col">
+            <div class="feature-card">
+              <span class="feature-card__badge">1</span>
+              <h4>Self-Service &amp; Enablement</h4>
+              <p>Not business-critical, but necessary for program progress. Systems to manage this tier protect your capacity for higher-value work while scaling your efforts company-wide.</p>
+              <p style="margin-top:.7em;"><b>Examples:</b> Webinars (routine, low-stakes), day-to-day internal communications, low-visibility speaking engagements, routine team updates.</p>
+              <p style="margin-top:.7em;"><b>Your role:</b> Enabler. You&rsquo;ve built the templates, documentation, and training. Stakeholders self-serve.</p>
+            </div>
+            <div class="feature-card">
+              <span class="feature-card__badge">2</span>
+              <h4>Production &amp; Collaboration</h4>
+              <p>Strategic work with immovable timelines or moderate visibility. This is the daily bread and butter where you build trust across the org.</p>
+              <p style="margin-top:.7em;"><b>Examples:</b> Templates and systems, customer-facing materials (case studies, sales decks), strategic sales materials (pitch decks, proposal presentations), resource hubs (slide libraries, brand toolkits), small-scale events (webinars, breakout sessions).</p>
+              <p style="margin-top:.7em;"><b>Your role:</b> Design partner, heavily involved but executing on an agreed direction.</p>
+            </div>
+            <div class="feature-card">
+              <span class="feature-card__badge">3</span>
+              <h4>Creative Partnership</h4>
+              <p>High-impact, high-visibility, business-critical communications. This work has the most value and the most risk; nail it and your credibility climbs fast.</p>
+              <p style="margin-top:.7em;"><b>Examples:</b> Marquee events (annual conferences, product launches), executive communications (earnings calls, all-hands presentations, board decks), high-stakes client pitches (deals worth millions).</p>
+              <p style="margin-top:.7em;"><b>Your role:</b> Strategic design partner from day one.</p>
+            </div>
+          </div>
         </div>
       </div>
 
@@ -1529,23 +1650,36 @@ h1,h2,h3,h4,h5,h6{ margin:0 0 .5em; font-weight:700; line-height:1.15; }
       <div class="subsection">
         <h2>Ruthless Prioritization</h2>
         <p>You cannot enable everything at once. Roll out in phases based on impact and frequency. Trying to do everything at launch overwhelms you and your users. Iterate based on feedback.</p>
-        <h4>Phase 1 (Launch)</h4>
-        <ul>
-          <li>Core template with the essential layouts</li>
-          <li>Quick-start guide</li>
-          <li>Graphic toolkit</li>
-        </ul>
-        <h4>Phase 2 (Month 2&ndash;3)</h4>
-        <ul>
-          <li>Slide library with 20&ndash;30 curated slides</li>
-          <li>Reskinned priority decks</li>
-          <li>Expanded documentation</li>
-        </ul>
-        <h4>Phase 3 (Month 4&ndash;6)</h4>
-        <ul>
-          <li>Advanced training (animations, data visualization)</li>
-          <li>User showcase (highlight great examples)</li>
-        </ul>
+        <div class="phase-track">
+          <div class="phase-track__item">
+            <span class="phase-track__badge">1</span>
+            <h4>Launch</h4>
+            <ul>
+              <li>Core template with the essential layouts</li>
+              <li>Quick-start guide</li>
+              <li>Graphic toolkit</li>
+            </ul>
+          </div>
+          <div class="phase-track__connector"></div>
+          <div class="phase-track__item">
+            <span class="phase-track__badge">2</span>
+            <h4>Month 2&ndash;3</h4>
+            <ul>
+              <li>Slide library with 20&ndash;30 curated slides</li>
+              <li>Reskinned priority decks</li>
+              <li>Expanded documentation</li>
+            </ul>
+          </div>
+          <div class="phase-track__connector"></div>
+          <div class="phase-track__item">
+            <span class="phase-track__badge">3</span>
+            <h4>Month 4&ndash;6</h4>
+            <ul>
+              <li>Advanced training (animations, data visualization)</li>
+              <li>User showcase (highlight great examples)</li>
+            </ul>
+          </div>
+        </div>
       </div>
 
       <div class="inset-panel inset-panel--practice">
@@ -1646,7 +1780,8 @@ h1,h2,h3,h4,h5,h6{ margin:0 0 .5em; font-weight:700; line-height:1.15; }
 
       <div class="subsection">
         <h2>The Event Designer&rsquo;s Mindset: Calmness Is Leadership</h2>
-        <p>Before the mechanics, establish the mindset. When you are deep in last-minute script changes, technical failures, and executive nerves, one mantra keeps you grounded: the event will happen, and then it will end.</p>
+        <p>Before the mechanics, establish the mindset. When you are deep in last-minute script changes, technical failures, and executive nerves, one mantra keeps you grounded:</p>
+        <p class="pull-quote">The event will happen, and then it will end.</p>
         <p>A few grounding truths:</p>
         <div class="tag-row">
           <span class="tag-chip">The event will happen</span>
@@ -2213,7 +2348,7 @@ h1,h2,h3,h4,h5,h6{ margin:0 0 .5em; font-weight:700; line-height:1.15; }
         <p>It is mindset.</p>
         <p>The designers who become indispensable think like entrepreneurs, often because they are the only person in the company doing this work and have to build the playbook themselves. Replaceable designers are fast but reactive. They execute well but do not shape direction, solve only today&rsquo;s problem, and wait to be told what to do. Indispensable designers reduce future work (they build systems that prevent recurring problems), create clarity under pressure (they are the calm voice in chaos), make other people better at their jobs (they enable, not just execute), and build systems that outlast them (templates, processes, documentation).</p>
         <p>The entrepreneurial mindset looks like revealing problems others do not or will not see, solving them before they become crises, taking ownership beyond your job description, and thinking in systems rather than outputs. Very few designers operate this way, which is exactly why very few become irreplaceable. If you shift from &ldquo;What slides do you need?&rdquo; to &ldquo;What problem are we really solving here?&rdquo; you immediately separate yourself from the majority of practitioners.</p>
-        <p>Convenience is value.</p>
+        <p class="pull-quote">Convenience is value.</p>
         <p>If your work makes life easier for others, they remember you. If you are the person who reduces stress, saves time, and prevents chaos, you become irreplaceable.</p>
       </div>
     </article>
